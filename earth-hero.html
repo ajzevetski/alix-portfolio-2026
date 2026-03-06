@@ -37,7 +37,6 @@
       font-family: var(--sans);
       font-size: 16px;
       line-height: 1.65;
-      cursor: none;
       overflow-x: hidden;
     }
 
@@ -50,19 +49,6 @@
       z-index: 9999;
       opacity: 0.5;
     }
-
-    /* CURSOR */
-    #cursor {
-      width: 28px; height: 26px;
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate(-50%, -50%);
-      transition: transform 0.12s ease, width 0.18s ease, height 0.18s ease;
-    }
-    #cursor svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(1px 2px 0 rgba(26,17,24,0.18)); }
-    #cursor.big { width: 40px; height: 37px; }
 
     /* NAV */
     nav {
@@ -522,102 +508,211 @@
       margin-bottom: 14px;
     }
 
-    /* ── IMAGE STRIP ── */
-    .cs-image-strip {
+    /* ── LIGHTBOX GRID ── */
+    .cs-lightbox-section {
+      padding: 80px 64px;
       border-bottom: 2px solid var(--ink);
+      background: var(--offwhite);
+    }
+    .cs-lightbox-header { margin-bottom: 48px; }
+    .cs-lightbox-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .cs-lb-thumb {
+      position: relative;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
       overflow: hidden;
+      background: white;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      aspect-ratio: 4/3;
     }
-    .cs-image-strip-inner {
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
+    .cs-lb-thumb:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--ink);
     }
-    .cs-image-strip-inner::-webkit-scrollbar { display: none; }
-    .cs-image-strip-item {
-      flex-shrink: 0;
-      width: 280px;
-      border-right: 2px solid var(--ink);
-      overflow: hidden;
-    }
-    .cs-image-strip-item:last-child { border-right: none; }
-    .cs-image-strip-item img { width: 100%; display: block; }
-    .cs-image-strip-item-placeholder {
+    .cs-lb-thumb img {
       width: 100%;
-      aspect-ratio: 9/16;
-      background: linear-gradient(135deg, var(--green-lt) 0%, #a7f3d0 100%);
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cs-lb-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,17,24,0.55);
       display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .cs-lb-overlay span {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: white;
+      background: var(--punch);
+      border: 2px solid white;
+      border-radius: 8px;
+      padding: 8px 16px;
+    }
+    .cs-lb-thumb:hover .cs-lb-overlay { opacity: 1; }
+
+    /* ── LIGHTBOX MODAL ── */
+    .cs-lb-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,17,24,0.85);
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+    }
+    .cs-lb-backdrop.open { display: block; }
+    .cs-lb-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+    .cs-lb-modal.open { display: flex; }
+    .cs-lb-content {
+      max-width: 860px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .cs-lb-content img {
+      width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 2px solid var(--ink);
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.4);
+      display: block;
+    }
+    .cs-lb-caption-wrap {
+      width: 100%;
+      background: white;
+      border: 2px solid var(--ink);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .cs-lb-counter {
+      font-family: var(--mono);
+      font-size: 0.62rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
+      flex-shrink: 0;
+      padding-top: 2px;
+      white-space: nowrap;
     }
-
-    /* ── FULL IMAGE ── */
-    .cs-full-image {
-      border-bottom: 2px solid var(--ink);
-      background: var(--green-lt);
-      padding: 48px 64px;
+    .cs-lb-caption {
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.65;
+      flex: 1;
     }
-    .cs-full-image img {
-      width: 100%;
-      border-radius: 12px;
+    .cs-lb-close {
+      position: fixed;
+      top: 20px; right: 24px;
+      z-index: 1002;
+      background: white;
       border: 2px solid var(--ink);
-      display: block;
-      box-shadow: 6px 6px 0 var(--ink);
-    }
-    .cs-full-image-placeholder {
-      width: 100%;
-      aspect-ratio: 16/7;
-      border-radius: 12px;
-      border: 2px solid var(--ink);
-      background: linear-gradient(135deg, #BBF7D0 0%, #059669 100%);
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      font-size: 1rem;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      box-shadow: 6px 6px 0 var(--ink);
+      transition: background 0.2s;
+      box-shadow: 3px 3px 0 var(--ink);
     }
+    .cs-lb-close:hover { background: var(--punch); color: white; }
+    .cs-lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      z-index: 1002;
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cs-lb-nav:hover { background: var(--yellow); transform: translateY(-50%) scale(1.05); }
+    .cs-lb-prev { left: 20px; }
+    .cs-lb-next { right: 20px; }
 
     /* ── USABILITY ── */
     .cs-usability {
-      padding: 80px 64px;
+      padding: 100px 64px;
       border-bottom: 2px solid var(--ink);
+      background: var(--violet);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+    .cs-usability .cs-section-label { color: rgba(255,255,255,0.5); }
+    .cs-usability .cs-section-title { color: white; }
+    .cs-usability .cs-section-title em { color: var(--yellow); }
+    .cs-usability .cs-body { color: rgba(255,255,255,0.75); }
+    .cs-usability .cs-body strong { color: white; }
     .cs-improvements {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-top: 32px;
-      max-width: 720px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+      max-width: 100%;
     }
     .cs-improvement-chip {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      background: var(--green-lt);
-      border: 2px solid var(--ink);
-      border-radius: 12px;
-      padding: 18px 20px;
-      font-size: 0.88rem;
-      color: var(--ink);
-      line-height: 1.5;
+      gap: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 28px 24px;
+      font-size: 0.92rem;
+      color: white;
+      line-height: 1.6;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cs-improvement-chip:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.4);
     }
     .cs-improvement-chip::before {
       content: '✓';
       font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--green);
+      font-size: 0.8rem;
+      color: var(--yellow);
       font-weight: 700;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
     /* ── BEFORE / AFTER ── */
@@ -634,22 +729,28 @@
     }
     .cs-ba-col {}
     .cs-ba-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
     }
     .cs-ba-label.before { color: var(--muted); }
     .cs-ba-label.after  { color: var(--green); }
     .cs-ba-tag {
-      padding: 4px 10px;
+      padding: 5px 14px;
       border-radius: 100px;
-      font-size: 0.6rem;
-      border: 1.5px solid currentColor;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 2px solid currentColor;
+      font-weight: 400;
     }
     .cs-ba-image {
       border: 2px solid var(--ink);
@@ -931,39 +1032,63 @@
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
 
-      .cs-hero { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; min-height: auto; }
-      .cs-overview { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px; }
-      .cs-problem { grid-template-columns: 1fr; padding: 48px 24px; }
+      /* HERO */
+      .cs-hero { grid-template-columns: 1fr; padding: 48px 24px; gap: 32px; min-height: auto; }
+      .cs-hero-image { max-width: 320px; margin: 0 auto; }
+      .cs-title { font-size: clamp(3rem, 14vw, 5rem); }
+
+      /* OVERVIEW */
+      .cs-overview { grid-template-columns: 1fr; gap: 32px; padding: 48px 24px; }
+
+      /* PROBLEM */
+      .cs-problem { grid-template-columns: 1fr; padding: 48px 24px; gap: 32px; }
+      .cs-problem-image { order: -1; }
+
+      /* GOALS */
       .cs-goals { grid-template-columns: 1fr; }
-      .cs-goals-col { padding: 40px 24px; }
+      .cs-goals-col { padding: 36px 24px; }
       .cs-goals-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+
+      /* SECTIONS */
       .cs-section { padding: 48px 24px; }
       .cs-research { padding: 48px 24px; }
-      .cs-research-grid { grid-template-columns: 1fr; gap: 24px; }
-      .cs-usability { padding: 48px 24px; }
-      .cs-improvements { grid-template-columns: 1fr; }
+      .cs-research-grid { grid-template-columns: 1fr; gap: 20px; }
+
+      /* USABILITY */
+      .cs-usability { padding: 64px 24px; min-height: auto; }
+      .cs-improvements { grid-template-columns: 1fr; gap: 12px; }
+
+      /* BEFORE / AFTER */
       .cs-before-after { padding: 48px 24px; }
-      .cs-ba-grid { grid-template-columns: 1fr; }
+      .cs-ba-grid { grid-template-columns: 1fr; gap: 48px; }
+      .cs-ba-label { font-size: 1.4rem; }
+
+      /* ANNOTATED IMAGE — constrain and allow tooltip overflow */
+      .cs-annotated-wrap { max-width: 280px; overflow: visible; }
 
       /* tooltips drop below dot on mobile */
       .cs-tooltip,
-      .cs-dot[data-dot="3"] .cs-tooltip {
+      .cs-dot[data-dot="3"] .cs-tooltip,
+      .cs-dot[data-dot="4"] .cs-tooltip,
+      .cs-dot[data-dot="5"] .cs-tooltip,
+      .cs-dot[data-dot="6"] .cs-tooltip {
         left: 50%;
         right: auto;
         top: calc(100% + 14px);
         transform: translateX(-50%) scale(0.92);
-        width: 200px;
+        width: 180px;
+        font-size: 0.75rem;
       }
       .cs-dot.active .cs-tooltip {
         transform: translateX(-50%) scale(1);
       }
-      /* arrow points up */
       .cs-tooltip::before,
-      .cs-dot[data-dot="3"] .cs-tooltip::before {
-        left: 50%;
-        right: auto;
-        top: -10px;
-        bottom: auto;
+      .cs-dot[data-dot="3"] .cs-tooltip::before,
+      .cs-dot[data-dot="4"] .cs-tooltip::before,
+      .cs-dot[data-dot="5"] .cs-tooltip::before,
+      .cs-dot[data-dot="6"] .cs-tooltip::before {
+        left: 50%; right: auto;
+        top: -10px; bottom: auto;
         transform: translateX(-50%);
         border-right-color: transparent;
         border-left-color: transparent;
@@ -971,38 +1096,55 @@
         border-top-color: transparent;
       }
       .cs-tooltip::after,
-      .cs-dot[data-dot="3"] .cs-tooltip::after {
-        left: 50%;
-        right: auto;
-        top: -7px;
-        bottom: auto;
+      .cs-dot[data-dot="3"] .cs-tooltip::after,
+      .cs-dot[data-dot="4"] .cs-tooltip::after,
+      .cs-dot[data-dot="5"] .cs-tooltip::after,
+      .cs-dot[data-dot="6"] .cs-tooltip::after {
+        left: 50%; right: auto;
+        top: -7px; bottom: auto;
         transform: translateX(-50%);
         border-right-color: transparent;
         border-left-color: transparent;
         border-bottom-color: white;
         border-top-color: transparent;
       }
+
+      /* LIGHTBOX */
+      .cs-lightbox-section { padding: 48px 24px; }
+      .cs-lightbox-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .cs-lb-nav { display: none; }
+      .cs-lb-modal { padding: 16px; }
+      .cs-lb-content img { max-height: 55vh; border-radius: 8px; }
+      .cs-lb-caption-wrap { padding: 14px 16px; flex-direction: column; gap: 6px; }
+      .cs-lb-close { top: 12px; right: 12px; width: 38px; height: 38px; }
+
+      /* TEXT SECTIONS */
       .cs-text-section { padding: 48px 24px; }
       .cs-outcomes { grid-template-columns: 1fr; }
       .cs-outcomes-col { padding: 48px 24px; }
       .cs-outcomes-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+
+      /* NEXT */
       .cs-next { grid-template-columns: 1fr; }
       .cs-next-back { border-right: none; border-bottom: 2px solid var(--ink); padding: 40px 24px; }
       .cs-next-project { padding: 40px 24px; }
-      .cs-full-image { padding: 32px 24px; }
+
       footer { flex-direction: column; gap: 8px; padding: 20px 24px; text-align: center; }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .cs-hero { padding: 36px 20px; }
+      .cs-title { font-size: clamp(2.8rem, 16vw, 4rem); }
+      .cs-annotated-wrap { max-width: 240px; }
+      .cs-lightbox-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .cs-lb-thumb { aspect-ratio: 3/2; }
+      .cs-goals-col { padding: 32px 20px; }
+      .cs-section-title { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
-
-<div id="cursor">
-  <svg viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14 23.5 C14 23.5 2 15.5 2 8.5 C2 5 4.5 2.5 7.5 2.5 C10 2.5 12 4 14 6.5 C16 4 18 2.5 20.5 2.5 C23.5 2.5 26 5 26 8.5 C26 15.5 14 23.5 14 23.5Z"
-      fill="#BBF7D0" stroke="#1A1118" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-    <ellipse cx="9.5" cy="7.5" rx="3.5" ry="2.2" fill="white" opacity="0.55" transform="rotate(-25 9.5 7.5)"/>
-  </svg>
-</div>
 
 <!-- NAV -->
 <nav>
@@ -1138,21 +1280,52 @@
     </div>
   </section>
 
-  <!-- ── DESIGN SCREENS ── -->
-  <div class="cs-image-strip reveal">
-    <div class="cs-image-strip-inner">
-      <div class="cs-image-strip-item"><div class="cs-image-strip-item-placeholder">Design A</div></div>
-      <div class="cs-image-strip-item"><div class="cs-image-strip-item-placeholder">Design B</div></div>
-      <div class="cs-image-strip-item"><div class="cs-image-strip-item-placeholder">Design C</div></div>
-      <div class="cs-image-strip-item"><div class="cs-image-strip-item-placeholder">Design D</div></div>
-      <div class="cs-image-strip-item"><div class="cs-image-strip-item-placeholder">Design E</div></div>
+  <!-- ── RESEARCH LIGHTBOX GRID ── -->
+  <section class="cs-lightbox-section reveal">
+    <div class="cs-lightbox-header">
+      <div class="cs-section-label">Research Artifacts</div>
+      <h2 class="cs-section-title">The work behind <em>the findings.</em></h2>
+      <p class="cs-body">Click any image to expand and read the caption.</p>
+    </div>
+    <div class="cs-lightbox-grid">
+
+      <button class="cs-lb-thumb" data-index="0">
+        <img src="google-analytics.jpg" alt="Google Analytics data" />
+        <div class="cs-lb-overlay"><span>View ↗</span></div>
+      </button>
+
+      <button class="cs-lb-thumb" data-index="1">
+        <img src="First-card-sort.jpg" alt="First card sort" />
+        <div class="cs-lb-overlay"><span>View ↗</span></div>
+      </button>
+
+      <button class="cs-lb-thumb" data-index="2">
+        <img src="categorization.jpg" alt="Categorization diagram" />
+        <div class="cs-lb-overlay"><span>View ↗</span></div>
+      </button>
+
+      <button class="cs-lb-thumb" data-index="3">
+        <img src="second-card-sort.jpg" alt="Second card sort" />
+        <div class="cs-lb-overlay"><span>View ↗</span></div>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- LIGHTBOX OVERLAY -->
+  <div class="cs-lb-modal" id="cs-lb-modal" aria-modal="true" role="dialog">
+    <button class="cs-lb-close" id="cs-lb-close">✕</button>
+    <button class="cs-lb-nav cs-lb-prev" id="cs-lb-prev">←</button>
+    <button class="cs-lb-nav cs-lb-next" id="cs-lb-next">→</button>
+    <div class="cs-lb-content">
+      <img src="" alt="" id="cs-lb-img" />
+      <div class="cs-lb-caption-wrap">
+        <div class="cs-lb-counter" id="cs-lb-counter">1 / 4</div>
+        <p class="cs-lb-caption" id="cs-lb-caption"></p>
+      </div>
     </div>
   </div>
-
-  <!-- ── FULL DESIGN SPREAD ── -->
-  <div class="cs-full-image reveal">
-    <div class="cs-full-image-placeholder">Full design spread — add your screens here</div>
-  </div>
+  <div class="cs-lb-backdrop" id="cs-lb-backdrop"></div>
 
   <!-- ── USABILITY TESTING ── -->
   <section class="cs-usability reveal">
@@ -1309,17 +1482,6 @@
 </footer>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
-  });
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
-  });
-
   // Mobile nav
   const hamburger = document.getElementById('nav-hamburger');
   const drawer    = document.getElementById('nav-drawer');
@@ -1346,7 +1508,59 @@
   }, { threshold: 0.1 });
   reveals.forEach(r => revealObs.observe(r));
 
-  // Annotation dots
+  // Lightbox
+  const lbImages = [
+    { src: 'google-analytics.jpg', caption: 'Google Analytics event data showing user drop-off patterns — session starts far outnumbered meaningful actions like setting emissions targets or completing actions, pointing to a retention and engagement problem.' },
+    { src: 'First-card-sort.jpg',  caption: 'First card sort exercise — Design A vs Design B. Participants were shown two navigation structures to understand how users expected to find content across Home, Actions, My Emissions, and Settings.' },
+    { src: 'categorization.jpg',   caption: 'Categorization results from the open card sort. Percentages represent agreement rates across participants — higher agreement indicates stronger mental model alignment with that grouping.' },
+    { src: 'second-card-sort.jpg', caption: 'Second card sort comparing Home Design A vs B side by side — testing whether users preferred a stats-first layout or a radial impact visualization as the primary homepage hierarchy.' },
+  ];
+  let lbCurrent = 0;
+  const lbModal    = document.getElementById('cs-lb-modal');
+  const lbBackdrop = document.getElementById('cs-lb-backdrop');
+  const lbImg      = document.getElementById('cs-lb-img');
+  const lbCaption  = document.getElementById('cs-lb-caption');
+  const lbCounter  = document.getElementById('cs-lb-counter');
+
+  function openLightbox(index) {
+    lbCurrent = index;
+    updateLightbox();
+    lbModal.classList.add('open');
+    lbBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lbModal.classList.remove('open');
+    lbBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function updateLightbox() {
+    const item = lbImages[lbCurrent];
+    lbImg.src         = item.src;
+    lbImg.alt         = item.caption;
+    lbCaption.textContent = item.caption;
+    lbCounter.textContent = `${lbCurrent + 1} / ${lbImages.length}`;
+  }
+
+  document.querySelectorAll('.cs-lb-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => openLightbox(parseInt(thumb.dataset.index)));
+  });
+  document.getElementById('cs-lb-close').addEventListener('click', closeLightbox);
+  lbBackdrop.addEventListener('click', closeLightbox);
+  document.getElementById('cs-lb-prev').addEventListener('click', () => {
+    lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length;
+    updateLightbox();
+  });
+  document.getElementById('cs-lb-next').addEventListener('click', () => {
+    lbCurrent = (lbCurrent + 1) % lbImages.length;
+    updateLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!lbModal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft')  { lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length; updateLightbox(); }
+    if (e.key === 'ArrowRight') { lbCurrent = (lbCurrent + 1) % lbImages.length; updateLightbox(); }
+  });
   document.querySelectorAll('.cs-dot').forEach(dot => {
     dot.addEventListener('click', (e) => {
       e.stopPropagation();
