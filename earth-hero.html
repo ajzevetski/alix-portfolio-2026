@@ -315,6 +315,8 @@
       overflow: hidden;
       background: white;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
     }
     /* each screen slide */
     .phone-slide {
@@ -326,6 +328,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.35s ease;
+      padding-bottom: 56px;
     }
     .phone-slide::-webkit-scrollbar { display: none; }
     .phone-slide.active {
@@ -335,6 +338,9 @@
     .phone-slide img {
       width: 100%;
       display: block;
+    }
+    .phone-slide-inner {
+      padding-bottom: 56px;
     }
     /* sticky bottom nav */
     .phone-nav {
@@ -383,13 +389,14 @@
     .phone-nav-btn.active svg circle { fill: #1A6B3C; }
     /* actions tabs inside browse/my actions screens */
     .phone-tabs {
-      position: absolute;
-      top: 52px; left: 0; right: 0;
+      position: sticky;
+      top: 0;
       height: 40px;
       background: white;
       border-bottom: 1px solid #e5e5e5;
       display: flex;
       z-index: 9;
+      flex-shrink: 0;
     }
     .phone-tab {
       flex: 1;
@@ -1296,24 +1303,30 @@
 
           <!-- SCREEN 1: Home -->
           <div class="phone-slide active" id="slide-home">
-            <img src="home-page.jpg" alt="Home screen" style="padding-bottom:56px;" />
+            <div class="phone-slide-inner">
+              <img src="home-page.jpg" alt="Home screen" />
+            </div>
           </div>
 
           <!-- SCREEN 2: Browse Actions -->
           <div class="phone-slide" id="slide-browse">
-            <img src="browse-actions.jpg" alt="Browse Actions" style="padding-bottom:56px;" />
             <div class="phone-tabs">
               <button class="phone-tab active" onclick="showActions('browse', event)">Browse Actions</button>
               <button class="phone-tab" onclick="showActions('my', event)">My Actions</button>
+            </div>
+            <div class="phone-slide-inner" style="padding-top:40px;">
+              <img src="browse-actions.jpg" alt="Browse Actions" />
             </div>
           </div>
 
           <!-- SCREEN 3: My Actions -->
           <div class="phone-slide" id="slide-my">
-            <img src="my-actions.jpg" alt="My Actions" style="padding-bottom:56px;" />
             <div class="phone-tabs">
               <button class="phone-tab" onclick="showActions('browse', event)">Browse Actions</button>
               <button class="phone-tab active" onclick="showActions('my', event)">My Actions</button>
+            </div>
+            <div class="phone-slide-inner" style="padding-top:40px;">
+              <img src="my-actions.jpg" alt="My Actions" />
             </div>
           </div>
 
@@ -1738,6 +1751,8 @@
     if (e.key === 'ArrowRight') { lbCurrent = (lbCurrent + 1) % lbImages.length; updateLightbox(); }
   });
   // Annotation dots — smart fixed tooltip positioning
+  let dotClickHandled = false;
+
   function positionTooltip(dot) {
     const tooltip = dot.querySelector('.cs-tooltip');
     if (!tooltip) return;
@@ -1747,13 +1762,11 @@
     const margin = 12;
     const vw = window.innerWidth, vh = window.innerHeight;
     let top, left;
-    // Prefer below, fall back to above
     if (dotRect.bottom + TH + margin < vh) {
-      top  = dotRect.bottom + margin;
+      top = dotRect.bottom + margin;
     } else {
-      top  = dotRect.top - TH - margin;
+      top = dotRect.top - TH - margin;
     }
-    // Center horizontally on dot, then clamp to viewport
     left = dotRect.left + dotRect.width / 2 - TW / 2;
     left = Math.max(margin, Math.min(left, vw - TW - margin));
     top  = Math.max(margin, Math.min(top,  vh - TH - margin));
@@ -1764,6 +1777,7 @@
   document.querySelectorAll('.cs-dot').forEach(dot => {
     dot.addEventListener('click', (e) => {
       e.stopPropagation();
+      dotClickHandled = true;
       const isActive = dot.classList.contains('active');
       document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
       if (!isActive) {
@@ -1772,8 +1786,10 @@
       }
     });
   });
-  // Close on outside click
+
+  // Close on outside click — only if a dot wasn't just clicked
   document.addEventListener('click', () => {
+    if (dotClickHandled) { dotClickHandled = false; return; }
     document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
   });
   const roleEl = document.getElementById('role-highlight');
