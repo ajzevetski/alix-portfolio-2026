@@ -472,77 +472,9 @@
     /* hide the big number when a real image is present */
     .card-visual:has(img.thumb) .card-visual-inner { display: none; }
     .card-visual:has(img.thumb) .card-badge { z-index: 2; }
-    /* drop zone styling shown when no image is present */
-    .thumb-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 2.5px dashed rgba(255,255,255,0.45);
-      border-radius: 4px;
-      margin: 16px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .thumb-placeholder:hover { background: rgba(255,255,255,0.1); }
-    .thumb-placeholder input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%; height: 100%;
-    }
-    .thumb-placeholder-icon { font-size: 1.8rem; opacity: 0.7; }
-    .thumb-placeholder-text {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      text-align: center;
-      line-height: 1.6;
-      pointer-events: none;
-    }
+    /* drop zone styling removed — images are hardcoded */
 
-    /* change thumbnail button — shown on hover when image exists */
-    .thumb-change-btn {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      z-index: 10;
-      background: white;
-      color: var(--ink);
-      border: 2px solid var(--ink);
-      border-radius: 8px;
-      padding: 8px 14px;
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 3px 3px 0 var(--ink);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s;
-      overflow: hidden;
-    }
-    .thumb-change-btn input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%; height: 100%;
-    }
-    .thumb-change-btn:hover {
-      background: var(--yellow);
-      transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--ink);
-    }
-    .card-visual:has(img.thumb):hover .thumb-change-btn { display: flex; }
+    /* change thumbnail button — removed (images are hardcoded) */
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
       transition: transform 0.55s ease;
@@ -979,16 +911,7 @@
   <div class="case-card">
     <div class="card-visual v-earth" id="visual-earth">
       <div class="card-badge">Sustainability App</div>
-      <div class="card-visual-inner"><span class="card-num">01</span></div>
-      <div class="thumb-placeholder" id="drop-earth">
-        <input type="file" accept="image/*" onchange="loadThumb(this, 'visual-earth', 'drop-earth')">
-        <div class="thumb-placeholder-icon">🖼</div>
-        <div class="thumb-placeholder-text">Drop thumbnail<br/>or click to upload</div>
-      </div>
-      <button class="thumb-change-btn">
-        🖼 Change photo
-        <input type="file" accept="image/*" onchange="loadThumb(this, 'visual-earth', 'drop-earth')">
-      </button>
+      <img src="Earth-hero-thumbnail.jpg" alt="Earth Hero case study thumbnail" class="thumb">
     </div>
     <div class="card-info">
       <span class="card-tag">Information Architecture · Retention</span>
@@ -1001,16 +924,7 @@
   <div class="case-card">
     <div class="card-visual v-laurel" id="visual-laurel">
       <div class="card-badge">Ed-Tech Platform</div>
-      <div class="card-visual-inner"><span class="card-num">02</span></div>
-      <div class="thumb-placeholder" id="drop-laurel">
-        <input type="file" accept="image/*" onchange="loadThumb(this, 'visual-laurel', 'drop-laurel')">
-        <div class="thumb-placeholder-icon">🖼</div>
-        <div class="thumb-placeholder-text">Drop thumbnail<br/>or click to upload</div>
-      </div>
-      <button class="thumb-change-btn">
-        🖼 Change photo
-        <input type="file" accept="image/*" onchange="loadThumb(this, 'visual-laurel', 'drop-laurel')">
-      </button>
+      <img src="LSS-thumbnail.jpg" alt="Laurel Springs case study thumbnail" class="thumb">
     </div>
     <div class="card-info">
       <span class="card-tag">Redesign · User Engagement</span>
@@ -1023,16 +937,7 @@
   <div class="case-card">
     <div class="card-visual v-spring" id="visual-spring">
       <div class="card-badge">National School Websites</div>
-      <div class="card-visual-inner"><span class="card-num">03</span></div>
-      <div class="thumb-placeholder" id="drop-spring">
-        <input type="file" accept="image/*" onchange="loadThumb(this, 'visual-spring', 'drop-spring')">
-        <div class="thumb-placeholder-icon">🖼</div>
-        <div class="thumb-placeholder-text">Drop thumbnail<br/>or click to upload</div>
-      </div>
-      <button class="thumb-change-btn">
-        🖼 Change photo
-        <input type="file" accept="image/*" onchange="loadThumb(this, 'visual-spring', 'drop-spring')">
-      </button>
+      <img src="SEG-thumbnail.jpg" alt="Spring Education Group case study thumbnail" class="thumb">
     </div>
     <div class="card-info">
       <span class="card-tag">Conversion · Research Driven</span>
@@ -1250,52 +1155,7 @@
   }, { threshold: 0.12 });
   cards.forEach(c => observer.observe(c));
 
-  // Thumbnail drop zones
-  function loadThumb(input, visualId, dropId) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      const visual = document.getElementById(visualId);
-      const drop   = document.getElementById(dropId);
-      // Remove old thumb if any
-      const old = visual.querySelector('img.thumb');
-      if (old) old.remove();
-      // Insert image
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      img.className = 'thumb';
-      visual.insertBefore(img, visual.firstChild);
-      // Hide placeholder
-      drop.style.display = 'none';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // Drag and drop support
-  document.querySelectorAll('.thumb-placeholder').forEach(zone => {
-    zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.background = 'rgba(255,255,255,0.18)'; });
-    zone.addEventListener('dragleave', () => { zone.style.background = ''; });
-    zone.addEventListener('drop', e => {
-      e.preventDefault();
-      zone.style.background = '';
-      const file = e.dataTransfer.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
-      const visualId = zone.id.replace('drop-', 'visual-');
-      const reader = new FileReader();
-      reader.onload = ev => {
-        const visual = document.getElementById(visualId);
-        const old = visual.querySelector('img.thumb');
-        if (old) old.remove();
-        const img = document.createElement('img');
-        img.src = ev.target.result;
-        img.className = 'thumb';
-        visual.insertBefore(img, visual.firstChild);
-        zone.style.display = 'none';
-      };
-      reader.readAsDataURL(file);
-    });
-  });
+  // Thumbnail upload removed — images are hardcoded
 
   // ── TWINKLING HERO CHECKERBOARD ──
   (function() {
