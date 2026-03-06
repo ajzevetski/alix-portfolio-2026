@@ -734,6 +734,13 @@
     .cs-dot.active .cs-dot-number { background: var(--ink); transform: scale(1.15); }
     .cs-dot.active .cs-dot-ring { animation: none; opacity: 0; }
 
+    /* green variant for after column */
+    .cs-dot--green .cs-dot-ring { background: var(--green); }
+    .cs-dot--green .cs-dot-number { background: var(--green); }
+    .cs-dot--green:hover .cs-dot-number,
+    .cs-dot--green.active .cs-dot-number { background: var(--teal); }
+    .cs-dot--green .cs-tooltip .cs-tooltip-num { color: var(--green); }
+
     /* ── TOOLTIP BUBBLES ── */
     .cs-tooltip {
       position: absolute;
@@ -937,6 +944,44 @@
       .cs-improvements { grid-template-columns: 1fr; }
       .cs-before-after { padding: 48px 24px; }
       .cs-ba-grid { grid-template-columns: 1fr; }
+
+      /* tooltips drop below dot on mobile */
+      .cs-tooltip,
+      .cs-dot[data-dot="3"] .cs-tooltip {
+        left: 50%;
+        right: auto;
+        top: calc(100% + 14px);
+        transform: translateX(-50%) scale(0.92);
+        width: 200px;
+      }
+      .cs-dot.active .cs-tooltip {
+        transform: translateX(-50%) scale(1);
+      }
+      /* arrow points up */
+      .cs-tooltip::before,
+      .cs-dot[data-dot="3"] .cs-tooltip::before {
+        left: 50%;
+        right: auto;
+        top: -10px;
+        bottom: auto;
+        transform: translateX(-50%);
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: var(--ink);
+        border-top-color: transparent;
+      }
+      .cs-tooltip::after,
+      .cs-dot[data-dot="3"] .cs-tooltip::after {
+        left: 50%;
+        right: auto;
+        top: -7px;
+        bottom: auto;
+        transform: translateX(-50%);
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: white;
+        border-top-color: transparent;
+      }
       .cs-text-section { padding: 48px 24px; }
       .cs-outcomes { grid-template-columns: 1fr; }
       .cs-outcomes-col { padding: 48px 24px; }
@@ -1170,11 +1215,41 @@
         </div>
       </div>
 
-      <!-- AFTER placeholder -->
+      <!-- AFTER -->
       <div class="cs-ba-col">
         <div class="cs-ba-label after"><span class="cs-ba-tag">After</span></div>
-        <div class="cs-ba-image" style="background:var(--green-lt)">
-          <div class="cs-ba-image-placeholder">After screenshot — coming soon</div>
+        <div class="cs-annotated-wrap">
+          <img src="Home_Page_After.jpg" alt="Earth Hero homepage after redesign" class="cs-annotated-img">
+
+          <!-- DOT 1: Points section -->
+          <button class="cs-dot cs-dot--green" style="top:20%;left:80%;" data-dot="4" aria-label="Annotation 4">
+            <span class="cs-dot-ring"></span>
+            <span class="cs-dot-number">1</span>
+            <div class="cs-tooltip">
+              <div class="cs-tooltip-num">Improvement 01</div>
+              <p class="cs-tooltip-text">More context into the points and how they were relevant to the task completion.</p>
+            </div>
+          </button>
+
+          <!-- DOT 2: Impact section -->
+          <button class="cs-dot cs-dot--green" style="top:42%;left:55%;" data-dot="5" aria-label="Annotation 5">
+            <span class="cs-dot-ring"></span>
+            <span class="cs-dot-number">2</span>
+            <div class="cs-tooltip">
+              <div class="cs-tooltip-num">Improvement 02</div>
+              <p class="cs-tooltip-text">Additional tasks to partake in instead of just reiterating the information already presented above.</p>
+            </div>
+          </button>
+
+          <!-- DOT 3: Action card -->
+          <button class="cs-dot cs-dot--green" style="top:62%;left:40%;" data-dot="6" aria-label="Annotation 6">
+            <span class="cs-dot-ring"></span>
+            <span class="cs-dot-number">3</span>
+            <div class="cs-tooltip">
+              <div class="cs-tooltip-num">Improvement 03</div>
+              <p class="cs-tooltip-text">More tasks to complete giving the user something to do and encouraging them to keep coming back.</p>
+            </div>
+          </button>
         </div>
       </div>
 
