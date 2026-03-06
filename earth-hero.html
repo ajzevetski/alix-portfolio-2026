@@ -674,123 +674,138 @@
     /* ── ANNOTATED IMAGE ── */
     .cs-annotated-wrap {
       position: relative;
-      display: inline-block;
+      display: block;
       width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
       border: 2px solid var(--ink);
-      border-radius: 12px;
-      overflow: hidden;
+      border-radius: 16px;
+      overflow: visible;
       box-shadow: 4px 4px 0 var(--ink);
     }
     .cs-annotated-img {
       width: 100%;
       display: block;
+      border-radius: 14px;
     }
     .cs-dot {
       position: absolute;
-      width: 32px; height: 32px;
+      width: 44px; height: 44px;
       transform: translate(-50%, -50%);
       background: none;
       border: none;
       cursor: pointer;
       padding: 0;
-      z-index: 10;
+      z-index: 20;
     }
     .cs-dot-ring {
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: var(--green);
-      opacity: 0.25;
+      background: var(--violet);
+      opacity: 0.3;
       animation: dotPulse 2s ease-out infinite;
     }
     .cs-dot[data-dot="1"] .cs-dot-ring { animation-delay: 0s; }
-    .cs-dot[data-dot="2"] .cs-dot-ring { animation-delay: 0.5s; }
-    .cs-dot[data-dot="3"] .cs-dot-ring { animation-delay: 1s; }
+    .cs-dot[data-dot="2"] .cs-dot-ring { animation-delay: 0.6s; }
+    .cs-dot[data-dot="3"] .cs-dot-ring { animation-delay: 1.2s; }
     @keyframes dotPulse {
       0%   { transform: scale(1);   opacity: 0.35; }
-      70%  { transform: scale(1.9); opacity: 0; }
-      100% { transform: scale(1.9); opacity: 0; }
+      70%  { transform: scale(2.2); opacity: 0; }
+      100% { transform: scale(2.2); opacity: 0; }
     }
     .cs-dot-number {
       position: absolute;
-      inset: 4px;
+      inset: 6px;
       border-radius: 50%;
-      background: var(--green);
-      border: 2px solid white;
+      background: var(--violet);
+      border: 2.5px solid white;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.3);
       transition: transform 0.2s ease, background 0.2s ease;
     }
-    .cs-dot:hover .cs-dot-number,
-    .cs-dot.active .cs-dot-number {
-      transform: scale(1.2);
-      background: var(--violet);
-    }
+    .cs-dot:hover .cs-dot-number { transform: scale(1.15); }
+    .cs-dot.active .cs-dot-number { background: var(--ink); transform: scale(1.15); }
     .cs-dot.active .cs-dot-ring { animation: none; opacity: 0; }
 
-    /* ── ANNOTATION CARDS ── */
-    .cs-annotation-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 32px;
-    }
-    .cs-annotation-card {
-      display: none;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 28px 32px;
-      background: var(--offwhite);
-      border: 2px solid var(--ink);
-      border-radius: 14px;
-      box-shadow: 4px 4px 0 var(--ink);
-      margin-top: 12px;
-      animation: cardSlideIn 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
-      position: relative;
-    }
-    .cs-annotation-card.visible { display: flex; }
-    @keyframes cardSlideIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .cs-annotation-num {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--green);
-      line-height: 1;
-      flex-shrink: 0;
-      opacity: 0.4;
-    }
-    .cs-annotation-text {
-      font-size: 0.92rem;
-      color: var(--ink);
-      line-height: 1.75;
-      flex: 1;
-      padding-top: 4px;
-    }
-    .cs-annotation-close {
+    /* ── TOOLTIP BUBBLES ── */
+    .cs-tooltip {
       position: absolute;
-      top: 12px; right: 12px;
-      background: none;
-      border: 1.5px solid var(--border);
-      border-radius: 50%;
-      width: 28px; height: 28px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, color 0.2s;
+      left: calc(100% + 16px);
+      top: 50%;
+      transform: translateY(-50%) scale(0.92);
+      width: 220px;
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 4px 4px 0 var(--ink);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+      z-index: 30;
     }
-    .cs-annotation-close:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    /* arrow pointing left */
+    .cs-tooltip::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-right-color: var(--ink);
+    }
+    .cs-tooltip::after {
+      content: '';
+      position: absolute;
+      left: -7px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-right-color: white;
+    }
+    .cs-dot.active .cs-tooltip {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) scale(1);
+    }
+    /* flip tooltip to left side for dot 3 if it goes off screen */
+    .cs-dot[data-dot="3"] .cs-tooltip {
+      left: auto;
+      right: calc(100% + 16px);
+    }
+    .cs-dot[data-dot="3"] .cs-tooltip::before {
+      left: auto;
+      right: -10px;
+      border-right-color: transparent;
+      border-left-color: var(--ink);
+    }
+    .cs-dot[data-dot="3"] .cs-tooltip::after {
+      left: auto;
+      right: -7px;
+      border-right-color: transparent;
+      border-left-color: white;
+    }
+    .cs-tooltip-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--violet);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .cs-tooltip-text {
+      font-size: 0.8rem;
+      color: var(--ink);
+      line-height: 1.65;
+    }
 
     /* ── STAKEHOLDER / HANDOFF ── */
     .cs-text-section {
@@ -1123,22 +1138,34 @@
         <div class="cs-annotated-wrap">
           <img src="Home_Page_Before.jpg" alt="Earth Hero homepage before redesign" class="cs-annotated-img" id="before-img">
 
-          <!-- DOT 1: Earth Hero Points bar ~22% from top -->
+          <!-- DOT 1: Earth Hero Points bar -->
           <button class="cs-dot" style="top:22%;left:72%;" data-dot="1" aria-label="Annotation 1">
             <span class="cs-dot-ring"></span>
             <span class="cs-dot-number">1</span>
+            <div class="cs-tooltip">
+              <div class="cs-tooltip-num">Finding 01</div>
+              <p class="cs-tooltip-text">Data visualization was confusing to the user and they weren't sure how they were relevant to the application.</p>
+            </div>
           </button>
 
-          <!-- DOT 2: Stats box ~42% from top -->
-          <button class="cs-dot" style="top:42%;left:50%;" data-dot="2" aria-label="Annotation 2">
+          <!-- DOT 2: Stats box -->
+          <button class="cs-dot" style="top:45%;left:55%;" data-dot="2" aria-label="Annotation 2">
             <span class="cs-dot-ring"></span>
             <span class="cs-dot-number">2</span>
+            <div class="cs-tooltip">
+              <div class="cs-tooltip-num">Finding 02</div>
+              <p class="cs-tooltip-text">Actions completed seemed redundant to the information above, and it wasn't clickable with further actions to take place.</p>
+            </div>
           </button>
 
-          <!-- DOT 3: Actions in Progress ~58% from top -->
-          <button class="cs-dot" style="top:60%;left:30%;" data-dot="3" aria-label="Annotation 3">
+          <!-- DOT 3: Actions in Progress -->
+          <button class="cs-dot" style="top:63%;left:40%;" data-dot="3" aria-label="Annotation 3">
             <span class="cs-dot-ring"></span>
             <span class="cs-dot-number">3</span>
+            <div class="cs-tooltip">
+              <div class="cs-tooltip-num">Finding 03</div>
+              <p class="cs-tooltip-text">Actions in progress didn't make the user want to take more actions but instead confused them how an action could be 'in progress'.</p>
+            </div>
           </button>
         </div>
       </div>
@@ -1151,25 +1178,6 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- ANNOTATION CALLOUTS -->
-    <div class="cs-annotation-cards">
-      <div class="cs-annotation-card" id="annotation-1">
-        <div class="cs-annotation-num">01</div>
-        <p class="cs-annotation-text">Data visualization was confusing to the user and they weren't sure how they were relevant to the application.</p>
-        <button class="cs-annotation-close" data-dot="1">✕</button>
-      </div>
-      <div class="cs-annotation-card" id="annotation-2">
-        <div class="cs-annotation-num">02</div>
-        <p class="cs-annotation-text">Actions completed seemed redundant to the information above, and it wasn't clickable with further actions to take place.</p>
-        <button class="cs-annotation-close" data-dot="2">✕</button>
-      </div>
-      <div class="cs-annotation-card" id="annotation-3">
-        <div class="cs-annotation-num">03</div>
-        <p class="cs-annotation-text">Actions in progress didn't make the user want to take more actions but instead confused them how an action could be 'in progress'.</p>
-        <button class="cs-annotation-close" data-dot="3">✕</button>
-      </div>
     </div>
 
   </section>
@@ -1265,30 +1273,16 @@
 
   // Annotation dots
   document.querySelectorAll('.cs-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      const num = dot.dataset.dot;
-      const card = document.getElementById(`annotation-${num}`);
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isActive = dot.classList.contains('active');
-
-      // close all
       document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
-      document.querySelectorAll('.cs-annotation-card').forEach(c => c.classList.remove('visible'));
-
-      // open this one if it wasn't already open
-      if (!isActive) {
-        dot.classList.add('active');
-        card.classList.add('visible');
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
+      if (!isActive) dot.classList.add('active');
     });
   });
-
-  document.querySelectorAll('.cs-annotation-close').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const num = btn.dataset.dot;
-      document.getElementById(`annotation-${num}`).classList.remove('visible');
-      document.querySelector(`.cs-dot[data-dot="${num}"]`).classList.remove('active');
-    });
+  // Close on outside click
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
   });
   const roleEl = document.getElementById('role-highlight');
   const roleObs = new IntersectionObserver(entries => {
