@@ -43,6 +43,12 @@
       overflow-x: hidden;
     }
 
+    /* FIX 1+2: Hide custom heart cursor on touch/mobile devices */
+    @media (hover: none) and (pointer: coarse) {
+      body { cursor: auto; }
+      #cursor { display: none !important; }
+    }
+
     body::before {
       content: '';
       position: fixed;
@@ -73,11 +79,11 @@
     #cursor.big { width: 40px; height: 37px; }
     #cursor.big svg { transform: scale(1.1); }
 
-    /* NAV */
+    /* NAV — FIX 3: raised z-index above noise layer so it never bleeds on scroll */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 10001;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -647,13 +653,7 @@
       position: relative;
       overflow: hidden;
     }
-    .contact-right::before {
-      content: '♥';
-      position: absolute; top: -30px; right: -10px;
-      font-size: 22rem;
-      color: rgba(255,255,255,0.025);
-      pointer-events: none;
-    }
+    /* FIX 4: giant decorative heart pseudo-element removed */
     .contact-links { display: flex; flex-direction: column; gap: 14px; }
     .contact-link-row {
       display: flex;
@@ -748,12 +748,13 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+    /* FIX 3: drawer z-index above nav so it fully covers screen with no bleed */
     .nav-drawer {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--white);
-      z-index: 300;
+      z-index: 10002;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -1595,17 +1596,11 @@
   window.addEventListener('resize', resizeCanvas);
 
   /* ── CORGI DRAWING ── */
-  // Draws a corgi at origin (0,0) = bottom-left of dog footprint
-  // isBenji: orange with curled fluffy tail
-  // !isBenji: black/brown Butters, tiny nub tail
   function drawCorgiShape(c, isBenji) {
-    const W = 80, H = 58; // overall bounding box
+    const W = 80, H = 58;
 
     if (isBenji) {
       // ── BENJI (orange) ──
-
-      // FLUFFY CURLED TAIL (behind body, draw first)
-      // big fluffy poof curled upward to the right
       c.fillStyle = '#F0A020';
       c.beginPath(); c.arc(W - 4, -H + 22, 14, 0, Math.PI * 2); c.fill();
       c.fillStyle = '#F8C860';
@@ -1615,96 +1610,67 @@
       c.fillStyle = '#FFF0D0';
       c.beginPath(); c.arc(W + 4, -H + 6, 5, 0, Math.PI * 2); c.fill();
 
-      // BODY — long low sausage
       c.fillStyle = '#D98A18';
       c.beginPath(); c.roundRect(6, -H + 20, W - 14, 22, 10); c.fill();
-      // top saddle slightly darker
       c.fillStyle = '#C07010';
       c.beginPath(); c.roundRect(14, -H + 22, W - 32, 10, 6); c.fill();
-      // BELLY cream
       c.fillStyle = '#F5D08A';
       c.beginPath(); c.ellipse(W/2 - 6, -H + 38, 24, 8, 0, 0, Math.PI * 2); c.fill();
 
-      // LEGS — 4 stubby legs
       c.fillStyle = '#D98A18';
       [[10, -H+40], [22, -H+40], [42, -H+40], [54, -H+40]].forEach(([lx,ly]) => {
         c.beginPath(); c.roundRect(lx, ly, 10, 17, 4); c.fill();
       });
-      // PAWS
       c.fillStyle = '#B06820';
       [[10, -H+55], [22, -H+55], [42, -H+55], [54, -H+55]].forEach(([lx,ly]) => {
         c.beginPath(); c.ellipse(lx+5, ly+2, 7, 4, 0, 0, Math.PI*2); c.fill();
       });
 
-      // HEAD
       c.fillStyle = '#D98A18';
       c.beginPath(); c.ellipse(14, -H + 16, 18, 16, 0, 0, Math.PI * 2); c.fill();
-      // SNOUT
       c.fillStyle = '#F5D08A';
       c.beginPath(); c.ellipse(4, -H + 18, 11, 9, -0.1, 0, Math.PI * 2); c.fill();
-      // nose
       c.fillStyle = '#1A0A00';
       c.beginPath(); c.ellipse(0, -H + 17, 5, 3.5, 0, 0, Math.PI * 2); c.fill();
-      // nostrils
       c.fillStyle = '#2A1400';
       c.beginPath(); c.ellipse(-2, -H+18, 1.5, 1, 0, 0, Math.PI*2); c.fill();
       c.beginPath(); c.ellipse(2, -H+18, 1.5, 1, 0, 0, Math.PI*2); c.fill();
-      // EYE
       c.fillStyle = '#1A0A00';
       c.beginPath(); c.arc(14, -H + 12, 4, 0, Math.PI * 2); c.fill();
       c.fillStyle = 'white';
       c.beginPath(); c.arc(15, -H + 11, 1.5, 0, Math.PI * 2); c.fill();
-      // tan eyebrow dot
       c.fillStyle = '#F5D08A';
       c.beginPath(); c.ellipse(14, -H + 7, 3.5, 2, 0, 0, Math.PI * 2); c.fill();
 
-      // BIG UPRIGHT TRIANGULAR EARS — poking up above the head
-      c.fillStyle = '#B06820';
-      // left ear
-      c.beginPath();
-      c.moveTo(4,  -H + 6);
-      c.lineTo(8,  -H - 14);
-      c.lineTo(18, -H + 4);
-      c.closePath(); c.fill();
-      // inner ear
-      c.fillStyle = '#F5A0A0';
-      c.beginPath();
-      c.moveTo(7,  -H + 4);
-      c.lineTo(10, -H - 8);
-      c.lineTo(16, -H + 3);
-      c.closePath(); c.fill();
-      // right ear
       c.fillStyle = '#B06820';
       c.beginPath();
-      c.moveTo(16, -H + 4);
-      c.lineTo(20, -H - 16);
-      c.lineTo(28, -H + 4);
+      c.moveTo(4,  -H + 6); c.lineTo(8,  -H - 14); c.lineTo(18, -H + 4);
       c.closePath(); c.fill();
       c.fillStyle = '#F5A0A0';
       c.beginPath();
-      c.moveTo(19, -H + 3);
-      c.lineTo(22, -H - 9);
-      c.lineTo(26, -H + 3);
+      c.moveTo(7,  -H + 4); c.lineTo(10, -H - 8); c.lineTo(16, -H + 3);
+      c.closePath(); c.fill();
+      c.fillStyle = '#B06820';
+      c.beginPath();
+      c.moveTo(16, -H + 4); c.lineTo(20, -H - 16); c.lineTo(28, -H + 4);
+      c.closePath(); c.fill();
+      c.fillStyle = '#F5A0A0';
+      c.beginPath();
+      c.moveTo(19, -H + 3); c.lineTo(22, -H - 9); c.lineTo(26, -H + 3);
       c.closePath(); c.fill();
 
     } else {
       // ── BUTTERS (black/brown) ──
-
-      // tiny nub tail
       c.fillStyle = '#3A2010';
       c.beginPath(); c.ellipse(W - 10, -H + 26, 6, 4, 0.3, 0, Math.PI * 2); c.fill();
 
-      // BODY
       c.fillStyle = '#2A1808';
       c.beginPath(); c.roundRect(6, -H + 20, W - 14, 22, 10); c.fill();
-      // dark saddle
       c.fillStyle = '#180E04';
       c.beginPath(); c.roundRect(14, -H + 21, W - 32, 12, 6); c.fill();
-      // tan belly
       c.fillStyle = '#8B5530';
       c.beginPath(); c.ellipse(W/2 - 6, -H + 38, 24, 8, 0, 0, Math.PI * 2); c.fill();
 
-      // LEGS
       c.fillStyle = '#8B5530';
       [[10, -H+40], [22, -H+40], [42, -H+40], [54, -H+40]].forEach(([lx,ly]) => {
         c.beginPath(); c.roundRect(lx, ly, 10, 17, 4); c.fill();
@@ -1714,10 +1680,8 @@
         c.beginPath(); c.ellipse(lx+5, ly+2, 7, 4, 0, 0, Math.PI*2); c.fill();
       });
 
-      // HEAD
       c.fillStyle = '#2A1808';
       c.beginPath(); c.ellipse(14, -H + 16, 18, 16, 0, 0, Math.PI * 2); c.fill();
-      // tan snout
       c.fillStyle = '#8B5530';
       c.beginPath(); c.ellipse(4, -H + 18, 11, 9, -0.1, 0, Math.PI * 2); c.fill();
       c.fillStyle = '#1A0A00';
@@ -1725,39 +1689,28 @@
       c.fillStyle = '#2A1400';
       c.beginPath(); c.ellipse(-2, -H+18, 1.5, 1, 0, 0, Math.PI*2); c.fill();
       c.beginPath(); c.ellipse(2, -H+18, 1.5, 1, 0, 0, Math.PI*2); c.fill();
-      // EYE
       c.fillStyle = '#1A0A00';
       c.beginPath(); c.arc(14, -H + 12, 4, 0, Math.PI * 2); c.fill();
       c.fillStyle = 'white';
       c.beginPath(); c.arc(15, -H + 11, 1.5, 0, Math.PI * 2); c.fill();
-      // tan eyebrow dot
       c.fillStyle = '#8B5530';
       c.beginPath(); c.ellipse(14, -H + 7, 3.5, 2, 0, 0, Math.PI * 2); c.fill();
 
-      // BIG UPRIGHT EARS
       c.fillStyle = '#3D2010';
       c.beginPath();
-      c.moveTo(4,  -H + 6);
-      c.lineTo(8,  -H - 14);
-      c.lineTo(18, -H + 4);
+      c.moveTo(4,  -H + 6); c.lineTo(8,  -H - 14); c.lineTo(18, -H + 4);
       c.closePath(); c.fill();
       c.fillStyle = '#8B5530';
       c.beginPath();
-      c.moveTo(7,  -H + 4);
-      c.lineTo(10, -H - 8);
-      c.lineTo(16, -H + 3);
+      c.moveTo(7,  -H + 4); c.lineTo(10, -H - 8); c.lineTo(16, -H + 3);
       c.closePath(); c.fill();
       c.fillStyle = '#3D2010';
       c.beginPath();
-      c.moveTo(16, -H + 4);
-      c.lineTo(20, -H - 16);
-      c.lineTo(28, -H + 4);
+      c.moveTo(16, -H + 4); c.lineTo(20, -H - 16); c.lineTo(28, -H + 4);
       c.closePath(); c.fill();
       c.fillStyle = '#8B5530';
       c.beginPath();
-      c.moveTo(19, -H + 3);
-      c.lineTo(22, -H - 9);
-      c.lineTo(26, -H + 3);
+      c.moveTo(19, -H + 3); c.lineTo(22, -H - 9); c.lineTo(26, -H + 3);
       c.closePath(); c.fill();
     }
   }
@@ -1824,7 +1777,7 @@
   canvas.addEventListener('touchend', () => { touchStartX = null; });
 
   /* ── TREATS ── */
-  const TREAT_TYPES = ['🦴','🥕','🍓','🎾','🦴','🥕','🎾']; // weighted toward classics
+  const TREAT_TYPES = ['🦴','🥕','🍓','🎾','🦴','🥕','🎾'];
   function spawnTreat() {
     treats.push({
       x:        TREAT_R + Math.random() * (canvas.width - TREAT_R * 2),
@@ -1858,7 +1811,6 @@
     const sky = ctx.createLinearGradient(0, 0, 0, H - GROUND_H);
     sky.addColorStop(0, '#a8cef0'); sky.addColorStop(1, '#d8eeff');
     ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H - GROUND_H);
-    // clouds
     [[W*.12,38,.7],[W*.48,22,1],[W*.78,45,.65]].forEach(([x,y,s]) => {
       ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
       ctx.fillStyle='rgba(255,255,255,0.88)';
@@ -1867,9 +1819,7 @@
       ctx.arc(-24,-4,16,0,Math.PI*2); ctx.arc(14,8,20,0,Math.PI*2);
       ctx.fill(); ctx.restore();
     });
-    // grass
     ctx.fillStyle = '#5ab03c'; ctx.fillRect(0, H-GROUND_H, W, 20);
-    // ground
     ctx.fillStyle = '#e4d09a'; ctx.fillRect(0, H-GROUND_H+20, W, GROUND_H-20);
     ctx.fillStyle = '#cdb87a'; ctx.fillRect(0, H-GROUND_H+22, W, 4);
   }
@@ -1914,7 +1864,6 @@
     ctx.clearRect(0, 0, W, H);
     drawBackground();
 
-    // timer
     const now = Date.now();
     if (now - lastTick >= 1000) {
       timeLeft--;
@@ -1923,27 +1872,21 @@
       if (timeLeft <= 0) { gameOver(); return; }
     }
 
-    // move dog
     const ACCEL=0.85, FRICTION=0.80, MAX_SPD=10;
     if (keys['ArrowLeft']  || keys['a']) dogSpeed -= ACCEL;
     if (keys['ArrowRight'] || keys['d']) dogSpeed += ACCEL;
     dogSpeed = Math.max(-MAX_SPD, Math.min(MAX_SPD, dogSpeed * FRICTION));
     dogX = Math.max(0, Math.min(W - DOG_W, dogX + dogSpeed));
 
-    // draw chosen corgi
     const isBenji = chosenDog === 'benji';
     ctx.save();
     ctx.translate(dogX, groundY + DOG_H - 2);
     drawCorgiShape(ctx, isBenji);
     ctx.restore();
 
-    // name label removed
-
-    // spawn
     spawnTimer++;
     if (spawnTimer >= Math.max(30, 58 - level*4)) { spawnTreat(); spawnTimer = 0; }
 
-    // update treats
     const catchL = dogX - 8;
     const catchR = dogX + DOG_W + 4;
     const catchY = groundY + 8;
