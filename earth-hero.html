@@ -50,7 +50,6 @@
       opacity: 0.5;
     }
 
-    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -108,7 +107,6 @@
       box-shadow: 5px 5px 0 var(--ink);
     }
 
-    /* MOBILE NAV */
     .nav-hamburger {
       display: none;
       flex-direction: column;
@@ -175,10 +173,8 @@
     .nav-drawer a:first-of-type { border-top: 2px solid var(--ink); }
     .nav-drawer a:hover { background: var(--punch); color: white; }
 
-    /* PAGE WRAPPER */
     .page { margin-top: 69px; }
 
-    /* ── HERO ── */
     .cs-hero {
       background: var(--green-lt);
       border-bottom: 2px solid var(--ink);
@@ -263,7 +259,6 @@
       align-items: center;
     }
 
-    /* ── PHONE MOCKUP ── */
     .phone-mockup {
       position: relative;
       width: 240px;
@@ -281,7 +276,6 @@
       z-index: 2;
       pointer-events: none;
     }
-    /* notch */
     .phone-shell::before {
       content: '';
       position: absolute;
@@ -293,7 +287,6 @@
       border-radius: 0 0 10px 10px;
       z-index: 10;
     }
-    /* home indicator */
     .phone-shell::after {
       content: '';
       position: absolute;
@@ -310,103 +303,28 @@
       inset: 3px;
       border-radius: 34px;
       overflow: hidden;
-      background: #f5f5f5;
+      background: #f0fdf4;
       z-index: 1;
-    }
-    /* each screen slide */
-    .phone-slide {
-      position: absolute;
-      inset: 0;
-      bottom: 56px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      scrollbar-width: none;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      background: white;
-    }
-    .phone-slide::-webkit-scrollbar { display: none; }
-    .phone-slide.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .phone-slide img {
-      width: 100%;
-      display: block;
-    }
-    .phone-slide-inner { width: 100%; }
-    /* sticky bottom nav */
-    .phone-nav {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 56px;
-      background: white;
-      border-top: 1px solid #e5e5e5;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      z-index: 10;
-    }
-    .phone-nav-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 6px 8px;
-      border-radius: 8px;
-      transition: background 0.15s;
-      flex: 1;
-    }
-    .phone-nav-btn:hover { background: rgba(0,0,0,0.04); }
-    .phone-nav-icon {
-      width: 22px; height: 22px;
-      display: flex;
-      align-items: center;
       justify-content: center;
+      gap: 12px;
+      padding: 20px;
     }
-    .phone-nav-icon svg { width: 20px; height: 20px; }
-    .phone-nav-label {
-      font-size: 9px;
-      font-family: var(--sans);
-      color: #888;
-      font-weight: 500;
-      transition: color 0.15s;
+    .phone-screen-placeholder {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #059669;
+      opacity: 0.6;
     }
-    .phone-nav-btn.active .phone-nav-label { color: #1A6B3C; font-weight: 700; }
-    /* home icon uses fill, others use stroke — handle both */
-    #nav-home svg path, #nav-home svg rect { fill: #ccc; }
-    #nav-home.active svg path, #nav-home.active svg rect { fill: #1A6B3C; }
-    #nav-actions svg path { stroke: #888; }
-    #nav-actions.active svg path { stroke: #1A6B3C; }
-    /* actions tabs */
-    .phone-tabs {
-      position: sticky;
-      top: 0;
-      height: 38px;
-      background: white;
-      border-bottom: 1px solid #e5e5e5;
-      display: flex;
-      z-index: 9;
+    .phone-screen-icon {
+      font-size: 2.5rem;
     }
-    .phone-tab {
-      flex: 1;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 600;
-      color: #888;
-      border-bottom: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .phone-tab.active { color: #1A6B3C; border-bottom-color: #1A6B3C; }
 
-    /* ── SECTION BASE ── */
     .cs-section {
       padding: 80px 64px;
       border-bottom: 2px solid var(--ink);
@@ -442,7 +360,6 @@
     .cs-body strong { color: var(--ink); font-weight: 600; }
     .cs-body + .cs-body { margin-top: 16px; }
 
-    /* ── OVERVIEW ── */
     .cs-overview {
       display: grid;
       grid-template-columns: 1fr 2fr;
@@ -452,7 +369,6 @@
       background: var(--offwhite);
     }
     .cs-overview-meta { display: flex; flex-direction: column; gap: 28px; }
-    .cs-overview-meta-block {}
     .cs-overview-meta-label {
       font-family: var(--mono);
       font-size: 0.62rem;
@@ -497,7 +413,6 @@
       line-height: 1.9;
     }
     .cs-overview-meta-list strong { color: var(--ink); }
-    .cs-overview-content {}
     .cs-overview-heading {
       font-family: 'Archivo Black', sans-serif;
       font-size: clamp(1.6rem, 2.5vw, 2.2rem);
@@ -507,7 +422,6 @@
       margin-bottom: 20px;
     }
 
-    /* ── PROBLEM ── */
     .cs-problem {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -558,7 +472,6 @@
     }
     .cs-bullet-list--purple li::before { color: var(--punch); }
 
-    /* ── GOALS ── */
     .cs-goals {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -584,20 +497,7 @@
       align-items: center;
       gap: 10px;
     }
-    .cs-goals-heading .goal-icon {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      border: 2px solid var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-    .cs-goals-col:first-child .goal-icon { background: var(--green); }
-    .cs-goals-col:last-child .goal-icon { background: var(--punch); }
 
-    /* ── RESEARCH ── */
     .cs-research {
       padding: 80px 64px;
       border-bottom: 2px solid var(--ink);
@@ -632,7 +532,6 @@
       margin-bottom: 14px;
     }
 
-    /* ── LIGHTBOX GRID ── */
     .cs-lightbox-section {
       padding: 56px 64px;
       border-bottom: 2px solid var(--ink);
@@ -663,13 +562,21 @@
       transform: translate(-2px, -2px);
       box-shadow: 5px 5px 0 var(--ink);
     }
-    .cs-lb-thumb img {
+    .cs-lb-thumb-placeholder {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      display: block;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--offwhite);
+      border-radius: 4px;
+      text-align: center;
+      padding: 8px;
     }
     .cs-lb-overlay {
       position: absolute;
@@ -695,109 +602,6 @@
     }
     .cs-lb-thumb:hover .cs-lb-overlay { opacity: 1; }
 
-    /* ── LIGHTBOX MODAL ── */
-    .cs-lb-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(26,17,24,0.88);
-      z-index: 1000;
-      backdrop-filter: blur(6px);
-    }
-    .cs-lb-backdrop.open { display: block; }
-    .cs-lb-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 1001;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 120px;
-    }
-    .cs-lb-modal.open { display: flex; }
-    .cs-lb-content {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: stretch;
-      max-width: 55vw;
-      max-height: 80vh;
-    }
-    .cs-lb-content img {
-      display: block;
-      max-width: 55vw;
-      max-height: 58vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 12px 12px 0 0;
-      border: 2px solid var(--ink);
-      border-bottom: none;
-      box-shadow: none;
-      background: white;
-    }
-    .cs-lb-caption-wrap {
-      background: white;
-      border: 2px solid var(--ink);
-      border-radius: 0 0 12px 12px;
-      padding: 14px 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-    .cs-lb-counter {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      flex-shrink: 0;
-      padding-top: 2px;
-      white-space: nowrap;
-    }
-    .cs-lb-caption {
-      font-size: 0.82rem;
-      color: var(--ink);
-      line-height: 1.6;
-      flex: 1;
-    }
-    .cs-lb-close {
-      position: fixed;
-      top: 20px; right: 24px;
-      z-index: 1002;
-      background: white;
-      border: 2px solid var(--ink);
-      border-radius: 50%;
-      width: 40px; height: 40px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      box-shadow: 3px 3px 0 var(--ink);
-    }
-    .cs-lb-close:hover { background: var(--punch); color: white; }
-    .cs-lb-nav {
-      position: fixed;
-      top: 50%; transform: translateY(-50%);
-      z-index: 1002;
-      background: white;
-      border: 2px solid var(--ink);
-      border-radius: 50%;
-      width: 44px; height: 44px;
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 0 var(--ink);
-      transition: background 0.2s, transform 0.2s;
-    }
-    .cs-lb-nav:hover { background: var(--yellow); transform: translateY(-50%) scale(1.05); }
-    .cs-lb-prev { left: 20px; }
-    .cs-lb-next { right: 20px; }
-
-    /* ── USABILITY ── */
     .cs-usability {
       padding: 64px;
       border-bottom: 2px solid var(--ink);
@@ -813,7 +617,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-top: 28px;
-      max-width: 100%;
     }
     .cs-improvement-chip {
       display: flex;
@@ -842,7 +645,6 @@
       margin-top: 1px;
     }
 
-    /* ── BEFORE / AFTER ── */
     .cs-before-after {
       padding: 56px 64px;
       border-bottom: 2px solid var(--ink);
@@ -855,7 +657,6 @@
       align-items: start;
       margin-top: 32px;
     }
-    .cs-ba-intro {}
     .cs-ba-intro-title {
       font-family: 'Archivo Black', sans-serif;
       font-size: clamp(1.4rem, 2vw, 1.9rem);
@@ -900,7 +701,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-    .cs-ba-col {}
     .cs-ba-label {
       font-family: 'Archivo Black', sans-serif;
       font-size: 1rem;
@@ -932,7 +732,6 @@
       box-shadow: 3px 3px 0 var(--ink);
       background: var(--blush);
     }
-    .cs-ba-image img { width: 100%; display: block; }
     .cs-ba-image-placeholder {
       aspect-ratio: 3/4;
       display: flex;
@@ -943,9 +742,10 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
+      text-align: center;
+      padding: 16px;
     }
 
-    /* ── ANNOTATED IMAGE ── */
     .cs-annotated-wrap {
       position: relative;
       display: block;
@@ -1008,14 +808,11 @@
     .cs-dot.active .cs-dot-number { background: var(--ink); transform: scale(1.15); }
     .cs-dot.active .cs-dot-ring { animation: none; opacity: 0; }
 
-    /* green variant for after column */
     .cs-dot--green .cs-dot-ring { background: var(--green); }
     .cs-dot--green .cs-dot-number { background: var(--green); }
     .cs-dot--green:hover .cs-dot-number,
     .cs-dot--green.active .cs-dot-number { background: var(--green); }
-    .cs-dot--green .cs-tooltip .cs-tooltip-num { color: var(--green); }
 
-    /* ── TOOLTIP BUBBLES ── */
     .cs-tooltip {
       position: absolute;
       top: 50%;
@@ -1033,7 +830,6 @@
       z-index: 100;
       white-space: normal;
     }
-    /* arrow */
     .cs-tooltip::before {
       content: '';
       position: absolute;
@@ -1057,7 +853,6 @@
       pointer-events: auto;
       transform: translateY(-50%) scale(1);
     }
-    /* flip left for dots near right edge (dots 1, 4) */
     .cs-dot[data-dot="1"] .cs-tooltip,
     .cs-dot[data-dot="4"] .cs-tooltip {
       left: auto;
@@ -1075,7 +870,6 @@
       border-right-color: transparent;
       border-left-color: white;
     }
-    .cs-dot.active .cs-tooltip { opacity: 1; pointer-events: auto; transform: translateY(-50%) scale(1); }
     .cs-tooltip-num {
       font-family: var(--mono);
       font-size: 0.6rem;
@@ -1092,14 +886,12 @@
       line-height: 1.6;
     }
 
-    /* ── STAKEHOLDER / HANDOFF ── */
     .cs-text-section {
       padding: 80px 64px;
       border-bottom: 2px solid var(--ink);
     }
     .cs-text-section.alt { background: var(--offwhite); }
 
-    /* ── OUTCOMES ── */
     .cs-outcomes {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1116,7 +908,6 @@
       background: var(--offwhite);
     }
 
-    /* ── NEXT PROJECT ── */
     .cs-next {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1168,11 +959,9 @@
       font-size: 0.78rem;
       letter-spacing: 0.08em;
       color: var(--muted);
-      transition: gap 0.2s;
     }
     .cs-next-project .cs-next-arrow { color: rgba(255,255,255,0.7); }
 
-    /* FOOTER */
     footer {
       background: var(--ink);
       border-top: 2px solid rgba(255,255,255,0.07);
@@ -1194,7 +983,6 @@
       color: rgba(255,255,255,0.2);
     }
 
-    /* SCROLL REVEAL */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
@@ -1203,94 +991,43 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE */
     @media (max-width: 834px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
-
-      /* HERO */
       .cs-hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; min-height: auto; }
       .cs-hero-image { max-width: 280px; margin: 0 auto; }
       .cs-title { font-size: clamp(2.8rem, 13vw, 4.5rem); }
-      .cs-subtitle { font-size: 0.9rem; }
-
-      /* OVERVIEW */
       .cs-overview { grid-template-columns: 1fr; gap: 28px; padding: 40px 20px; }
-
-      /* PROBLEM */
       .cs-problem { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; }
-      .cs-problem-image { order: -1; }
-
-      /* GOALS */
       .cs-goals { grid-template-columns: 1fr; }
       .cs-goals-col { padding: 32px 20px; }
       .cs-goals-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
-
-      /* SECTIONS */
       .cs-section { padding: 40px 20px; }
       .cs-research { padding: 40px 20px; }
       .cs-research-grid { grid-template-columns: 1fr; gap: 16px; }
-      .cs-research-block { padding: 24px; }
-      .cs-section-title { font-size: clamp(1.5rem, 6vw, 2rem); }
-
-      /* USABILITY */
       .cs-usability { padding: 48px 20px; }
-      .cs-improvements { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
-      .cs-improvement-chip { padding: 14px 16px; font-size: 0.8rem; }
-
-      /* BEFORE / AFTER */
+      .cs-improvements { grid-template-columns: 1fr; }
       .cs-before-after { padding: 40px 20px; }
       .cs-ba-layout { grid-template-columns: 1fr; gap: 24px; }
       .cs-ba-images { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .cs-annotated-wrap { max-width: 100%; overflow: visible; }
-
-      /* DOTS — smaller on mobile */
-      .cs-dot { width: 32px; height: 32px; }
-      .cs-dot-number { inset: 4px; font-size: 0.6rem; }
-
-      /* LIGHTBOX */
       .cs-lightbox-section { padding: 40px 20px; }
       .cs-lightbox-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .cs-lb-nav { display: none; }
-      .cs-lb-modal { padding: 20px; }
-      .cs-lb-content { max-width: 92vw; max-height: 88vh; }
-      .cs-lb-content img { max-width: 92vw; max-height: 60vh; border-radius: 8px 8px 0 0; }
-      .cs-lb-caption-wrap { flex-direction: column; gap: 4px; padding: 12px 14px; }
-      .cs-lb-close { top: 10px; right: 12px; width: 36px; height: 36px; font-size: 0.8rem; }
-
-      /* TEXT SECTIONS */
       .cs-text-section { padding: 40px 20px; }
       .cs-outcomes { grid-template-columns: 1fr; }
       .cs-outcomes-col { padding: 40px 20px; }
       .cs-outcomes-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
-
-      /* NEXT */
       .cs-next { grid-template-columns: 1fr; }
       .cs-next-back { border-right: none; border-bottom: 2px solid var(--ink); padding: 36px 20px; }
       .cs-next-project { padding: 36px 20px; }
-
       footer { flex-direction: column; gap: 8px; padding: 18px 20px; text-align: center; }
-    }
-
-    /* Extra small screens */
-    @media (max-width: 480px) {
-      .cs-hero { padding: 32px 16px; }
-      .cs-title { font-size: clamp(2.4rem, 15vw, 3.5rem); }
-      .cs-annotated-wrap { max-width: 100%; }
-      .cs-ba-images { gap: 8px; }
-      .cs-dot { width: 28px; height: 28px; }
-      .cs-dot-number { font-size: 0.55rem; }
-      .cs-section-title { font-size: 1.4rem; }
-      .cs-lightbox-grid { gap: 8px; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="index.html" aria-label="Alix Zevetski">
+  <a class="nav-logo" href="#" aria-label="Alix Zevetski">
     <svg width="220" height="36" viewBox="0 0 220 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <text x="2" y="28" font-family="'Archivo Black',sans-serif" font-style="italic" font-size="29" fill="#1A1118" letter-spacing="-1.5">Alix with an i</text>
       <rect x="2"  y="31" width="24" height="3" rx="1.5" fill="#7B7FC4"/>
@@ -1298,10 +1035,10 @@
     </svg>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#work">Work</a></li>
-    <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="index.html#contact" class="nav-contact-btn">Contact</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Work</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1310,18 +1047,17 @@
 
 <div class="nav-drawer" id="nav-drawer">
   <button class="nav-drawer-close" onclick="closeNav()" aria-label="Close menu">✕</button>
-  <a href="index.html#about" onclick="closeNav()">About</a>
-  <a href="index.html#work"  onclick="closeNav()">Work</a>
-  <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="index.html#contact" onclick="closeNav()">Contact</a>
+  <a href="#" onclick="closeNav()">About</a>
+  <a href="#" onclick="closeNav()">Work</a>
+  <a href="#" onclick="closeNav()">Resume</a>
+  <a href="#" onclick="closeNav()">Contact</a>
 </div>
 
 <div class="page">
 
-  <!-- ── HERO ── -->
   <section class="cs-hero">
     <div class="cs-hero-text">
-      <a href="index.html#work" class="cs-back">← Back to Work</a>
+      <a href="#" class="cs-back">← Back to Work</a>
       <div class="cs-eyebrow">
         <span class="cs-pill">Case Study 01</span>
         ✦ Sustainability App
@@ -1333,24 +1069,23 @@
       <div class="phone-mockup">
         <div class="phone-shell"></div>
         <div class="phone-screen">
-
+          <img src="home-page.jpg" alt="Earth Hero app home screen" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── OVERVIEW ── -->
   <section class="cs-overview reveal">
     <div class="cs-overview-meta">
-      <div class="cs-overview-meta-block">
+      <div>
         <div class="cs-overview-meta-label">My Role</div>
         <div class="cs-overview-meta-value"><span class="cs-role-highlight" id="role-highlight">Lead Product Designer<svg viewBox="0 0 200 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 6 C20 3, 50 8, 80 5 C110 2, 140 8, 170 5 C185 3.5, 194 6, 199 5"/></svg></span></div>
       </div>
-      <div class="cs-overview-meta-block">
+      <div>
         <div class="cs-overview-meta-label">Time</div>
         <div class="cs-overview-meta-value">8 Weeks</div>
       </div>
-      <div class="cs-overview-meta-block">
+      <div>
         <div class="cs-overview-meta-label">Team Structure</div>
         <ul class="cs-overview-meta-list">
           <li><strong>6 UX Designers</strong></li>
@@ -1367,7 +1102,6 @@
     </div>
   </section>
 
-  <!-- ── PROBLEM ── -->
   <section class="cs-problem reveal">
     <div>
       <div class="cs-section-label">Problem & Context</div>
@@ -1379,12 +1113,11 @@
         <li>How their actions contributed to meaningful climate impact</li>
       </ul>
     </div>
-    <div class="before-earth-hero.jpg">
-      <div class="before-earth-hero.jpg">Problem context image</div>
+    <div class="cs-problem-image">
+      <img src="before-earth-hero.jpg" alt="Earth Hero app before redesign" style="width:100%;display:block;object-fit:cover;" />
     </div>
   </section>
 
-  <!-- ── GOALS ── -->
   <div class="cs-goals reveal">
     <div class="cs-goals-col">
       <div class="cs-goals-heading">User Goals</div>
@@ -1404,7 +1137,6 @@
     </div>
   </div>
 
-  <!-- ── RESEARCH ── -->
   <section class="cs-research reveal">
     <div class="cs-section-label">Research</div>
     <h2 class="cs-section-title">Understanding how users <em>think.</em></h2>
@@ -1427,7 +1159,6 @@
     </div>
   </section>
 
-  <!-- ── RESEARCH LIGHTBOX GRID ── -->
   <section class="cs-lightbox-section reveal">
     <div class="cs-lightbox-header">
       <div class="cs-section-label">Research Artifacts</div>
@@ -1435,46 +1166,25 @@
       <p class="cs-body">Click any image to expand and read the caption.</p>
     </div>
     <div class="cs-lightbox-grid">
-
       <button class="cs-lb-thumb" data-index="0">
-        <img src="google-analytics.jpg" alt="Google Analytics data" />
+        <div class="cs-lb-thumb-placeholder">Google Analytics Data</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
-
       <button class="cs-lb-thumb" data-index="1">
-        <img src="First-card-sort.jpg" alt="First card sort" />
+        <div class="cs-lb-thumb-placeholder">First Card Sort</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
-
       <button class="cs-lb-thumb" data-index="2">
-        <img src="categorization.jpg" alt="Categorization diagram" />
+        <div class="cs-lb-thumb-placeholder">Categorization Diagram</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
-
       <button class="cs-lb-thumb" data-index="3">
-        <img src="second-card-sort.jpg" alt="Second card sort" />
+        <div class="cs-lb-thumb-placeholder">Second Card Sort</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
-
     </div>
   </section>
 
-  <!-- LIGHTBOX OVERLAY -->
-  <div class="cs-lb-modal" id="cs-lb-modal" aria-modal="true" role="dialog">
-    <button class="cs-lb-close" id="cs-lb-close">✕</button>
-    <button class="cs-lb-nav cs-lb-prev" id="cs-lb-prev">←</button>
-    <button class="cs-lb-nav cs-lb-next" id="cs-lb-next">→</button>
-    <div class="cs-lb-content">
-      <img src="" alt="" id="cs-lb-img" />
-      <div class="cs-lb-caption-wrap">
-        <div class="cs-lb-counter" id="cs-lb-counter">1 / 4</div>
-        <p class="cs-lb-caption" id="cs-lb-caption"></p>
-      </div>
-    </div>
-  </div>
-  <div class="cs-lb-backdrop" id="cs-lb-backdrop"></div>
-
-  <!-- ── USABILITY TESTING ── -->
   <section class="cs-usability reveal">
     <div class="cs-section-label">Usability Testing</div>
     <h2 class="cs-section-title">Refining based on <em>real feedback.</em></h2>
@@ -1489,13 +1199,9 @@
     </div>
   </section>
 
-  <!-- ── BEFORE / AFTER ── -->
   <section class="cs-before-after reveal">
     <div class="cs-section-label">Before & After</div>
-
     <div class="cs-ba-layout">
-
-      <!-- LEFT: text -->
       <div class="cs-ba-intro">
         <h2 class="cs-ba-intro-title">Click the dots to see <em>what changed.</em></h2>
         <p class="cs-ba-hint">Each dot highlights a specific pain point or improvement discovered during research.</p>
@@ -1511,14 +1217,13 @@
         </div>
       </div>
 
-      <!-- RIGHT: images -->
       <div class="cs-ba-images">
-
-        <!-- BEFORE -->
         <div class="cs-ba-col">
           <div class="cs-ba-label before"><span class="cs-ba-tag">Before</span></div>
           <div class="cs-annotated-wrap">
-            <img src="Home_Page_Before.jpg" alt="Earth Hero homepage before redesign" class="cs-annotated-img">
+            <div style="aspect-ratio:9/16;background:var(--blush);border-radius:14px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Home_Page_Before.jpg</span>
+            </div>
             <button class="cs-dot" style="top:22%;left:72%;" data-dot="1" aria-label="Annotation 1">
               <span class="cs-dot-ring"></span><span class="cs-dot-number">1</span>
               <div class="cs-tooltip"><div class="cs-tooltip-num">Finding 01</div><p class="cs-tooltip-text">Data visualization was confusing to the user and they weren't sure how they were relevant to the application.</p></div>
@@ -1534,11 +1239,12 @@
           </div>
         </div>
 
-        <!-- AFTER -->
         <div class="cs-ba-col">
           <div class="cs-ba-label after"><span class="cs-ba-tag">After</span></div>
           <div class="cs-annotated-wrap">
-            <img src="Home_Page_After.jpg" alt="Earth Hero homepage after redesign" class="cs-annotated-img">
+            <div style="aspect-ratio:9/16;background:var(--green-lt);border-radius:14px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Home_Page_After.jpg</span>
+            </div>
             <button class="cs-dot cs-dot--green" style="top:20%;left:80%;" data-dot="4" aria-label="Annotation 4">
               <span class="cs-dot-ring"></span><span class="cs-dot-number">1</span>
               <div class="cs-tooltip"><div class="cs-tooltip-num">Improvement 01</div><p class="cs-tooltip-text">More context into the points and how they were relevant to the task completion.</p></div>
@@ -1553,26 +1259,22 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── STAKEHOLDER ALIGNMENT ── -->
   <section class="cs-text-section reveal">
     <div class="cs-section-label">Stakeholder Alignment</div>
     <h2 class="cs-section-title">Bringing everyone <em>along.</em></h2>
     <p class="cs-body">I presented weekly progress to the stakeholder, facilitating updates around design direction and tradeoffs. When stakeholder preferences conflicted with research insights, I advocated for our decisions by presenting research evidence and explaining the long-term impact of design decisions.</p>
   </section>
 
-  <!-- ── FINAL DESIGNS ── -->
   <section class="cs-text-section alt reveal">
     <div class="cs-section-label">Final Designs & Handoff</div>
     <h2 class="cs-section-title">From pixels <em>to production.</em></h2>
     <p class="cs-body">After validating the design direction, I led the creation of final high-fidelity designs and handoff documentation.</p>
   </section>
 
-  <!-- ── OUTCOMES / REFLECTION ── -->
   <div class="cs-outcomes reveal">
     <div class="cs-outcomes-col">
       <div class="cs-section-label">Outcomes</div>
@@ -1587,14 +1289,13 @@
     </div>
   </div>
 
-  <!-- ── NEXT PROJECT ── -->
   <div class="cs-next">
-    <a href="index.html#work" class="cs-next-back">
+    <a href="#" class="cs-next-back">
       <span class="cs-next-label">← Back to</span>
       <span class="cs-next-title">All Work</span>
       <span class="cs-next-arrow">View all case studies</span>
     </a>
-    <a href="laurel-springs.html" class="cs-next-project">
+    <a href="#" class="cs-next-project">
       <span class="cs-next-label">Next Case Study →</span>
       <span class="cs-next-title">Laurel Springs</span>
       <span class="cs-next-arrow">Ed-Tech Platform →</span>
@@ -1603,16 +1304,14 @@
 
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span class="footer-name">Alix Zevetski</span>
   <span class="footer-credit">© 2025 · Designed with ♥ and too much research</span>
 </footer>
 
 <script>
-  // Mobile nav
   const hamburger = document.getElementById('nav-hamburger');
-  const drawer    = document.getElementById('nav-drawer');
+  const drawer = document.getElementById('nav-drawer');
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     drawer.classList.toggle('open');
@@ -1624,90 +1323,22 @@
     document.body.style.overflow = '';
   }
 
-  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObs.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   reveals.forEach(r => revealObs.observe(r));
 
-  // Phone prototype
-  function showScreen(screen) {
-    document.querySelectorAll('.phone-slide').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.phone-nav-btn').forEach(b => b.classList.remove('active'));
-    if (screen === 'home') {
-      document.getElementById('slide-home').classList.add('active');
-      document.getElementById('nav-home').classList.add('active');
-    } else if (screen === 'browse') {
-      document.getElementById('slide-browse').classList.add('active');
-      document.getElementById('nav-actions').classList.add('active');
-    } else if (screen === 'my') {
-      document.getElementById('slide-my').classList.add('active');
-      document.getElementById('nav-actions').classList.add('active');
-    }
-  }
-  function showActions(tab, e) {
-    if (e) { e.stopPropagation(); e.preventDefault(); }
-    showScreen(tab === 'browse' ? 'browse' : 'my');
-  }
-  const lbImages = [
-    { src: 'google-analytics.jpg', caption: 'Google Analytics event data showing user drop-off patterns — session starts far outnumbered meaningful actions like setting emissions targets or completing actions, pointing to a retention and engagement problem.' },
-    { src: 'First-card-sort.jpg',  caption: 'First card sort exercise — Design A vs Design B. Participants were shown two navigation structures to understand how users expected to find content across Home, Actions, My Emissions, and Settings.' },
-    { src: 'categorization.jpg',   caption: 'Categorization results from the open card sort. Percentages represent agreement rates across participants — higher agreement indicates stronger mental model alignment with that grouping.' },
-    { src: 'second-card-sort.jpg', caption: 'Second card sort comparing Home Design A vs B side by side — testing whether users preferred a stats-first layout or a radial impact visualization as the primary homepage hierarchy.' },
-  ];
-  let lbCurrent = 0;
-  const lbModal    = document.getElementById('cs-lb-modal');
-  const lbBackdrop = document.getElementById('cs-lb-backdrop');
-  const lbImg      = document.getElementById('cs-lb-img');
-  const lbCaption  = document.getElementById('cs-lb-caption');
-  const lbCounter  = document.getElementById('cs-lb-counter');
+  // Trigger reveals already in view on load
+  setTimeout(() => {
+    reveals.forEach(r => {
+      const rect = r.getBoundingClientRect();
+      if (rect.top < window.innerHeight) r.classList.add('visible');
+    });
+  }, 100);
 
-  function openLightbox(index) {
-    lbCurrent = index;
-    updateLightbox();
-    lbModal.classList.add('open');
-    lbBackdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lbModal.classList.remove('open');
-    lbBackdrop.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function updateLightbox() {
-    const item = lbImages[lbCurrent];
-    lbImg.src         = item.src;
-    lbImg.alt         = item.caption;
-    lbCaption.textContent = item.caption;
-    lbCounter.textContent = `${lbCurrent + 1} / ${lbImages.length}`;
-  }
-
-  document.querySelectorAll('.cs-lb-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => openLightbox(parseInt(thumb.dataset.index)));
-  });
-  document.getElementById('cs-lb-close').addEventListener('click', closeLightbox);
-  lbBackdrop.addEventListener('click', closeLightbox);
-  document.getElementById('cs-lb-prev').addEventListener('click', () => {
-    lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length;
-    updateLightbox();
-  });
-  document.getElementById('cs-lb-next').addEventListener('click', () => {
-    lbCurrent = (lbCurrent + 1) % lbImages.length;
-    updateLightbox();
-  });
-  document.addEventListener('keydown', e => {
-    if (!lbModal.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft')  { lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length; updateLightbox(); }
-    if (e.key === 'ArrowRight') { lbCurrent = (lbCurrent + 1) % lbImages.length; updateLightbox(); }
-  });
-  // Annotation dots
   let dotClickHandled = false;
   document.querySelectorAll('.cs-dot').forEach(dot => {
     dot.addEventListener('click', (e) => {
@@ -1722,17 +1353,14 @@
     if (dotClickHandled) { dotClickHandled = false; return; }
     document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
   });
+
   const roleEl = document.getElementById('role-highlight');
   const roleObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        roleEl.classList.add('underlined');
-        roleObs.unobserve(roleEl);
-      }
+      if (e.isIntersecting) { roleEl.classList.add('underlined'); roleObs.unobserve(roleEl); }
     });
   }, { threshold: 1.0 });
   if (roleEl) roleObs.observe(roleEl);
 </script>
-
 </body>
 </html>
