@@ -1167,38 +1167,25 @@
     </div>
     <div class="cs-lightbox-grid">
       <button class="cs-lb-thumb" data-index="0">
-        <img src="google-analytics.jpg" alt="Google Analytics data" />
+        <div class="cs-lb-thumb-placeholder">Google Analytics Data</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
       <button class="cs-lb-thumb" data-index="1">
-        <img src="First-card-sort.jpg" alt="First card sort" />
+        <div class="cs-lb-thumb-placeholder">First Card Sort</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
       <button class="cs-lb-thumb" data-index="2">
-        <img src="categorization.jpg" alt="Categorization diagram" />
+        <div class="cs-lb-thumb-placeholder">Categorization Diagram</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
       <button class="cs-lb-thumb" data-index="3">
-        <img src="second-card-sort.jpg" alt="Second card sort" />
+        <div class="cs-lb-thumb-placeholder">Second Card Sort</div>
         <div class="cs-lb-overlay"><span>View ↗</span></div>
       </button>
     </div>
   </section>
 
-  <!-- LIGHTBOX OVERLAY -->
-  <div class="cs-lb-modal" id="cs-lb-modal" aria-modal="true" role="dialog">
-    <button class="cs-lb-close" id="cs-lb-close">✕</button>
-    <button class="cs-lb-nav cs-lb-prev" id="cs-lb-prev">←</button>
-    <button class="cs-lb-nav cs-lb-next" id="cs-lb-next">→</button>
-    <div class="cs-lb-content">
-      <img src="" alt="" id="cs-lb-img" />
-      <div class="cs-lb-caption-wrap">
-        <div class="cs-lb-counter" id="cs-lb-counter">1 / 4</div>
-        <p class="cs-lb-caption" id="cs-lb-caption"></p>
-      </div>
-    </div>
-  </div>
-  <div class="cs-lb-backdrop" id="cs-lb-backdrop"></div>
+  <section class="cs-usability reveal">
     <div class="cs-section-label">Usability Testing</div>
     <h2 class="cs-section-title">Refining based on <em>real feedback.</em></h2>
     <p class="cs-body">Based on usability findings, we refined the experience to improve clarity and engagement.</p>
@@ -1234,7 +1221,9 @@
         <div class="cs-ba-col">
           <div class="cs-ba-label before"><span class="cs-ba-tag">Before</span></div>
           <div class="cs-annotated-wrap">
-            <img src="Home_Page_Before.jpg" alt="Earth Hero homepage before redesign" class="cs-annotated-img">
+            <div style="aspect-ratio:9/16;background:var(--blush);border-radius:14px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Home_Page_Before.jpg</span>
+            </div>
             <button class="cs-dot" style="top:22%;left:72%;" data-dot="1" aria-label="Annotation 1">
               <span class="cs-dot-ring"></span><span class="cs-dot-number">1</span>
               <div class="cs-tooltip"><div class="cs-tooltip-num">Finding 01</div><p class="cs-tooltip-text">Data visualization was confusing to the user and they weren't sure how they were relevant to the application.</p></div>
@@ -1253,7 +1242,9 @@
         <div class="cs-ba-col">
           <div class="cs-ba-label after"><span class="cs-ba-tag">After</span></div>
           <div class="cs-annotated-wrap">
-            <img src="Home_Page_After.jpg" alt="Earth Hero homepage after redesign" class="cs-annotated-img">
+            <div style="aspect-ratio:9/16;background:var(--green-lt);border-radius:14px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Home_Page_After.jpg</span>
+            </div>
             <button class="cs-dot cs-dot--green" style="top:20%;left:80%;" data-dot="4" aria-label="Annotation 4">
               <span class="cs-dot-ring"></span><span class="cs-dot-number">1</span>
               <div class="cs-tooltip"><div class="cs-tooltip-num">Improvement 01</div><p class="cs-tooltip-text">More context into the points and how they were relevant to the task completion.</p></div>
@@ -1361,59 +1352,6 @@
   document.addEventListener('click', () => {
     if (dotClickHandled) { dotClickHandled = false; return; }
     document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
-  });
-
-  const lbImages = [
-    { src: 'google-analytics.jpg', caption: 'Google Analytics event data showing user drop-off patterns — session starts far outnumbered meaningful actions like setting emissions targets or completing actions, pointing to a retention and engagement problem.' },
-    { src: 'First-card-sort.jpg',  caption: 'First card sort exercise — Design A vs Design B. Participants were shown two navigation structures to understand how users expected to find content across Home, Actions, My Emissions, and Settings.' },
-    { src: 'categorization.jpg',   caption: 'Categorization results from the open card sort. Percentages represent agreement rates across participants — higher agreement indicates stronger mental model alignment with that grouping.' },
-    { src: 'second-card-sort.jpg', caption: 'Second card sort comparing Home Design A vs B side by side — testing whether users preferred a stats-first layout or a radial impact visualization as the primary homepage hierarchy.' },
-  ];
-  let lbCurrent = 0;
-  const lbModal    = document.getElementById('cs-lb-modal');
-  const lbBackdrop = document.getElementById('cs-lb-backdrop');
-  const lbImg      = document.getElementById('cs-lb-img');
-  const lbCaption  = document.getElementById('cs-lb-caption');
-  const lbCounter  = document.getElementById('cs-lb-counter');
-
-  function openLightbox(index) {
-    lbCurrent = index;
-    updateLightbox();
-    lbModal.classList.add('open');
-    lbBackdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lbModal.classList.remove('open');
-    lbBackdrop.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function updateLightbox() {
-    const item = lbImages[lbCurrent];
-    lbImg.src = item.src;
-    lbImg.alt = item.caption;
-    lbCaption.textContent = item.caption;
-    lbCounter.textContent = `${lbCurrent + 1} / ${lbImages.length}`;
-  }
-
-  document.querySelectorAll('.cs-lb-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => openLightbox(parseInt(thumb.dataset.index)));
-  });
-  document.getElementById('cs-lb-close').addEventListener('click', closeLightbox);
-  lbBackdrop.addEventListener('click', closeLightbox);
-  document.getElementById('cs-lb-prev').addEventListener('click', () => {
-    lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length;
-    updateLightbox();
-  });
-  document.getElementById('cs-lb-next').addEventListener('click', () => {
-    lbCurrent = (lbCurrent + 1) % lbImages.length;
-    updateLightbox();
-  });
-  document.addEventListener('keydown', e => {
-    if (!lbModal.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft')  { lbCurrent = (lbCurrent - 1 + lbImages.length) % lbImages.length; updateLightbox(); }
-    if (e.key === 'ArrowRight') { lbCurrent = (lbCurrent + 1) % lbImages.length; updateLightbox(); }
   });
 
   const roleEl = document.getElementById('role-highlight');
