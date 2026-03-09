@@ -189,11 +189,12 @@
     .cs-hero {
       background: var(--ls-gold-lt);
       border-bottom: 2px solid var(--ink);
-      padding: 80px 64px 0;
+      padding: 80px 64px;
       display: grid;
-      grid-template-columns: 1fr minmax(0, 420px);
-      gap: 56px;
-      align-items: end;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      min-height: 520px;
       position: relative;
       overflow: hidden;
     }
@@ -206,7 +207,13 @@
       opacity: 0.5;
       pointer-events: none;
     }
-    .cs-hero-text { position: relative; z-index: 1; padding-bottom: 80px; }
+    .cs-hero-text {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: heroSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
     .cs-back {
       display: inline-flex;
       align-items: center;
@@ -262,51 +269,22 @@
       max-width: 480px;
     }
 
-    /* ── HERO VIDEO ── */
-    .cs-hero-video-wrap {
+    /* ── HERO SVG MOCKUP ── */
+    .cs-hero-mockup {
       position: relative;
       z-index: 1;
-      align-self: end;
-      border: 2px solid var(--ink);
-      border-bottom: none;
-      border-radius: 12px 12px 0 0;
-      overflow: hidden;
-      box-shadow: 6px 0 0 0 var(--ink), -6px 0 0 0 var(--ink), 0 -6px 0 0 var(--ink);
-      width: 100%;
+      opacity: 0;
+      transform: translateY(60px);
+      animation: heroSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
     }
-    .cs-hero-video-bar {
-      background: #F2F2F2;
-      border-bottom: 2px solid var(--ink);
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
+    @keyframes heroSlideUp {
+      to { opacity: 1; transform: translateY(0); }
     }
-    .cs-hero-video-dots { display: flex; gap: 6px; }
-    .cs-hero-video-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      border: 1.5px solid var(--ink);
-    }
-    .cs-hero-video-dot:nth-child(1) { background: #FF5F57; }
-    .cs-hero-video-dot:nth-child(2) { background: #FFBD2E; }
-    .cs-hero-video-dot:nth-child(3) { background: #28CA41; }
-    .cs-hero-video-url {
-      flex: 1;
-      background: white;
-      border: 1.5px solid var(--ink);
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-    }
-    .cs-hero-video-wrap video {
-      display: block;
+    .cs-hero-mockup img {
       width: 100%;
       height: auto;
+      display: block;
+      filter: drop-shadow(8px 12px 32px rgba(26,17,24,0.18));
     }
 
     /* ── STATS BAND ── */
@@ -454,8 +432,18 @@
       overflow: hidden;
       box-shadow: 6px 6px 0 var(--ink);
       background: var(--ls-gold-lt);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
     }
-    .cs-problem-image img { width: 100%; display: block; }
+    .cs-problem-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top;
+      display: block;
+    }
     .cs-problem-image-placeholder {
       aspect-ratio: 4/3;
       display: flex;
@@ -714,7 +702,7 @@
       box-shadow: 6px 6px 0 var(--ink);
     }
     .cs-screen-card-img {
-      background: var(--ls-navy);
+      background: var(--ls-gold-lt);
       aspect-ratio: 16/10;
       overflow: hidden;
       border-bottom: 2px solid var(--ink);
@@ -725,7 +713,7 @@
     .cs-screen-card-img img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: top;
       display: block;
     }
@@ -751,17 +739,17 @@
       overflow: hidden;
       box-shadow: 6px 6px 0 var(--ink);
       background: var(--ls-gold-lt);
-    }
-    .cs-solution-image-placeholder {
       aspect-ratio: 4/3;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
+    }
+    .cs-solution-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top;
+      display: block;
     }
 
     /* ── STAKEHOLDER / TEXT SECTIONS ── */
@@ -983,7 +971,7 @@
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
 
-      .cs-hero { grid-template-columns: 1fr; padding: 40px 20px 0; gap: 32px; }
+      .cs-hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; min-height: auto; }
       .cs-hero-text { padding-bottom: 0; }
       .cs-title { font-size: clamp(2.8rem, 13vw, 4.5rem); }
       .cs-subtitle { font-size: 0.9rem; }
@@ -1075,16 +1063,8 @@
       <h1 class="cs-title">Laurel<br /><em>Springs.</em></h1>
       <p class="cs-subtitle">Transforming a difficult experience into a centralized, user-friendly catalog. The new catalog is now a top navigation item and has become one of the Top 5 most visited landing pages on the site.</p>
     </div>
-    <div class="cs-hero-video-wrap">
-      <div class="cs-hero-video-bar">
-        <div class="cs-hero-video-dots">
-          <div class="cs-hero-video-dot"></div>
-          <div class="cs-hero-video-dot"></div>
-          <div class="cs-hero-video-dot"></div>
-        </div>
-        <div class="cs-hero-video-url">laurelsprings.org / course-catalog</div>
-      </div>
-      <img src="course-catalog-full.jpg" alt="Laurel Springs Course Catalog" style="width:100%; display:block;" />
+    <div class="cs-hero-mockup">
+      <img src="course-catalog-mockups.svg" alt="Laurel Springs Course Catalog mockup" />
     </div>
   </section>
 
@@ -1149,7 +1129,7 @@
       <p class="cs-body" style="margin-top: 20px;">As a result, the catalog did not effectively support users in understanding the breadth and value of Laurel Springs' academic offerings.</p>
     </div>
     <div class="cs-problem-image">
-      <img src="before-course-catalog-experience.jpg" alt="Before state — original high school course catalog experience" style="width:100%; display:block;" />
+      <img src="before-course-catalog-experience.jpg" alt="Before state — original high school course catalog experience" />
     </div>
   </section>
 
@@ -1313,7 +1293,7 @@
       <p class="cs-body" style="margin-top: 20px;">The experience significantly reduced friction and made academic exploration more intuitive.</p>
     </div>
     <div class="cs-solution-image">
-      <img src="catalog-demo.gif" alt="Course catalog filtering interaction demo" style="width:100%; display:block;" />
+      <img src="catalog-demo.gif" alt="Course catalog filtering interaction demo" />
     </div>
   </section>
 
