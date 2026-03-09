@@ -377,8 +377,8 @@
     }
     .about-heart-frame {
       position: relative;
-      width: 360px;
-      height: 360px;
+      width: 500px;
+      height: 500px;
       flex-shrink: 0;
     }
     .about-heart-svg-wrap {
@@ -827,7 +827,8 @@
 
       .about-me { grid-template-columns: 1fr; }
       .about-me-text { border-right: none; border-bottom: 2px solid var(--ink); padding: 48px 28px; }
-      .about-me-photo { min-height: 320px; }
+      .about-me-photo { min-height: 420px; }
+      .about-heart-frame { width: 340px; height: 340px; }
 
       .work-header { padding: 32px 24px; }
 
@@ -993,15 +994,15 @@
     <div class="about-heart-frame">
 
       <!-- SVG: defines clipPath + renders border on top -->
-      <svg class="about-heart-svg-wrap" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+      <svg class="about-heart-svg-wrap" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <clipPath id="heartClip">
-            <path d="M180 320 C180 320 20 215 20 110 C20 55 62 22 110 30 C140 36 162 56 180 80 C198 56 220 36 250 30 C298 22 340 55 340 110 C340 215 180 320 180 320 Z"/>
+            <path d="M250 450 C250 450 20 300 20 145 C20 70 75 25 140 35 C185 42 220 70 250 105 C280 70 315 42 360 35 C425 25 480 70 480 145 C480 300 250 450 250 450 Z"/>
           </clipPath>
         </defs>
 
         <!-- Photo carousel clipped to heart -->
-        <foreignObject x="0" y="0" width="360" height="360" clip-path="url(#heartClip)">
+        <foreignObject x="0" y="0" width="500" height="500" clip-path="url(#heartClip)">
           <div xmlns="http://www.w3.org/1999/xhtml" class="about-carousel">
             <div class="about-carousel-slide active" style="background-image: url('puppies-1.jpeg')"></div>
             <div class="about-carousel-slide" style="background-image: url('puppies-2.jpg')"></div>
@@ -1011,7 +1012,7 @@
         </foreignObject>
 
         <!-- Heart border drawn on top -->
-        <path d="M180 320 C180 320 20 215 20 110 C20 55 62 22 110 30 C140 36 162 56 180 80 C198 56 220 36 250 30 C298 22 340 55 340 110 C340 215 180 320 180 320 Z"
+        <path d="M250 450 C250 450 20 300 20 145 C20 70 75 25 140 35 C185 42 220 70 250 105 C280 70 315 42 360 35 C425 25 480 70 480 145 C480 300 250 450 250 450 Z"
               fill="none" stroke="#6B21A8" stroke-width="4"/>
       </svg>
 
