@@ -200,7 +200,13 @@
       opacity: 0.5;
       pointer-events: none;
     }
-    .cs-hero-text { position: relative; z-index: 1; }
+    .cs-hero-text {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: heroSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
     .cs-back {
       display: inline-flex;
       align-items: center;
@@ -258,9 +264,18 @@
     .cs-hero-image {
       position: relative;
       z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      opacity: 0;
+      transform: translateY(60px);
+      animation: heroSlideUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+    }
+    @keyframes heroSlideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cs-hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(8px 12px 32px rgba(0,0,0,0.18));
     }
 
     /* ── PHONE MOCKUP ── */
@@ -1211,7 +1226,8 @@
 
       /* HERO */
       .cs-hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; min-height: auto; }
-      .cs-hero-image { max-width: 280px; margin: 0 auto; }
+      .cs-hero-text { animation: none; opacity: 1; transform: none; }
+      .cs-hero-image { max-width: 320px; margin: 0 auto; animation: none; opacity: 1; transform: none; }
       .cs-title { font-size: clamp(2.8rem, 13vw, 4.5rem); }
       .cs-subtitle { font-size: 0.9rem; }
 
@@ -1301,7 +1317,7 @@
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="index.html#contact" class="nav-contact-btn">Contact</a></li>
+    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1313,7 +1329,7 @@
   <a href="index.html#about" onclick="closeNav()">About</a>
   <a href="index.html#work"  onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="index.html#contact" onclick="closeNav()">Contact</a>
+  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
 </div>
 
 <div class="page">
@@ -1330,12 +1346,7 @@
       <p class="cs-subtitle">A research driven redesign of Earth Hero's homepage and actions experience to address user drop off and improve engagement and retention.</p>
     </div>
     <div class="cs-hero-image">
-      <div class="phone-mockup">
-        <div class="phone-shell"></div>
-        <div class="phone-screen">
-
-        </div>
-      </div>
+      <img src="earth-hero-case-study-thumbnail.svg" alt="Earth Hero app mockup" />
     </div>
   </section>
 
