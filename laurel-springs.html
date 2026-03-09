@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laurel Springs Course Catalog — Alix Zevetski</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:    #FFFFFF;
+      --offwhite: #FAFAF8;
+      --punch:    #7B7FC4;
+      --violet:   #6B21A8;
+      --mint:     #D1FAE5;
+      --yellow:   #FFF176;
+      --teal:     #0D9488;
+      --blush:    #C8CAF0;
+      --green:    #059669;
+      --green-lt: #BBF7D0;
+      --ink:      #1A1118;
+      --muted:    #6B6070;
+      --border:   #E5D8F0;
+
+      /* Laurel Springs accent colors */
+      --ls-navy:   #1B2A4A;
+      --ls-gold:   #C8962A;
+      --ls-gold-lt: #FFF3D4;
+      --ls-sand:   #F7F3EC;
+
+      --serif:    'Archivo Black', sans-serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: var(--white);
+      border-bottom: 2px solid var(--ink);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo svg { display: block; transition: transform 0.2s ease; }
+    .nav-logo:hover svg { transform: translateY(-2px); }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 0; height: 2px;
+      background: var(--punch);
+      transition: width 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--punch); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.nav-contact-btn {
+      background: var(--teal);
+      color: white;
+      padding: 9px 20px;
+      border-radius: 8px;
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s;
+    }
+    .nav-links a.nav-contact-btn::after { display: none; }
+    .nav-links a.nav-contact-btn:hover {
+      background: var(--violet);
+      color: white;
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    /* MOBILE NAV */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 400;
+      position: relative;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--white);
+      z-index: 300;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer-close {
+      position: absolute;
+      top: 18px; right: 24px;
+      background: none;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      font-family: var(--sans);
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-drawer-close:hover { background: var(--punch); color: white; border-color: var(--punch); }
+    .nav-drawer a {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 20px 0;
+      width: 100%;
+      text-align: center;
+      border-bottom: 2px solid var(--ink);
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-drawer a:first-of-type { border-top: 2px solid var(--ink); }
+    .nav-drawer a:hover { background: var(--punch); color: white; }
+
+    /* PAGE WRAPPER */
+    .page { margin-top: 69px; }
+
+    /* ── HERO ── */
+    .cs-hero {
+      background: var(--ls-gold-lt);
+      border-bottom: 2px solid var(--ink);
+      padding: 80px 64px 0;
+      display: grid;
+      grid-template-columns: 1fr minmax(0, 420px);
+      gap: 56px;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
+    }
+    .cs-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect width='12' height='12' x='0' y='0' fill='%23f5e0a8'/%3E%3Crect width='12' height='12' x='12' y='12' fill='%23f5e0a8'/%3E%3Crect width='12' height='12' x='12' y='0' fill='%23FFF3D4'/%3E%3Crect width='12' height='12' x='0' y='12' fill='%23FFF3D4'/%3E%3C/svg%3E");
+      background-size: 24px 24px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .cs-hero-text { position: relative; z-index: 1; padding-bottom: 80px; }
+    .cs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 28px;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .cs-back:hover { color: var(--ls-gold); gap: 12px; }
+    .cs-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cs-pill {
+      background: var(--ls-gold);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+    }
+    .cs-title {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .cs-title em {
+      font-family: 'Archivo', sans-serif;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--ls-gold);
+    }
+    .cs-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    /* ── HERO VIDEO ── */
+    .cs-hero-video-wrap {
+      position: relative;
+      z-index: 1;
+      align-self: end;
+      border: 2px solid var(--ink);
+      border-bottom: none;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      box-shadow: 6px 0 0 0 var(--ink), -6px 0 0 0 var(--ink), 0 -6px 0 0 var(--ink);
+      width: 100%;
+    }
+    .cs-hero-video-bar {
+      background: #F2F2F2;
+      border-bottom: 2px solid var(--ink);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cs-hero-video-dots { display: flex; gap: 6px; }
+    .cs-hero-video-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink);
+    }
+    .cs-hero-video-dot:nth-child(1) { background: #FF5F57; }
+    .cs-hero-video-dot:nth-child(2) { background: #FFBD2E; }
+    .cs-hero-video-dot:nth-child(3) { background: #28CA41; }
+    .cs-hero-video-url {
+      flex: 1;
+      background: white;
+      border: 1.5px solid var(--ink);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .cs-hero-video-wrap video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ── STATS BAND ── */
+    .cs-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 2px solid var(--ink);
+    }
+    .cs-stat {
+      padding: 48px 64px;
+      border-right: 2px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat-number {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--ls-gold);
+      line-height: 1;
+    }
+    .cs-stat-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION BASE ── */
+    .cs-section {
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .cs-section-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .cs-section-title {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .cs-section-title em {
+      font-family: 'Archivo', sans-serif;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--ls-gold);
+    }
+    .cs-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 680px;
+    }
+    .cs-body strong { color: var(--ink); font-weight: 600; }
+    .cs-body + .cs-body { margin-top: 16px; }
+
+    /* ── OVERVIEW ── */
+    .cs-overview {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--offwhite);
+    }
+    .cs-overview-meta { display: flex; flex-direction: column; gap: 28px; }
+    .cs-overview-meta-block {}
+    .cs-overview-meta-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .cs-overview-meta-value {
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .cs-role-highlight {
+      position: relative;
+      display: inline;
+    }
+    .cs-role-highlight svg {
+      position: absolute;
+      left: -2px;
+      bottom: -6px;
+      width: calc(100% + 4px);
+      height: 10px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .cs-role-highlight svg path {
+      stroke: var(--ls-gold);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+    }
+    .cs-role-highlight.underlined svg path { stroke-dashoffset: 0; }
+    .cs-overview-meta-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .cs-overview-meta-list strong { color: var(--ink); }
+    .cs-overview-heading {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    /* ── PROBLEM ── */
+    .cs-problem {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+      align-items: center;
+    }
+    .cs-problem-image {
+      border-radius: 16px;
+      border: 2px solid var(--ink);
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--ink);
+      background: var(--ls-gold-lt);
+    }
+    .cs-problem-image img { width: 100%; display: block; }
+    .cs-problem-image-placeholder {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cs-bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .cs-bullet-list li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.7;
+    }
+    .cs-bullet-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--ls-gold);
+      font-weight: 700;
+    }
+    .cs-bullet-list--purple li::before { color: var(--punch); }
+
+    /* ── GOALS ── */
+    .cs-goals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+    }
+    .cs-goals-col {
+      padding: 64px;
+    }
+    .cs-goals-col:first-child {
+      border-right: 2px solid var(--ink);
+      background: var(--ls-gold-lt);
+    }
+    .cs-goals-col:last-child {
+      background: var(--blush);
+    }
+    .cs-goals-heading {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cs-goals-heading .goal-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .cs-goals-col:first-child .goal-icon { background: var(--ls-gold); }
+    .cs-goals-col:last-child .goal-icon { background: var(--punch); }
+
+    /* ── RESEARCH ── */
+    .cs-research {
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--offwhite);
+    }
+    .cs-research-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+      align-items: start;
+    }
+    .cs-research-block {
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 4px 4px 0 var(--ink);
+      height: 100%;
+    }
+    .cs-research-block--gold {
+      background: var(--ls-navy);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .cs-research-block--gold .cs-research-block-label { color: var(--ls-gold); }
+    .cs-research-block--gold .cs-research-block-title { color: white; }
+    .cs-research-block--gold .cs-body { color: rgba(255,255,255,0.65); }
+    .cs-research-block-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      margin-bottom: 10px;
+    }
+    .cs-research-block-title {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+    .cs-insight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .cs-insight-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+    }
+    .cs-insight-icon {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--ls-gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .cs-live-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      background: var(--ls-gold);
+      color: white;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s;
+    }
+    .cs-live-btn:hover {
+      background: var(--ls-navy);
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    /* ── IA / VISUAL DESIGN SPLIT ── */
+    .cs-ia-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+    }
+    .cs-ia-col {
+      padding: 64px;
+    }
+    .cs-ia-col:first-child {
+      border-right: 2px solid var(--ink);
+    }
+    .cs-ia-col:last-child {
+      background: var(--offwhite);
+    }
+
+    /* ── IMPLEMENTATION BAND ── */
+    .cs-impl {
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--ls-navy);
+    }
+    .cs-impl .cs-section-label { color: rgba(255,255,255,0.45); }
+    .cs-impl .cs-section-title { color: white; }
+    .cs-impl .cs-section-title em { color: var(--ls-gold); }
+    .cs-impl .cs-body { color: rgba(255,255,255,0.65); }
+    .cs-impl .cs-body strong { color: white; }
+    .cs-impl-chips {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .cs-impl-chip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.55;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cs-impl-chip:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .cs-impl-chip::before {
+      content: '✓';
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--ls-gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cs-impl-image-wrap {
+      margin-top: 40px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.4);
+    }
+    .cs-impl-image-wrap img {
+      width: 100%;
+      display: block;
+    }
+    .cs-screens {
+      padding: 64px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--offwhite);
+    }
+    .cs-screens-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .cs-screen-card {
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 var(--ink);
+      background: white;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cs-screen-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+    .cs-screen-card-img {
+      background: var(--ls-navy);
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .cs-screen-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .cs-screen-card-caption {
+      padding: 14px 16px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── SOLUTION ── */
+    .cs-solution {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+      align-items: center;
+    }
+    .cs-solution-image {
+      border-radius: 16px;
+      border: 2px solid var(--ink);
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--ink);
+      background: var(--ls-gold-lt);
+    }
+    .cs-solution-image-placeholder {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── STAKEHOLDER / TEXT SECTIONS ── */
+    .cs-text-section {
+      padding: 80px 64px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .cs-text-section.alt { background: var(--offwhite); }
+
+    /* ── OUTCOMES ── */
+    .cs-outcomes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+    }
+    .cs-outcomes-col {
+      padding: 80px 64px;
+    }
+    .cs-outcomes-col:first-child {
+      border-right: 2px solid var(--ink);
+      background: var(--ls-gold-lt);
+    }
+    .cs-outcomes-col:last-child {
+      background: var(--offwhite);
+    }
+
+    /* ── IMPACT TABLE ── */
+    .cs-impact-table {
+      margin-top: 28px;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .cs-impact-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .cs-impact-row:last-child { border-bottom: none; }
+    .cs-impact-row.header {
+      background: var(--ink);
+    }
+    .cs-impact-cell {
+      padding: 12px 18px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-right: 1.5px solid var(--ink);
+    }
+    .cs-impact-cell:last-child { border-right: none; }
+    .cs-impact-cell.header {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .cs-impact-cell.good { color: var(--ls-gold); font-weight: 600; }
+
+    /* ── IMPACT SLIDESHOW ── */
+    .cs-impact-slideshow {
+      margin-top: 28px;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .cs-impact-slides {
+      position: relative;
+      background: #f5f5f5;
+    }
+    .cs-impact-slide {
+      display: none;
+    }
+    .cs-impact-slide.active {
+      display: block;
+    }
+    .cs-impact-slide img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: top;
+    }
+    .cs-impact-slide-footer {
+      background: white;
+      border-top: 2px solid var(--ink);
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .cs-impact-caption {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .cs-impact-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cs-impact-btn {
+      background: none;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      color: var(--ink);
+    }
+    .cs-impact-btn:hover {
+      background: var(--ls-gold);
+      border-color: var(--ls-gold);
+      color: white;
+    }
+    .cs-impact-counter {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ── NEXT PROJECT ── */
+    .cs-next {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 280px;
+    }
+    .cs-next-back {
+      padding: 64px;
+      border-right: 2px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--white);
+      transition: background 0.2s;
+    }
+    .cs-next-back:hover { background: var(--yellow); }
+    .cs-next-project {
+      padding: 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--punch);
+      transition: background 0.2s;
+    }
+    .cs-next-project:hover { background: var(--violet); }
+    .cs-next-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cs-next-project .cs-next-label { color: rgba(255,255,255,0.7); }
+    .cs-next-title {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .cs-next-project .cs-next-title { color: white; }
+    .cs-next-arrow {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .cs-next-project .cs-next-arrow { color: rgba(255,255,255,0.7); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      border-top: 2px solid rgba(255,255,255,0.07);
+      padding: 22px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-name {
+      font-family: 'Archivo Black', sans-serif;
+      font-style: italic;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.95rem;
+    }
+    .footer-credit {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 834px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .cs-hero { grid-template-columns: 1fr; padding: 40px 20px 0; gap: 32px; }
+      .cs-hero-text { padding-bottom: 0; }
+      .cs-title { font-size: clamp(2.8rem, 13vw, 4.5rem); }
+      .cs-subtitle { font-size: 0.9rem; }
+
+      .cs-stats { grid-template-columns: 1fr; }
+      .cs-stat { border-right: none; border-bottom: 2px solid var(--ink); padding: 32px 20px; }
+      .cs-stat:last-child { border-bottom: none; }
+
+      .cs-overview { grid-template-columns: 1fr; gap: 28px; padding: 40px 20px; }
+
+      .cs-problem { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; }
+      .cs-problem-image { order: -1; }
+
+      .cs-goals { grid-template-columns: 1fr; }
+      .cs-goals-col { padding: 32px 20px; }
+      .cs-goals-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+
+      .cs-section { padding: 40px 20px; }
+      .cs-research { padding: 40px 20px; }
+      .cs-research-two-col { grid-template-columns: 1fr; gap: 16px; }
+      .cs-research-block { padding: 24px; }
+      .cs-section-title { font-size: clamp(1.5rem, 6vw, 2rem); }
+
+      .cs-ia-visual { grid-template-columns: 1fr; }
+      .cs-ia-col { padding: 40px 20px; }
+      .cs-ia-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+
+      .cs-impl { padding: 48px 20px; }
+      .cs-impl-chips { grid-template-columns: 1fr; gap: 10px; }
+
+      .cs-screens { padding: 40px 20px; }
+      .cs-screens-grid { grid-template-columns: 1fr; gap: 12px; }
+
+      .cs-solution { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; }
+
+      .cs-text-section { padding: 40px 20px; }
+      .cs-outcomes { grid-template-columns: 1fr; }
+      .cs-outcomes-col { padding: 40px 20px; }
+      .cs-outcomes-col:first-child { border-right: none; border-bottom: 2px solid var(--ink); }
+
+      .cs-next { grid-template-columns: 1fr; }
+      .cs-next-back { border-right: none; border-bottom: 2px solid var(--ink); padding: 36px 20px; }
+      .cs-next-project { padding: 36px 20px; }
+
+      footer { flex-direction: column; gap: 8px; padding: 18px 20px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html" aria-label="Alix Zevetski">
+    <svg width="220" height="36" viewBox="0 0 220 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="28" font-family="'Archivo Black',sans-serif" font-style="italic" font-size="29" fill="#1A1118" letter-spacing="-1.5">Alix with an i</text>
+      <rect x="2"  y="31" width="24" height="3" rx="1.5" fill="#7B7FC4"/>
+      <rect x="30" y="31" width="36" height="3" rx="1.5" fill="#7B7FC4"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
+    <li><a href="index.html#contact" class="nav-contact-btn">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <button class="nav-drawer-close" onclick="closeNav()" aria-label="Close menu">✕</button>
+  <a href="index.html#about" onclick="closeNav()">About</a>
+  <a href="index.html#work"  onclick="closeNav()">Work</a>
+  <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
+  <a href="index.html#contact" onclick="closeNav()">Contact</a>
+</div>
+
+<div class="page">
+
+  <!-- ── HERO ── -->
+  <section class="cs-hero">
+    <div class="cs-hero-text">
+      <a href="index.html#work" class="cs-back">← Back to Work</a>
+      <div class="cs-eyebrow">
+        <span class="cs-pill">Case Study 02</span>
+        ✦ Ed-Tech Platform
+      </div>
+      <h1 class="cs-title">Laurel<br /><em>Springs.</em></h1>
+      <p class="cs-subtitle">Transforming a difficult experience into a centralized, user-friendly catalog. The new catalog is now a top navigation item and has become one of the Top 5 most visited landing pages on the site.</p>
+    </div>
+    <div class="cs-hero-video-wrap">
+      <div class="cs-hero-video-bar">
+        <div class="cs-hero-video-dots">
+          <div class="cs-hero-video-dot"></div>
+          <div class="cs-hero-video-dot"></div>
+          <div class="cs-hero-video-dot"></div>
+        </div>
+        <div class="cs-hero-video-url">laurelsprings.org / course-catalog</div>
+      </div>
+      <img src="course-catalog-full.jpg" alt="Laurel Springs Course Catalog" style="width:100%; display:block;" />
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="cs-stats reveal">
+    <div class="cs-stat">
+      <div class="cs-stat-number">Top 4</div>
+      <div class="cs-stat-label">Landing Page on Site</div>
+    </div>
+    <div class="cs-stat">
+      <div class="cs-stat-number">7K+</div>
+      <div class="cs-stat-label">More Sessions</div>
+    </div>
+    <div class="cs-stat">
+      <div class="cs-stat-number">↑ Inq.</div>
+      <div class="cs-stat-label">Increase in Inquiries</div>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ── -->
+  <section class="cs-overview reveal">
+    <div class="cs-overview-meta">
+      <div class="cs-overview-meta-block">
+        <div class="cs-overview-meta-label">My Role</div>
+        <div class="cs-overview-meta-value"><span class="cs-role-highlight" id="role-highlight">UX Designer<svg viewBox="0 0 200 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 6 C20 3, 50 8, 80 5 C110 2, 140 8, 170 5 C185 3.5, 194 6, 199 5"/></svg></span></div>
+      </div>
+
+      <div class="cs-overview-meta-block">
+        <div class="cs-overview-meta-label">Team</div>
+        <ul class="cs-overview-meta-list">
+          <li><strong>1 UX Designer (Me!)</strong></li>
+          <li><strong>Director of Web Product Marketing</strong></li>
+          <li><strong>1 Developer</strong></li>
+          <li><strong>Laurel Springs Stakeholders</strong></li>
+          <li><strong>Project Manager</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cs-overview-content">
+      <div class="cs-section-label">Overview</div>
+      <h2 class="cs-overview-heading">From scattered PDFs to a <em style="font-style:italic; color: var(--ls-gold);">centralized catalog.</em></h2>
+      <p class="cs-body">Laurel Springs School's course catalog experience was difficult to navigate, and not optimized for modern user expectations, especially on mobile. Courses were buried within individual grade level pages and nested inside dropdown menus, making it difficult for prospective families and students to explore offerings holistically.</p>
+      <p class="cs-body" style="margin-top: 16px;">I led the UX design of a new, centralized course catalog experience that improved discoverability, streamlined navigation, and created a scalable foundation for future growth. The new catalog was launched within two months and has since become one of the Top 5 most visited landing pages on the site, significantly increasing course visibility and engagement.</p>
+      <a href="https://laurelsprings.com/academics/course-catalog/" target="_blank" class="cs-live-btn">View Live Site ↗</a>
+    </div>
+  </section>
+
+  <!-- ── PROBLEM ── -->
+  <section class="cs-problem reveal">
+    <div>
+      <div class="cs-section-label">Problem & Context</div>
+      <h2 class="cs-section-title">A catalog families <em>couldn't use.</em></h2>
+      <p class="cs-body">The existing course catalog experience created significant usability and discoverability challenges.</p>
+      <p class="cs-body" style="margin-top: 16px;">This structure created several key issues:</p>
+      <ul class="cs-bullet-list">
+        <li>Courses were difficult to discover unless users navigated multiple levels deep</li>
+        <li>Users could not easily browse or explore courses across grade levels</li>
+        <li>The experience required excessive clicking and interaction</li>
+        <li>Content was especially difficult to navigate on mobile devices</li>
+        <li>The structure did not support exploratory behavior, which is critical for prospective families</li>
+      </ul>
+      <p class="cs-body" style="margin-top: 20px;">As a result, the catalog did not effectively support users in understanding the breadth and value of Laurel Springs' academic offerings.</p>
+    </div>
+    <div class="cs-problem-image">
+      <img src="before-course-catalog-experience.jpg" alt="Before state — original high school course catalog experience" style="width:100%; display:block;" />
+    </div>
+  </section>
+
+  <!-- ── GOALS ── -->
+  <div class="cs-goals reveal">
+    <div class="cs-goals-col">
+      <div class="cs-goals-heading">
+        <span class="goal-icon">🎓</span>
+        User Goals
+      </div>
+      <ul class="cs-bullet-list cs-bullet-list--purple">
+        <li>Quickly find courses by grade, subject, or keyword</li>
+        <li>Compare course details to make informed enrollment decisions</li>
+        <li>Access the catalog from any device, anywhere</li>
+      </ul>
+    </div>
+    <div class="cs-goals-col">
+      <div class="cs-goals-heading">
+        <span class="goal-icon">📈</span>
+        Business Goals
+      </div>
+      <ul class="cs-bullet-list">
+        <li>Reduce support inquiries related to course information</li>
+        <li>Increase catalog page engagement and time on site</li>
+        <li>Drive more qualified inquiries to the admissions team</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── RESEARCH ── -->
+  <section class="cs-research reveal">
+    <div class="cs-section-label">Research</div>
+    <h2 class="cs-section-title">Understanding the <em>landscape.</em></h2>
+
+    <div class="cs-research-two-col">
+
+      <!-- LEFT: Competitive Analysis -->
+      <div class="cs-research-left">
+        <div class="cs-research-block">
+          <div class="cs-research-block-label">Competitive Analysis</div>
+          <div class="cs-research-block-title">How do peer schools do it?</div>
+          <p class="cs-body">To inform the redesign, I conducted a competitive analysis of course catalogs from other online private schools and educational institutions.</p>
+          <p class="cs-body" style="margin-top:14px;">I evaluated how competitors structured their catalogs, focusing on:</p>
+          <ul class="cs-bullet-list" style="margin-top:14px;">
+            <li>Information architecture and organization models</li>
+            <li>Filtering and categorization systems</li>
+            <li>Course discoverability</li>
+            <li>Mobile usability and responsiveness</li>
+            <li>Scanning efficiency and content hierarchy</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RIGHT: Key Insights -->
+      <div class="cs-research-right">
+        <div class="cs-research-block cs-research-block--gold">
+          <div class="cs-research-block-label">Key Insights</div>
+          <div class="cs-research-block-title">Patterns across competitor experiences.</div>
+          <p class="cs-body">Across competitor experiences, several patterns emerged:</p>
+          <ul class="cs-insight-list">
+            <li>
+              <span class="cs-insight-icon">→</span>
+              <span>Courses were centralized in a single, dedicated catalog</span>
+            </li>
+            <li>
+              <span class="cs-insight-icon">→</span>
+              <span>Filtering allowed users to refine by grade level, subject, or category</span>
+            </li>
+            <li>
+              <span class="cs-insight-icon">→</span>
+              <span>Card-based layouts improved scannability</span>
+            </li>
+            <li>
+              <span class="cs-insight-icon">→</span>
+              <span>Users could browse without navigating through multiple layers</span>
+            </li>
+            <li>
+              <span class="cs-insight-icon">→</span>
+              <span>Mobile experiences prioritized vertical scrolling and simplified interaction</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── IA / VISUAL DESIGN ── -->
+  <div class="cs-ia-visual reveal">
+    <div class="cs-ia-col">
+      <div class="cs-section-label">Information Architecture</div>
+      <h2 class="cs-section-title">Building a <em>clear path.</em></h2>
+      <p class="cs-body">I redesigned the catalog structure to consolidate all courses into one centralized experience, accessible directly from the main navigation. This eliminated the need for users to navigate through multiple grade-level pages and made the catalog a primary entry point.</p>
+    </div>
+    <div class="cs-ia-col">
+      <div class="cs-section-label">Interaction and Visual Design</div>
+      <h2 class="cs-section-title">Aligned to the <em>brand.</em></h2>
+      <p class="cs-body">I designed a card-based layout that allowed users to quickly scan available courses and understand key information at a glance. Filtering functionality enabled users to narrow results based on relevant criteria, improving efficiency and usability.</p>
+      <p class="cs-body" style="margin-top:16px;">The experience was designed mobile-first, ensuring usability and clarity across all screen sizes.</p>
+    </div>
+  </div>
+
+  <!-- ── IMPLEMENTATION ── -->
+  <section class="cs-impl reveal">
+    <div class="cs-section-label">Implementation and QA</div>
+    <h2 class="cs-section-title">Shipped to <em>production.</em></h2>
+    <p class="cs-body">I collaborated closely with the development team through build, QA, and launch — flagging issues, validating interactions, and ensuring the implemented experience matched the design intent.</p>
+    <div class="cs-impl-chips">
+      <div class="cs-impl-chip">Cross-browser and mobile QA across all major device breakpoints</div>
+      <div class="cs-impl-chip">Annotated handoff documentation with interaction specs and edge cases</div>
+      <div class="cs-impl-chip">Iterative review cycles with stakeholders before final sign-off</div>
+      <div class="cs-impl-chip">Performance review to ensure fast load on the 17K+ page site</div>
+      <div class="cs-impl-chip">Accessibility checks for color contrast and keyboard navigation</div>
+      <div class="cs-impl-chip">Post-launch analytics tracking to validate engagement goals</div>
+    </div>
+    <div class="cs-impl-image-wrap">
+      <img src="course-catalog-dev.jpg" alt="Course catalog development screenshots showing web experience across multiple states" />
+    </div>
+  </section>
+
+  <!-- ── SCREENS ── -->
+  <section class="cs-screens reveal">
+    <div class="cs-section-label">Final Designs</div>
+    <h2 class="cs-section-title">From pixels <em>to production.</em></h2>
+    <p class="cs-body">The delivered catalog brought all course information into a single, searchable experience with consistent structure across all grade levels.</p>
+    <div class="cs-screens-grid">
+      <div class="cs-screen-card">
+        <div class="cs-screen-card-img">
+          <img src="catalog-experience-full.jpg" alt="Full course catalog web experience" />
+        </div>
+        <div class="cs-screen-card-caption">Web experience — full catalog with filters, search, and course cards</div>
+      </div>
+      <div class="cs-screen-card">
+        <div class="cs-screen-card-img">
+          <img src="catalog-experience-no-courses.jpg" alt="Course catalog empty state" />
+        </div>
+        <div class="cs-screen-card-caption">Empty state — clear messaging when no courses match the selected filters</div>
+      </div>
+      <div class="cs-screen-card">
+        <div class="cs-screen-card-img">
+          <img src="catalog-experience-mobile-filter.jpg" alt="Mobile filter drawer experience" />
+        </div>
+        <div class="cs-screen-card-caption">Mobile filter drawer — collapsible filter panel optimized for small screens</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOLUTION ── -->
+  <section class="cs-solution reveal">
+    <div>
+      <div class="cs-section-label">Solution</div>
+      <h2 class="cs-section-title">A catalog families <em>actually use.</em></h2>
+      <p class="cs-body">The existing course catalog experience created significant usability and discoverability challenges.</p>
+      <p class="cs-body" style="margin-top: 16px;">The final solution included:</p>
+      <ul class="cs-bullet-list">
+        <li>A centralized course catalog accessible from top-level navigation</li>
+        <li>A scannable, structured layout for easy browsing</li>
+        <li>A responsive design optimized for mobile and desktop</li>
+        <li>A scalable framework supporting future course additions</li>
+      </ul>
+      <p class="cs-body" style="margin-top: 20px;">The experience significantly reduced friction and made academic exploration more intuitive.</p>
+    </div>
+    <div class="cs-solution-image">
+      <img src="catalog-demo.gif" alt="Course catalog filtering interaction demo" style="width:100%; display:block;" />
+    </div>
+  </section>
+
+  <!-- ── OUTCOMES ── -->
+  <div class="cs-outcomes reveal">
+    <div class="cs-outcomes-col">
+      <div class="cs-section-label">Outcomes and Impact</div>
+      <h2 class="cs-section-title">What we <em>achieved.</em></h2>
+      <p class="cs-body">The catalog became one of the top 5 most visited pages on the entire site — moving from invisible to a core navigation destination within weeks of launch.</p>
+
+      <!-- Image Slideshow -->
+      <div class="cs-impact-slideshow">
+        <div class="cs-impact-slides">
+          <div class="cs-impact-slide active">
+            <img src="before-impact.jpg" alt="Before: Google Analytics data showing catalog page ranked #11" />
+          </div>
+          <div class="cs-impact-slide">
+            <img src="after-impact.jpg" alt="After: Google Analytics data showing catalog page ranked #4" />
+          </div>
+        </div>
+        <div class="cs-impact-slide-footer">
+          <div class="cs-impact-caption" id="impact-caption">
+            Before launch — the catalog page ranked #11, buried deep in site traffic with limited visibility.
+          </div>
+          <div class="cs-impact-controls">
+            <button class="cs-impact-btn" id="impact-prev" aria-label="Previous">←</button>
+            <span class="cs-impact-counter" id="impact-counter">1 / 2</span>
+            <button class="cs-impact-btn" id="impact-next" aria-label="Next">→</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="cs-outcomes-col">
+      <div class="cs-section-label">Reflection & Growth</div>
+      <h2 class="cs-section-title">What I <em>learned.</em></h2>
+      <p class="cs-body">This project reinforced the importance of:</p>
+      <ul class="cs-bullet-list" style="margin-top: 16px;">
+        <li>Evaluating existing usability issues before designing solutions</li>
+        <li>Leveraging competitive analysis to inform UX decisions</li>
+        <li>Iterating collaboratively with developers</li>
+        <li>Ensuring quality through UX-focused QA</li>
+      </ul>
+      <p class="cs-body" style="margin-top: 20px;">It also demonstrated how structural improvements to information architecture can significantly improve user engagement and discoverability.</p>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ── -->
+  <div class="cs-next">
+    <a href="earth-hero.html" class="cs-next-back">
+      <span class="cs-next-label">← Previous Case Study</span>
+      <span class="cs-next-title">Earth Hero</span>
+      <span class="cs-next-arrow">Sustainability App</span>
+    </a>
+    <a href="index.html#work" class="cs-next-project">
+      <span class="cs-next-label">Back to →</span>
+      <span class="cs-next-title">All Work</span>
+      <span class="cs-next-arrow">View all case studies →</span>
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Alix Zevetski</span>
+  <span class="footer-credit">© 2025 · Designed with ♥ and too much research</span>
+</footer>
+
+<script>
+  // Mobile nav
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer    = document.getElementById('nav-drawer');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    drawer.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeNav() {
+    hamburger.classList.remove('open');
+    drawer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => revealObs.observe(r));
+
+  // Impact slideshow
+  const slides = document.querySelectorAll('.cs-impact-slide');
+  const captions = [
+    'Before launch — the catalog page ranked #11, buried deep in site traffic with limited visibility.',
+    'After launch — the catalog jumped to #4, becoming one of the most visited pages on the entire site.'
+  ];
+  let current = 0;
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('impact-caption').textContent = captions[current];
+    document.getElementById('impact-counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  document.getElementById('impact-prev').addEventListener('click', () => goToSlide(current - 1));
+  document.getElementById('impact-next').addEventListener('click', () => goToSlide(current + 1));
+
+
+  const roleEl = document.getElementById('role-highlight');
+  const roleObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        roleEl.classList.add('underlined');
+        roleObs.unobserve(roleEl);
+      }
+    });
+  }, { threshold: 1.0 });
+  if (roleEl) roleObs.observe(roleEl);
+</script>
+
+</body>
+</html>
