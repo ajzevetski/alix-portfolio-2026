@@ -373,37 +373,53 @@
       justify-content: center;
       min-height: 480px;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
-    .photo-placeholder {
-      width: 220px; height: 280px;
-      border: 2px dashed var(--border);
-      border-radius: 120px;
+    .about-heart-frame {
+      position: relative;
+      width: 360px;
+      height: 360px;
+      flex-shrink: 0;
+    }
+    .about-heart-svg-wrap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .about-carousel {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+    .about-carousel-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .about-carousel-slide.active { opacity: 1; }
+    .about-carousel-dots {
+      position: absolute;
+      bottom: -36px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: rgba(255,255,255,0.5);
+      gap: 8px;
+      z-index: 10;
     }
-    .photo-placeholder-icon {
-      font-size: 2.5rem;
-      opacity: 0.4;
+    .about-carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 2px solid var(--violet);
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
     }
-    .photo-placeholder-text {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
-    }
-    .about-me-photo img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      position: absolute; inset: 0;
-    }
+    .about-carousel-dot.active { background: var(--violet); }
 
     /* WORK */
     .work-header {
@@ -855,7 +871,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#bbdac1decddecfc8d0d2cec3fbdcd6dad2d795d8d4d6" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -868,7 +884,7 @@
   <a href="#about"   onclick="closeNav()">About</a>
   <a href="#work"    onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#88e9f2edfeedfcfbe3e1fdf0c8efe5e9e1e4a6ebe7e5" onclick="closeNav()">Contact</a>
 </div>
 
 <!-- TICKER -->
@@ -878,7 +894,7 @@
   <div class="hero-left">
     <p class="hero-eyebrow">✦ Senior UX Designer · <span class="avail-dot"></span> Available for work</p>
     <h1 class="hero-name" id="hero-name"><span class="type-cursor"></span></h1>
-    <p class="hero-role">I design research-backed digital experiences that improve conversion, reduce friction, and keep users coming back. Founding UX hire at Spring Education Group — where I helped drive <strong style="color:var(--ink)">$3M+ in revenue impact</strong> through data-informed design.</p>
+    <p class="hero-role">I design research-backed digital experiences that improve conversion, reduce friction, and keep users coming back. I was the founding UX hire at Spring Education Group, where I helped drive <strong style="color:var(--ink)">$3M+ in revenue impact</strong> through data-informed design.</p>
     <div class="hero-tags">
       <span class="tag">UX Research</span>
       <span class="tag">Product Design</span>
@@ -931,7 +947,7 @@
     <div class="card-info">
       <span class="card-tag">Redesign · User Engagement</span>
       <h3 class="card-title">Laurel Springs</h3>
-      <p class="card-desc">Centralizing course discovery for an online K–12 school to reduce friction and improve usability — making it easier for students and parents to find what they need.</p>
+      <p class="card-desc">Centralizing course discovery for an online K–12 school to reduce friction and improve usability, making it easier for students and parents to find what they need.</p>
       <a href="laurel-springs.html" class="card-link">View Case Study →</a>
     </div>
   </div>
@@ -944,7 +960,7 @@
     <div class="card-info">
       <span class="card-tag">Conversion · Research Driven</span>
       <h3 class="card-title">Spring Education Group</h3>
-      <p class="card-desc">Increasing visit-to-inquiry conversion through a research-driven redesign of key landing pages — with A/B tested results and measurable financial impact.</p>
+      <p class="card-desc">Increasing visit-to-inquiry conversion through a research-driven redesign of key landing pages, with A/B tested results and measurable financial impact.</p>
       <a href="#" class="card-link">View Case Study →</a>
     </div>
   </div>
@@ -960,9 +976,9 @@
   <div class="about-me-text">
     <span class="about-me-eyebrow">✦ About Me</span>
     <h2 class="about-me-heading">The person<br />behind the <em>pixels.</em></h2>
-    <p class="about-me-body">I'm a Senior UX Designer with <strong>4 years of experience</strong> designing and launching web products in fast-moving environments. I was the <strong>founding UX hire</strong> at Spring Education Group, where I built the UX practice from scratch inside a 10,000+ person org — defining processes, setting design standards, and introducing research and experimentation at scale.</p>
-    <p class="about-me-body">My work lives at the intersection of research and results. I partner closely with product, engineering, and marketing to ship experiences that don't just look good — they move the needle. I've driven <strong>$3M+ in revenue impact</strong> through improved conversion, led A/B testing programs with Optimizely, and increased visit-to-inquiry rates by over 50%.</p>
-    <p class="about-me-body">When I'm not in Figma, you'll find me hiking, scuba diving, playing pickleball, or rewatching the Eras Tour.</p>
+    <p class="about-me-body">I'm a Senior UX Designer with <strong>4 years of experience</strong> designing web products that actually ship. I was the first UX hire at Spring Education Group, which meant building the whole practice from zero inside a 10,000+ person company.</p>
+    <p class="about-me-body">I care a lot about research and making sure design decisions are backed by something real. I've run A/B tests, usability studies, and enough analytics deep-dives to know that good design is rarely just about how something looks.</p>
+    <p class="about-me-body">Outside of work I'm usually hiking with my two corgis, playing pickleball, or headbanging at a concert somewhere.</p>
     <div class="about-me-chips">
       <span class="about-chip">Figma</span>
       <span class="about-chip">Optimizely</span>
@@ -974,9 +990,38 @@
     </div>
   </div>
   <div class="about-me-photo">
-    <div class="photo-placeholder">
-      <div class="photo-placeholder-icon">📷</div>
-      <div class="photo-placeholder-text">Your photo<br />goes here</div>
+    <div class="about-heart-frame">
+
+      <!-- SVG: defines clipPath + renders border on top -->
+      <svg class="about-heart-svg-wrap" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="heartClip">
+            <path d="M180 320 C180 320 20 215 20 110 C20 55 62 22 110 30 C140 36 162 56 180 80 C198 56 220 36 250 30 C298 22 340 55 340 110 C340 215 180 320 180 320 Z"/>
+          </clipPath>
+        </defs>
+
+        <!-- Photo carousel clipped to heart -->
+        <foreignObject x="0" y="0" width="360" height="360" clip-path="url(#heartClip)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="about-carousel">
+            <div class="about-carousel-slide active" style="background-image: url('puppies-1.jpeg')"></div>
+            <div class="about-carousel-slide" style="background-image: url('puppies-2.jpg')"></div>
+            <div class="about-carousel-slide" style="background-image: url('jeffrey-picture.jpg')"></div>
+            <div class="about-carousel-slide" style="background-image: url('warped-tour.jpeg')"></div>
+          </div>
+        </foreignObject>
+
+        <!-- Heart border drawn on top -->
+        <path d="M180 320 C180 320 20 215 20 110 C20 55 62 22 110 30 C140 36 162 56 180 80 C198 56 220 36 250 30 C298 22 340 55 340 110 C340 215 180 320 180 320 Z"
+              fill="none" stroke="#6B21A8" stroke-width="4"/>
+      </svg>
+
+      <!-- Dots outside SVG -->
+      <div class="about-carousel-dots">
+        <button class="about-carousel-dot active" data-index="0"></button>
+        <button class="about-carousel-dot" data-index="1"></button>
+        <button class="about-carousel-dot" data-index="2"></button>
+        <button class="about-carousel-dot" data-index="3"></button>
+      </div>
     </div>
   </div>
 </section>
@@ -997,7 +1042,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const cursorHeart = cursor.querySelector('path');
@@ -1111,6 +1156,25 @@
       }, speed);
     }, delay);
   })();
+
+  // About carousel
+  let carouselIndex = 0;
+  const carouselSlides = document.querySelectorAll('.about-carousel-slide');
+  const carouselDots   = document.querySelectorAll('.about-carousel-dot');
+
+  function goToCarouselSlide(n) {
+    carouselSlides[carouselIndex].classList.remove('active');
+    carouselDots[carouselIndex].classList.remove('active');
+    carouselIndex = (n + carouselSlides.length) % carouselSlides.length;
+    carouselSlides[carouselIndex].classList.add('active');
+    carouselDots[carouselIndex].classList.add('active');
+  }
+
+  carouselDots.forEach(dot => {
+    dot.addEventListener('click', () => goToCarouselSlide(parseInt(dot.dataset.index)));
+  });
+
+  setInterval(() => goToCarouselSlide(carouselIndex + 1), 4000);
 
   // Mobile nav
   const hamburger = document.getElementById('nav-hamburger');
@@ -1927,12 +1991,4 @@
 
   document.getElementById('start-btn').addEventListener('click', startGame);
   document.getElementById('restart-btn').addEventListener('click', () => {
-    document.getElementById('gameover-screen').style.display = 'none';
-    document.getElementById('start-screen').style.display    = 'flex';
-    drawPreviews();
-  });
-})();
-</script>
-
-</body>
-</html>
+    d
