@@ -16,19 +16,69 @@
       --cream:    #FAFAF8;
       --warm:     #FFF5E6;
       /* section accent colors */
-      --punch:    #7B7FC4;   /* periwinkle — primary accent */
-      --terra:    #7B7FC4;   /* alias for punch */
-      --violet:   #6B21A8;   /* deep purple — about section */
-      --mint:     #D1FAE5;   /* soft mint — case study section bg */
-      --yellow:   #FFF176;   /* retro yellow — coming soon, highlights */
-      --teal:     #0D9488;   /* teal — contact section */
-      --blush:    #C8CAF0;   /* soft periwinkle tint */
-      --ink:      #1A1118;   /* near-black */
+      --punch:    #7B7FC4;
+      --terra:    #7B7FC4;
+      --violet:   #6B21A8;
+      --mint:     #D1FAE5;
+      --yellow:   #FFF176;
+      --teal:     #0D9488;
+      --blush:    #C8CAF0;
+      --ink:      #1A1118;
       --muted:    #6B6070;
       --border:   #E5D8F0;
       --serif:    'Archivo Black', sans-serif;
       --sans:     'Plus Jakarta Sans', sans-serif;
       --mono:     'DM Mono', monospace;
+    }
+
+    /* DARK MODE */
+    html.dark {
+      --white:    #0F0D12;
+      --offwhite: #161219;
+      --cream:    #161219;
+      --warm:     #1A1520;
+      --mint:     #0D2B1F;
+      --yellow:   #3D3800;
+      --blush:    #1E1B2E;
+      --ink:      #F0EBF5;
+      --muted:    #9A8FAA;
+      --border:   #2E2438;
+    }
+    html.dark body { background: var(--white); color: var(--ink); }
+    html.dark nav  { background: var(--white); border-color: #2E2438; }
+    html.dark .nav-logo-text { color: var(--ink); }
+    html.dark .nav-logo-bar  { background: var(--punch); }
+    html.dark .nav-links a   { color: var(--ink); }
+    html.dark .nav-links a.nav-contact-btn { background: var(--ink); color: var(--white); border-color: var(--ink); }
+    html.dark .nav-drawer    { background: var(--white); }
+    html.dark .nav-drawer a  { color: var(--ink); border-color: #2E2438; }
+    html.dark .nav-hamburger span { background: var(--ink); }
+
+    /* Dark mode toggle button */
+    #dark-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--ink);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 2px 2px 0 var(--ink);
+      flex-shrink: 0;
+      color: var(--ink);
+    }
+    #dark-toggle:hover {
+      transform: translate(-1px,-1px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    /* Smooth transitions on dark mode switch */
+    body, nav, section, div, footer, h1, h2, h3, p, a, span, li {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     html { scroll-behavior: smooth; }
@@ -94,15 +144,69 @@
     .nav-logo {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
       flex-shrink: 0;
     }
-    .nav-logo svg {
-      display: block;
-      transition: transform 0.2s ease;
+    .nav-logo-inner {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .nav-logo:hover svg { transform: translateY(-2px); }
-    .nav-logo:hover rect { fill: #6B21A8; }
+    .nav-logo-text {
+      font-family: 'Archivo Black', sans-serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .logo-not {
+      font-family: 'Archivo Black', sans-serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: #FF6B2B;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      white-space: nowrap;
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-120px);
+      pointer-events: none;
+    }
+    @keyframes notSlideIn {
+      0%   { transform: translateX(-80px); opacity: 0; }
+      100% { transform: translateX(0px);   opacity: 1; }
+    }
+    @keyframes notSlideOut {
+      0%   { transform: translateX(0px);   opacity: 1; }
+      100% { transform: translateX(-80px); opacity: 0; }
+    }
+    .logo-not.slide-in  { animation: notSlideIn  0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .logo-not.slide-out { animation: notSlideOut 0.4s cubic-bezier(0.55,0,1,0.45) forwards; }
+    .nav-logo-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-left: 2px;
+      align-self: flex-end;
+      padding-bottom: 3px;
+    }
+    .nav-logo-bar {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--punch);
+      display: block;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .nav-logo-bar:first-child { width: 24px; }
+    .nav-logo-bar:last-child  { width: 36px; transition-delay: 0.07s; }
+    .nav-logo-bars.visible .nav-logo-bar { transform: scaleX(1); }
+    .nav-logo:hover .nav-logo-bar { background: #6B21A8; }
+
     .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-links a {
       font-family: var(--mono);
@@ -370,40 +474,22 @@
       background: #F3E8FF;
       min-height: 480px;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
     }
-    .about-carousel {
+    .about-single-photo {
+      width: 78%;
+      height: 90%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 16px;
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      display: block;
       position: absolute;
-      inset: 0;
     }
-    .about-carousel-slide {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .about-carousel-slide.active { opacity: 1; }
-    .about-carousel-dots {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 10;
-    }
-    .about-carousel-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      border: 2px solid white;
-      background: transparent;
-      cursor: pointer;
-      padding: 0;
-      transition: background 0.2s;
-    }
-    .about-carousel-dot.active { background: white; }
 
     /* WORK */
     .work-header {
@@ -812,6 +898,7 @@
       .about-me { grid-template-columns: 1fr; }
       .about-me-text { border-right: none; border-bottom: 2px solid var(--ink); padding: 48px 28px; }
       .about-me-photo { min-height: 360px; }
+      .about-single-photo { width: 85%; }
 
       .work-header { padding: 32px 24px; }
 
@@ -845,13 +932,17 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#" aria-label="Alix Zevetski">
-    <svg width="220" height="36" viewBox="0 0 220 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="2" y="28" font-family="'Archivo Black',sans-serif" font-style="italic" font-size="29" fill="#1A1118" letter-spacing="-1.5">Alix with an i</text>
-      <rect x="2"  y="31" width="24" height="3" rx="1.5" fill="#7B7FC4"/>
-      <rect x="30" y="31" width="36" height="3" rx="1.5" fill="#7B7FC4"/>
-    </svg>
+    <span class="nav-logo-inner" id="nav-logo-inner">
+      <span class="logo-not" id="logo-not">not</span>
+      <span class="nav-logo-text" id="nav-logo-text">A.I.</span>
+    </span>
+    <span class="nav-logo-bars" id="nav-logo-bars">
+      <span class="nav-logo-bar"></span>
+      <span class="nav-logo-bar"></span>
+    </span>
   </a>
   <ul class="nav-links">
+    <li><button id="dark-toggle" aria-label="Toggle dark mode">🌙</button></li>
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
@@ -868,7 +959,7 @@
   <a href="#about"   onclick="closeNav()">About</a>
   <a href="#work"    onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="/cdn-cgi/l/email-protection#88e9f2edfeedfcfbe3e1fdf0c8efe5e9e1e4a6ebe7e5" onclick="closeNav()">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#35544f50435041465e5c404d755258545c591b565a58" onclick="closeNav()">Contact</a>
 </div>
 
 <!-- TICKER -->
@@ -876,9 +967,9 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow">✦ Senior UX Designer · <span class="avail-dot"></span> Available for work</p>
+    <p class="hero-eyebrow">✦ UX Researcher & Designer · <span class="avail-dot"></span> Available for work</p>
     <h1 class="hero-name" id="hero-name"><span class="type-cursor"></span></h1>
-    <p class="hero-role">I design research-backed digital experiences that improve conversion, reduce friction, and keep users coming back. I was the founding UX hire at Spring Education Group, where I helped drive <strong style="color:var(--ink)">$3M+ in revenue impact</strong> through data-informed design.</p>
+    <p class="hero-role">I'm a UX researcher and designer who uses interviews, behavioral data, and testing to figure out what's actually going wrong and then fix it.</p>
     <div class="hero-tags">
       <span class="tag">UX Research</span>
       <span class="tag">Product Design</span>
@@ -918,7 +1009,7 @@
     <div class="card-info">
       <span class="card-tag">Information Architecture · Retention</span>
       <h3 class="card-title">Earth Hero</h3>
-      <p class="card-desc">Redesigning the homepage and action flows of a sustainability app to reduce drop-off and improve long-term user retention through research-led UX decisions.</p>
+      <p class="card-desc">User interviews and behavioral data revealed why people were dropping off a sustainability app. That research drove a redesign that improved engagement and long-term retention.</p>
       <a href="earth-hero.html" class="card-link">View Case Study →</a>
     </div>
   </div>
@@ -931,7 +1022,7 @@
     <div class="card-info">
       <span class="card-tag">Redesign · User Engagement</span>
       <h3 class="card-title">Laurel Springs</h3>
-      <p class="card-desc">Centralizing course discovery for an online K–12 school to reduce friction and improve usability, making it easier for students and parents to find what they need.</p>
+      <p class="card-desc">Competitive analysis and user behavior data showed why students and parents couldn't find what they were looking for. The research shaped a centralized catalog that became a top 4 page on the site.</p>
       <a href="laurel-springs.html" class="card-link">View Case Study →</a>
     </div>
   </div>
@@ -944,7 +1035,7 @@
     <div class="card-info">
       <span class="card-tag">Conversion · Research Driven</span>
       <h3 class="card-title">Spring Education Group</h3>
-      <p class="card-desc">Increasing visit-to-inquiry conversion through a research-driven redesign of key landing pages, with A/B tested results and measurable financial impact.</p>
+      <p class="card-desc">A/B testing, funnel analysis, and usability research identified exactly where visitors were dropping off. Data-informed redesigns drove $3M+ in revenue impact and a 50%+ lift in inquiry rates.</p>
       <a href="#" class="card-link">View Case Study →</a>
     </div>
   </div>
@@ -960,32 +1051,21 @@
   <div class="about-me-text">
     <span class="about-me-eyebrow">✦ About Me</span>
     <h2 class="about-me-heading">The person<br />behind the <em>pixels.</em></h2>
-    <p class="about-me-body">I'm a Senior UX Designer with <strong>4 years of experience</strong> designing web products that actually ship. I was the first UX hire at Spring Education Group, which meant building the whole practice from zero inside a 10,000+ person company.</p>
-    <p class="about-me-body">I care a lot about research and making sure design decisions are backed by something real. I've run A/B tests, usability studies, and enough analytics deep-dives to know that good design is rarely just about how something looks.</p>
+    <p class="about-me-body">I'm a UX researcher and designer with <strong>4 years of experience</strong> at Spring Education Group, where I was the first UX hire and built the research practice from zero inside a 10,000+ person company.</p>
+    <p class="about-me-body">Research is where I spend most of my time. User interviews, card sorting, usability testing, Hotjar recordings, GA4 funnels, A/B tests. I use whatever it takes to understand what's actually happening and why. The design work comes after that, and it's better for it.</p>
     <p class="about-me-body">Outside of work I'm usually hiking with my two corgis, playing pickleball, or headbanging at a concert somewhere.</p>
     <div class="about-me-chips">
-      <span class="about-chip">Figma</span>
-      <span class="about-chip">Optimizely</span>
       <span class="about-chip">GA4</span>
       <span class="about-chip">Hotjar</span>
-      <span class="about-chip">Miro</span>
+      <span class="about-chip">Optimizely</span>
       <span class="about-chip">Domo</span>
+      <span class="about-chip">Miro</span>
+      <span class="about-chip">Figma</span>
       <span class="about-chip">Jira</span>
     </div>
   </div>
   <div class="about-me-photo">
-    <div class="about-carousel">
-      <div class="about-carousel-slide active" style="background-image: url('puppies-1.jpeg')"></div>
-      <div class="about-carousel-slide" style="background-image: url('puppies-2.jpg')"></div>
-      <div class="about-carousel-slide" style="background-image: url('jeffrey-picture.jpg')"></div>
-      <div class="about-carousel-slide" style="background-image: url('warped-tour.jpeg')"></div>
-    </div>
-    <div class="about-carousel-dots">
-      <button class="about-carousel-dot active" data-index="0"></button>
-      <button class="about-carousel-dot" data-index="1"></button>
-      <button class="about-carousel-dot" data-index="2"></button>
-      <button class="about-carousel-dot" data-index="3"></button>
-    </div>
+    <img src="puppies-1.jpeg" alt="Alix with her two corgis" class="about-single-photo" />
   </div>
 </section>
 
@@ -1005,7 +1085,53 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Dark mode toggle
+  const darkToggle = document.getElementById('dark-toggle');
+  const html = document.documentElement;
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') { html.classList.add('dark'); darkToggle.textContent = '☀️'; }
+  darkToggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    const isDark = html.classList.contains('dark');
+    darkToggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+
+  // Nav logo: "A.I." → "not" slides in → slides out → types into "Alix with an i"
+  (function() {
+    const logoInner = document.getElementById('nav-logo-inner');
+    const logoText  = document.getElementById('nav-logo-text');
+    const logoNot   = document.getElementById('logo-not');
+    const logoBars  = document.getElementById('nav-logo-bars');
+
+    // Step 1: "not" slides in after 600ms
+    setTimeout(() => {
+      logoNot.classList.add('slide-in');
+    }, 600);
+
+    // Step 2: "not" slides back out
+    setTimeout(() => {
+      logoNot.classList.remove('slide-in');
+      logoNot.classList.add('slide-out');
+    }, 1600);
+
+    // Step 3: type "A.I." → "Alix with an i" slowly
+    setTimeout(() => {
+      const finalText = 'Alix with an i';
+      let i = 0;
+      logoText.textContent = '';
+      const timer = setInterval(() => {
+        i++;
+        logoText.textContent = finalText.slice(0, i);
+        if (i >= finalText.length) {
+          clearInterval(timer);
+          logoBars.classList.add('visible');
+        }
+      }, 110);
+    }, 2100);
+  })();
+
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const cursorHeart = cursor.querySelector('path');
@@ -1342,6 +1468,7 @@
     padding: 13px 24px;
     cursor: pointer;
     user-select: none;
+    touch-action: manipulation;
     font-family: var(--mono);
     font-size: 0.68rem;
     letter-spacing: 0.08em;
@@ -1584,6 +1711,7 @@
     stopGame();
   }
   fabBtn.addEventListener('click', openModal);
+  fabBtn.addEventListener('touchend', e => { e.preventDefault(); openModal(); });
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', closeModal);
 
@@ -1952,6 +2080,4 @@
     document.getElementById('gameover-screen').style.display = 'flex';
   }
 
-  document.getElementById('start-btn').addEventListener('click', startGame);
-  document.getElementById('restart-btn').addEventListener('click', () => {
-    d
+  doc
