@@ -1332,7 +1332,30 @@
 <div id="corgi-modal">
   <button id="corgi-close">✕</button>
 
-  <div id="game-wrap">
+  <!-- START SCREEN (outside game-wrap) -->
+  <div id="start-screen" class="game-screen">
+    <div class="screen-inner">
+      <h2 class="screen-title">Treat Catcher</h2>
+      <p class="screen-body" style="margin-bottom:4px;">Choose your corgi:</p>
+      <div id="dog-picker">
+        <button class="dog-choice selected" data-dog="benji">
+          <span class="dog-choice-emoji">🟠</span>
+          <canvas class="dog-preview" id="preview-benji" width="90" height="80"></canvas>
+          <span class="dog-choice-name">Benji</span>
+        </button>
+        <button class="dog-choice" data-dog="butters">
+          <span class="dog-choice-emoji">🟤</span>
+          <canvas class="dog-preview" id="preview-butters" width="90" height="80"></canvas>
+          <span class="dog-choice-name">Butters</span>
+        </button>
+      </div>
+      <p class="screen-body hint-keyboard"><strong>← → arrow keys</strong> to move · Catch treats!</p>
+      <p class="screen-body hint-touch">Drag left &amp; right to move · Catch treats!</p>
+      <button class="game-btn" id="start-btn">Let's Go!</button>
+    </div>
+  </div>
+
+  <div id="game-wrap" style="display:none;">
     <!-- HUD -->
     <div id="game-hud">
       <div id="hud-score">
@@ -1345,29 +1368,6 @@
 
     <!-- CANVAS -->
     <canvas id="game-canvas"></canvas>
-
-    <!-- START SCREEN -->
-    <div id="start-screen" class="game-screen">
-      <div class="screen-inner">
-        <h2 class="screen-title">Treat Catcher</h2>
-        <p class="screen-body" style="margin-bottom:4px;">Choose your corgi:</p>
-        <div id="dog-picker">
-          <button class="dog-choice selected" data-dog="benji">
-            <span class="dog-choice-emoji">🟠</span>
-            <canvas class="dog-preview" id="preview-benji" width="90" height="80"></canvas>
-            <span class="dog-choice-name">Benji</span>
-          </button>
-          <button class="dog-choice" data-dog="butters">
-            <span class="dog-choice-emoji">🟤</span>
-            <canvas class="dog-preview" id="preview-butters" width="90" height="80"></canvas>
-            <span class="dog-choice-name">Butters</span>
-          </button>
-        </div>
-        <p class="screen-body hint-keyboard"><strong>← → arrow keys</strong> to move · Catch treats!</p>
-        <p class="screen-body hint-touch">Drag left &amp; right to move · Catch treats!</p>
-        <button class="game-btn" id="start-btn">Let's Go!</button>
-      </div>
-    </div>
 
     <!-- GAME OVER SCREEN -->
     <div id="gameover-screen" class="game-screen" style="display:none;">
@@ -1468,18 +1468,6 @@
       overflow-x: hidden;
     }
     #corgi-modal.show { transform: translate(-50%, -50%) scale(1); }
-
-    /* hide canvas+hud while a screen is showing — modal only needs to fit the screen content */
-    #game-wrap.show-screen #game-canvas { display: none; }
-    #game-wrap.show-screen #game-hud    { display: none; }
-
-    /* screens become normal block flow, not absolute overlay */
-    .game-screen {
-      position: relative;
-      inset: auto;
-      top: auto;
-      min-height: unset;
-    }
     .screen-inner { padding: 48px 24px 52px; gap: 14px; }
     .game-btn     { padding: 16px 36px; font-size: 0.9rem; }
     #game-canvas  { height: 56vw !important; min-height: 200px; }
@@ -1542,14 +1530,16 @@
 
   /* ── SCREENS ── */
   .game-screen {
-    position: absolute;
-    inset: 0;
-    top: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.93);
-    backdrop-filter: blur(6px);
+    background: white;
+  }
+  /* gameover still overlays the canvas */
+  #gameover-screen {
+    position: absolute;
+    inset: 0;
+    top: 44px;
     z-index: 5;
   }
   .screen-inner {
@@ -1662,6 +1652,10 @@
     document.body.style.overflow = '';
     setTimeout(() => { modal.style.display = 'none'; }, 250);
     stopGame();
+    // reset back to start screen
+    gameWrap.style.display = 'none';
+    startScreen.style.display = 'flex';
+    document.getElementById('gameover-screen').style.display = 'none';
   }
   fabBtn.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
@@ -2008,12 +2002,13 @@
     animId = requestAnimationFrame(gameLoop);
   }
 
-  const gameWrap = document.getElementById('game-wrap');
+  const gameWrap   = document.getElementById('game-wrap');
+  const startScreen = document.getElementById('start-screen');
 
   function startGame() {
-    document.getElementById('start-screen').style.display    = 'none';
+    startScreen.style.display = 'none';
     document.getElementById('gameover-screen').style.display = 'none';
-    gameWrap.classList.remove('show-screen');
+    gameWrap.style.display = 'block';
     initGame(); gameRunning = true; gameLoop();
   }
   function stopGame() { gameRunning = false; if (animId) cancelAnimationFrame(animId); }
@@ -2032,13 +2027,13 @@
     document.getElementById('final-score').textContent = score;
     document.getElementById('go-comment').textContent  = msg;
     document.getElementById('gameover-screen').style.display = 'flex';
-    gameWrap.classList.add('show-screen');
   }
 
   // Button wiring
   document.getElementById('start-btn').addEventListener('click', startGame);
   document.getElementById('restart-btn').addEventListener('click', () => {
     document.getElementById('gameover-screen').style.display = 'none';
+    gameWrap.style.display = 'block';
     startGame();
   });
 
