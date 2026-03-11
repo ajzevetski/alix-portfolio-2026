@@ -1454,39 +1454,35 @@
   }
   #corgi-modal.show { display: block; transform: translate(-50%,-50%) scale(1); opacity: 1; }
 
-  /* mobile modal — card style, not full screen */
+  /* mobile modal */
   @media (max-width: 600px) {
     #corgi-modal {
       top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.92);
       width: 92vw;
-      max-height: 90dvh;
+      max-height: 92dvh;
       border-radius: 16px;
       border: 2px solid var(--ink);
       box-shadow: 6px 6px 0 var(--ink);
       overflow-y: auto;
       overflow-x: hidden;
     }
-    #corgi-modal.show {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    #game-canvas { height: 52vw !important; min-height: 200px; }
+    #corgi-modal.show { transform: translate(-50%, -50%) scale(1); }
 
-    /* start/gameover screens: static flow instead of absolute overlay so they scroll naturally */
+    /* hide canvas+hud while a screen is showing — modal only needs to fit the screen content */
+    #game-wrap.show-screen #game-canvas { display: none; }
+    #game-wrap.show-screen #game-hud    { display: none; }
+
+    /* screens become normal block flow, not absolute overlay */
     .game-screen {
       position: relative;
-      top: auto;
       inset: auto;
-      min-height: 320px;
+      top: auto;
+      min-height: unset;
     }
-    .screen-inner {
-      padding: 32px 20px 48px;
-      gap: 14px;
-    }
-    .game-btn {
-      padding: 16px 36px;
-      font-size: 0.85rem;
-    }
+    .screen-inner { padding: 48px 24px 52px; gap: 14px; }
+    .game-btn     { padding: 16px 36px; font-size: 0.9rem; }
+    #game-canvas  { height: 56vw !important; min-height: 200px; }
   }
 
   #corgi-close {
@@ -1654,6 +1650,7 @@
     modal.style.display = 'block';
     overlay.classList.add('show');
     document.body.style.overflow = 'hidden';
+    document.getElementById('game-wrap').classList.add('show-screen');
     requestAnimationFrame(() => {
       modal.classList.add('show');
       drawPreviews();
@@ -2011,9 +2008,12 @@
     animId = requestAnimationFrame(gameLoop);
   }
 
+  const gameWrap = document.getElementById('game-wrap');
+
   function startGame() {
     document.getElementById('start-screen').style.display    = 'none';
     document.getElementById('gameover-screen').style.display = 'none';
+    gameWrap.classList.remove('show-screen');
     initGame(); gameRunning = true; gameLoop();
   }
   function stopGame() { gameRunning = false; if (animId) cancelAnimationFrame(animId); }
@@ -2032,6 +2032,7 @@
     document.getElementById('final-score').textContent = score;
     document.getElementById('go-comment').textContent  = msg;
     document.getElementById('gameover-screen').style.display = 'flex';
+    gameWrap.classList.add('show-screen');
   }
 
   // Button wiring
