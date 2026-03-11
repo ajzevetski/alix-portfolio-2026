@@ -538,6 +538,17 @@
       box-shadow: 4px 4px 0 var(--ink);
       height: 100%;
     }
+    .cs-research-comp-image {
+      margin-top: 24px;
+      border-radius: 10px;
+      border: 2px solid var(--ink);
+      overflow: hidden;
+    }
+    .cs-research-comp-image img {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+    }
     .cs-research-block--gold {
       background: var(--ls-navy);
       box-shadow: 4px 4px 0 var(--ink);
@@ -678,6 +689,117 @@
       width: 100%;
       display: block;
     }
+
+    /* EASTER EGG */
+    .cs-easter-egg-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .cs-easter-egg-trigger {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.08);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      animation: eggWiggle 4s ease-in-out 2s infinite;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .cs-easter-egg-trigger::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--ls-gold);
+      opacity: 0;
+      animation: eggPulse 4s ease-in-out 2s infinite;
+    }
+    .cs-easter-egg-trigger:hover {
+      animation: none;
+      border-color: var(--ls-gold);
+      transform: scale(1.1);
+    }
+    .cs-easter-egg-trigger:hover::after { display: none; }
+    @keyframes eggWiggle {
+      0%, 75%, 100% { transform: rotate(0deg); }
+      80% { transform: rotate(-14deg); }
+      86% { transform: rotate(14deg); }
+      91% { transform: rotate(-8deg); }
+      95% { transform: rotate(6deg); }
+    }
+    @keyframes eggPulse {
+      0%, 70%, 100% { opacity: 0; transform: scale(1); }
+      76% { opacity: 0.7; transform: scale(1); }
+      88% { opacity: 0; transform: scale(1.5); }
+    }
+    .cs-easter-egg-hint {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.35);
+      font-style: italic;
+    }
+    .cs-easter-egg-popover {
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 0;
+      width: 300px;
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 14px;
+      box-shadow: 5px 5px 0 var(--ink);
+      padding: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+      z-index: 100;
+    }
+    .cs-easter-egg-popover::before {
+      content: '';
+      position: absolute;
+      bottom: -13px;
+      left: 14px;
+      width: 18px; height: 12px;
+      background: var(--ink);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+    .cs-easter-egg-popover::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 16px;
+      width: 14px; height: 9px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+    .cs-easter-egg-wrap:hover .cs-easter-egg-popover,
+    .cs-easter-egg-wrap.open .cs-easter-egg-popover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .cs-easter-egg-popover img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+    .cs-easter-egg-popover-label {
+      margin-top: 8px;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ls-gold);
+      font-family: 'Archivo Black', sans-serif;
+    }
     .cs-screens {
       padding: 64px;
       border-bottom: 2px solid var(--ink);
@@ -696,6 +818,7 @@
       box-shadow: 4px 4px 0 var(--ink);
       background: white;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: zoom-in;
     }
     .cs-screen-card:hover {
       transform: translate(-2px, -2px);
@@ -722,6 +845,94 @@
       font-size: 0.78rem;
       color: var(--muted);
       line-height: 1.5;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      transform-origin: center center;
+      transition: transform 0.15s ease;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .lightbox-img.grabbing { cursor: grabbing; }
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.15s ease;
+    }
+    .lightbox-close:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+    .lightbox-zoom {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 1001;
+    }
+    .lightbox-zoom-btn {
+      background: white;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      width: 44px;
+      height: 44px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform 0.15s ease;
+    }
+    .lightbox-zoom-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+    .lightbox-hint {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.5);
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
     }
 
     /* ── SOLUTION ── */
@@ -1013,11 +1224,20 @@
       .cs-impl { padding: 40px 20px; }
       .cs-impl-chips { grid-template-columns: 1fr; gap: 10px; }
       .cs-impl-image-wrap { margin-top: 28px; }
+      .cs-easter-egg-popover { width: 260px; }
 
       /* FINAL DESIGNS */
       .cs-screens { padding: 40px 20px; }
       .cs-screens-grid { grid-template-columns: 1fr; gap: 16px; }
       .cs-screen-card-img { aspect-ratio: 16/9; }
+      .cs-screen-card { cursor: pointer; }
+
+      /* LIGHTBOX */
+      .lightbox { padding: 12px; }
+      .lightbox-img { max-width: 96vw; max-height: 80vh; }
+      .lightbox-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+      .lightbox-zoom { bottom: 16px; }
+      .lightbox-hint { bottom: 72px; font-size: 0.65rem; }
 
       /* SOLUTION */
       .cs-solution { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; }
@@ -1056,6 +1276,8 @@
       .cs-research-block { padding: 20px; }
       .cs-ia-col { padding: 32px 16px; }
       .cs-impl { padding: 32px 16px; }
+      .cs-easter-egg-wrap { margin-top: 20px; }
+      .cs-easter-egg-popover { width: 240px; left: 0; right: auto; }
       .cs-screens { padding: 32px 16px; }
       .cs-solution { padding: 32px 16px; }
       .cs-text-section { padding: 32px 16px; }
@@ -1082,7 +1304,7 @@
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#dcbda6b9aab9a8afb7b5a9a49cbbb1bdb5b0f2bfb3b1" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1094,7 +1316,7 @@
   <a href="index.html#about" onclick="closeNav()">About</a>
   <a href="index.html#work"  onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#56372c33203322253d3f232e16313b373f3a7835393b" onclick="closeNav()">Contact</a>
 </div>
 
 <div class="page">
@@ -1227,6 +1449,9 @@
             <li>Mobile usability and responsiveness</li>
             <li>Scanning efficiency and content hierarchy</li>
           </ul>
+          <div class="cs-research-comp-image">
+            <img src="Competitors.jpg" alt="Competitive analysis — course catalog experiences from Florida Virtual School, Dwight Global Online, and Stanford Online High School" />
+          </div>
         </div>
       </div>
 
@@ -1284,6 +1509,14 @@
     <div class="cs-section-label">Implementation and QA</div>
     <h2 class="cs-section-title">Shipped to <em>production.</em></h2>
     <p class="cs-body">I collaborated closely with the development team through build, QA, and launch — flagging issues, validating interactions, and ensuring the implemented experience matched the design intent.</p>
+    <div class="cs-easter-egg-wrap" id="easterEgg">
+      <button class="cs-easter-egg-trigger" aria-label="A little something">💛</button>
+      <span class="cs-easter-egg-hint">psst — hover the heart</span>
+      <div class="cs-easter-egg-popover">
+        <img src="Message-from-dev.jpg" alt="Message from the developer" />
+        <div class="cs-easter-egg-popover-label">✦ From the dev</div>
+      </div>
+    </div>
     <div class="cs-impl-chips">
       <div class="cs-impl-chip">Cross-browser and mobile QA across all major device breakpoints</div>
       <div class="cs-impl-chip">Annotated handoff documentation with interaction specs and edge cases</div>
@@ -1303,19 +1536,19 @@
     <h2 class="cs-section-title">From pixels <em>to production.</em></h2>
     <p class="cs-body">The delivered catalog brought all course information into a single, searchable experience with consistent structure across all grade levels.</p>
     <div class="cs-screens-grid">
-      <div class="cs-screen-card">
+      <div class="cs-screen-card" onclick="openLightbox('catalog-experience-full.jpg')">
         <div class="cs-screen-card-img">
           <img src="catalog-experience-full.jpg" alt="Full course catalog web experience" />
         </div>
         <div class="cs-screen-card-caption">Web experience — full catalog with filters, search, and course cards</div>
       </div>
-      <div class="cs-screen-card">
+      <div class="cs-screen-card" onclick="openLightbox('catalog-experience-no-courses.jpg')">
         <div class="cs-screen-card-img">
           <img src="catalog-experience-no-courses.jpg" alt="Course catalog empty state" />
         </div>
         <div class="cs-screen-card-caption">Empty state — clear messaging when no courses match the selected filters</div>
       </div>
-      <div class="cs-screen-card">
+      <div class="cs-screen-card" onclick="openLightbox('catalog-experience-mobile-filter.jpg')">
         <div class="cs-screen-card-img">
           <img src="catalog-experience-mobile-filter.jpg" alt="Mobile filter drawer experience" />
         </div>
@@ -1323,6 +1556,19 @@
       </div>
     </div>
   </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBackdrop(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-inner">
+      <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    </div>
+    <div class="lightbox-hint">scroll or pinch to zoom · drag to pan · esc to close</div>
+    <div class="lightbox-zoom">
+      <button class="lightbox-zoom-btn" onclick="adjustZoom(-0.25)">−</button>
+      <button class="lightbox-zoom-btn" onclick="adjustZoom(0.25)">+</button>
+    </div>
+  </div>
 
   <!-- ── SOLUTION ── -->
   <section class="cs-solution reveal">
@@ -1410,7 +1656,7 @@
   <span class="footer-credit">© 2025 · Designed with ♥ and too much research</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Mobile nav
   const hamburger = document.getElementById('nav-hamburger');
   const drawer    = document.getElementById('nav-drawer');
@@ -1461,13 +1707,118 @@
   const roleObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        roleEl.classList.add('underlined');
-        roleObs.unobserve(roleEl);
+        e.target.classList.add('visible');
+        roleObs.unobserve(e.target);
       }
     });
-  }, { threshold: 1.0 });
+  }, { threshold: 0.3 });
   if (roleEl) roleObs.observe(roleEl);
-</script>
 
+  // Easter egg
+  const easterEgg = document.getElementById('easterEgg');
+  if (easterEgg) {
+    easterEgg.querySelector('.cs-easter-egg-trigger').addEventListener('click', () => {
+      easterEgg.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!easterEgg.contains(e.target)) easterEgg.classList.remove('open');
+    });
+  }
+
+
+  let lbScale = 1;
+  let lbDragX = 0, lbDragY = 0;
+  let lbStartX = 0, lbStartY = 0;
+  let lbDragging = false;
+  const lbImg = document.getElementById('lightbox-img');
+  const lightbox = document.getElementById('lightbox');
+
+  function openLightbox(src) {
+    lbImg.src = src;
+    lbScale = 1;
+    lbDragX = 0; lbDragY = 0;
+    lbImg.style.transform = 'scale(1) translate(0px, 0px)';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOnBackdrop(e) {
+    if (e.target === lightbox) closeLightbox();
+  }
+
+  function updateTransform() {
+    lbImg.style.transform = `scale(${lbScale}) translate(${lbDragX / lbScale}px, ${lbDragY / lbScale}px)`;
+  }
+
+  function adjustZoom(delta) {
+    lbScale = Math.min(Math.max(lbScale + delta, 0.5), 5);
+    updateTransform();
+  }
+
+  // Scroll to zoom
+  lightbox.addEventListener('wheel', e => {
+    e.preventDefault();
+    adjustZoom(e.deltaY < 0 ? 0.15 : -0.15);
+  }, { passive: false });
+
+  // Drag to pan
+  lbImg.addEventListener('mousedown', e => {
+    lbDragging = true;
+    lbStartX = e.clientX - lbDragX;
+    lbStartY = e.clientY - lbDragY;
+    lbImg.classList.add('grabbing');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!lbDragging) return;
+    lbDragX = e.clientX - lbStartX;
+    lbDragY = e.clientY - lbStartY;
+    updateTransform();
+  });
+  window.addEventListener('mouseup', () => {
+    lbDragging = false;
+    lbImg.classList.remove('grabbing');
+  });
+
+  // Keyboard close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Touch drag to pan (mobile)
+  let lbTouchStartX = 0, lbTouchStartY = 0;
+  let lbTouchDragX = 0, lbTouchDragY = 0;
+  lbImg.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      lbTouchStartX = e.touches[0].clientX - lbDragX;
+      lbTouchStartY = e.touches[0].clientY - lbDragY;
+    }
+  }, { passive: true });
+  lbImg.addEventListener('touchmove', e => {
+    if (e.touches.length === 1 && lbScale > 1) {
+      lbDragX = e.touches[0].clientX - lbTouchStartX;
+      lbDragY = e.touches[0].clientY - lbTouchStartY;
+      updateTransform();
+    }
+  }, { passive: true });
+
+
+  let lbLastDist = 0;
+  lightbox.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) lbLastDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+  }, { passive: true });
+  lightbox.addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      adjustZoom((dist - lbLastDist) * 0.01);
+      lbLastDist = dist;
+    }
+  }, { passive: true });
+
+</script>
 </body>
 </html>
