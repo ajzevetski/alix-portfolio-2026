@@ -32,70 +32,11 @@
     }
 
     /* DARK MODE */
-    html.dark {
-      --white:    #0F0D12;
-      --offwhite: #161219;
-      --cream:    #161219;
-      --warm:     #1A1520;
-      --mint:     #0D2B1F;
-      --yellow:   #3D3800;
-      --blush:    #1E1B2E;
-      --ink:      #F0EBF5;
-      --muted:    #9A8FAA;
-      --border:   #2E2438;
-    }
-    html.dark body        { background: #0F0D12; color: #F0EBF5; }
-    html.dark nav         { background: #0F0D12; border-color: #2E2438; }
-    html.dark .hero       { background: #0F0D12; }
-    html.dark .hero-checkerboard { opacity: 0.15; }
-    html.dark .about-section    { background: #161219; }
-    html.dark .about-me-photo   { background: #1E1B2E; }
-    html.dark .work-section     { background: #0F0D12; }
-    html.dark .case-card        { background: #161219; border-color: #2E2438; box-shadow: 4px 4px 0 #2E2438; }
-    html.dark .case-card:hover  { box-shadow: 6px 6px 0 var(--punch); }
-    html.dark .contact-section  { background: #161219; }
-    html.dark footer            { background: #0F0D12; border-color: #2E2438; }
-    html.dark .nav-ticker       { background: #161219; border-color: #2E2438; }
-    html.dark .skill-chip       { background: #2E2438; color: #F0EBF5; border-color: #3E3450; }
-    html.dark .hero-tag         { background: #1E1B2E; color: #F0EBF5; border-color: #3E3450; }
-    html.dark .nav-logo-text    { color: #F0EBF5; }
-    html.dark .nav-links a      { color: #F0EBF5; }
-    html.dark .nav-links a.nav-contact-btn { background: #F0EBF5; color: #0F0D12; border-color: #F0EBF5; }
-    html.dark .nav-drawer       { background: #0F0D12; }
-    html.dark .nav-drawer a     { color: #F0EBF5; border-color: #2E2438; }
-    html.dark .nav-hamburger span { background: #F0EBF5; }
-    html.dark #dark-toggle      { border-color: #F0EBF5; color: #F0EBF5; box-shadow: 2px 2px 0 #F0EBF5; }
-    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark p, html.dark li { color: #F0EBF5; }
-    html.dark .muted, html.dark .about-me-body { color: #9A8FAA; }
-    html.dark .contact-btn      { background: #F0EBF5; color: #0F0D12; border-color: #F0EBF5; box-shadow: 4px 4px 0 var(--punch); }
-    html.dark .work-section-label { color: #9A8FAA; }
-    html.dark .case-card-label  { color: #9A8FAA; }
-
     /* Smooth transitions */
-    body, nav, section, div, footer, h1, h2, h3, p, a, span, li, button {
+    body, nav, section, footer, .case-card, .skill-chip, .hero-tag,
+    .contact-btn, .nav-contact-btn, .nav-drawer,
+    .about-section, .work-section, .contact-section, .nav-ticker {
       transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    /* Dark mode toggle button */
-    #dark-toggle {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid var(--ink);
-      background: transparent;
-      cursor: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      box-shadow: 2px 2px 0 var(--ink);
-      flex-shrink: 0;
-      color: var(--ink);
-      line-height: 1;
-    }
-    #dark-toggle:hover {
-      transform: translate(-1px,-1px);
-      box-shadow: 3px 3px 0 var(--ink);
     }
 
     html { scroll-behavior: smooth; }
@@ -959,7 +900,6 @@
     </span>
   </a>
   <ul class="nav-links">
-    <li><button id="dark-toggle" aria-label="Toggle dark mode">🌙</button></li>
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
@@ -1102,19 +1042,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script>
-  // Dark mode toggle
-  const darkToggle = document.getElementById('dark-toggle');
-  const html = document.documentElement;
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') { html.classList.add('dark'); darkToggle.textContent = '☀️'; }
-  darkToggle.addEventListener('click', () => {
-    html.classList.toggle('dark');
-    const isDark = html.classList.contains('dark');
-    darkToggle.textContent = isDark ? '☀️' : '🌙';
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  });
-
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav logo: "A.I." → "not" slides in → slides out → types into "Alix with an i"
   (function() {
     const logoInner = document.getElementById('nav-logo-inner');
@@ -1713,7 +1641,6 @@
     stopGame();
   }
   fabBtn.addEventListener('click', openModal);
-  fabBtn.addEventListener('touchstart', e => { e.preventDefault(); openModal(); }, { passive: false });
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', closeModal);
 
@@ -2077,9 +2004,3 @@
     ];
     const msg = msgs.find(([min]) => score >= min)[1];
     document.getElementById('final-score').textContent = score;
-    document.getElementById('go-comment').textContent  = msg;
-    document.getElementById('go-emoji').textContent    = score>=200?'🏆':score>=100?'🌟':'😢';
-    document.getElementById('gameover-screen').style.display = 'flex';
-  }
-
-  doc
