@@ -903,7 +903,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#81e0fbe4f7e4f5f2eae8f4f9c1e6ece0e8edafe2eeec" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -916,7 +916,7 @@
   <a href="#about"   onclick="closeNav()">About</a>
   <a href="#work"    onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#fb9a819e8d9e8f8890928e83bb9c969a9297d5989496" onclick="closeNav()">Contact</a>
 </div>
 
 <!-- TICKER -->
@@ -1031,7 +1031,7 @@
   <div class="contact-left">
     <h2 class="contact-heading">Let's<br /><em>work</em><br />together.</h2>
     <p class="contact-sub">I'm open to full-time roles, contract work, and collaborations. If you've got a design problem worth solving, I'd love to hear about it.</p>
-    <a href="mailto:azevetskiux@gmail.com" class="contact-btn">Say Hello →</a>
+    <a href="/cdn-cgi/l/email-protection#46273c23302332352d2f333e06212b272f2a6825292b" class="contact-btn">Say Hello →</a>
   </div>
 
 </section>
@@ -1042,7 +1042,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav logo: "A.I." → "not" slides in → slides out → types into "Alix with an i"
   (function() {
     const logoInner = document.getElementById('nav-logo-inner');
@@ -1460,16 +1460,33 @@
       top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.92);
       width: 92vw;
-      max-height: 88dvh;
+      max-height: 90dvh;
       border-radius: 16px;
       border: 2px solid var(--ink);
       box-shadow: 6px 6px 0 var(--ink);
       overflow-y: auto;
+      overflow-x: hidden;
     }
     #corgi-modal.show {
       transform: translate(-50%, -50%) scale(1);
     }
-    #game-canvas { height: 52vw !important; min-height: 220px; }
+    #game-canvas { height: 52vw !important; min-height: 200px; }
+
+    /* start/gameover screens: static flow instead of absolute overlay so they scroll naturally */
+    .game-screen {
+      position: relative;
+      top: auto;
+      inset: auto;
+      min-height: 320px;
+    }
+    .screen-inner {
+      padding: 32px 20px 48px;
+      gap: 14px;
+    }
+    .game-btn {
+      padding: 16px 36px;
+      font-size: 0.85rem;
+    }
   }
 
   #corgi-close {
@@ -2026,6 +2043,5 @@
 
 })();
 </script>
-    
 </body>
 </html>
