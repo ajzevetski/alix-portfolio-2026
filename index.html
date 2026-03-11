@@ -44,15 +44,37 @@
       --muted:    #9A8FAA;
       --border:   #2E2438;
     }
-    html.dark body { background: var(--white); color: var(--ink); }
-    html.dark nav  { background: var(--white); border-color: #2E2438; }
-    html.dark .nav-logo-text { color: var(--ink); }
-    html.dark .nav-logo-bar  { background: var(--punch); }
-    html.dark .nav-links a   { color: var(--ink); }
-    html.dark .nav-links a.nav-contact-btn { background: var(--ink); color: var(--white); border-color: var(--ink); }
-    html.dark .nav-drawer    { background: var(--white); }
-    html.dark .nav-drawer a  { color: var(--ink); border-color: #2E2438; }
-    html.dark .nav-hamburger span { background: var(--ink); }
+    html.dark body        { background: #0F0D12; color: #F0EBF5; }
+    html.dark nav         { background: #0F0D12; border-color: #2E2438; }
+    html.dark .hero       { background: #0F0D12; }
+    html.dark .hero-checkerboard { opacity: 0.15; }
+    html.dark .about-section    { background: #161219; }
+    html.dark .about-me-photo   { background: #1E1B2E; }
+    html.dark .work-section     { background: #0F0D12; }
+    html.dark .case-card        { background: #161219; border-color: #2E2438; box-shadow: 4px 4px 0 #2E2438; }
+    html.dark .case-card:hover  { box-shadow: 6px 6px 0 var(--punch); }
+    html.dark .contact-section  { background: #161219; }
+    html.dark footer            { background: #0F0D12; border-color: #2E2438; }
+    html.dark .nav-ticker       { background: #161219; border-color: #2E2438; }
+    html.dark .skill-chip       { background: #2E2438; color: #F0EBF5; border-color: #3E3450; }
+    html.dark .hero-tag         { background: #1E1B2E; color: #F0EBF5; border-color: #3E3450; }
+    html.dark .nav-logo-text    { color: #F0EBF5; }
+    html.dark .nav-links a      { color: #F0EBF5; }
+    html.dark .nav-links a.nav-contact-btn { background: #F0EBF5; color: #0F0D12; border-color: #F0EBF5; }
+    html.dark .nav-drawer       { background: #0F0D12; }
+    html.dark .nav-drawer a     { color: #F0EBF5; border-color: #2E2438; }
+    html.dark .nav-hamburger span { background: #F0EBF5; }
+    html.dark #dark-toggle      { border-color: #F0EBF5; color: #F0EBF5; box-shadow: 2px 2px 0 #F0EBF5; }
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark p, html.dark li { color: #F0EBF5; }
+    html.dark .muted, html.dark .about-me-body { color: #9A8FAA; }
+    html.dark .contact-btn      { background: #F0EBF5; color: #0F0D12; border-color: #F0EBF5; box-shadow: 4px 4px 0 var(--punch); }
+    html.dark .work-section-label { color: #9A8FAA; }
+    html.dark .case-card-label  { color: #9A8FAA; }
+
+    /* Smooth transitions */
+    body, nav, section, div, footer, h1, h2, h3, p, a, span, li, button {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
     /* Dark mode toggle button */
     #dark-toggle {
@@ -61,24 +83,19 @@
       border-radius: 50%;
       border: 2px solid var(--ink);
       background: transparent;
-      cursor: pointer;
+      cursor: none;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1rem;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
       box-shadow: 2px 2px 0 var(--ink);
       flex-shrink: 0;
       color: var(--ink);
+      line-height: 1;
     }
     #dark-toggle:hover {
       transform: translate(-1px,-1px);
       box-shadow: 3px 3px 0 var(--ink);
-    }
-
-    /* Smooth transitions on dark mode switch */
-    body, nav, section, div, footer, h1, h2, h3, p, a, span, li {
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     html { scroll-behavior: smooth; }
@@ -946,7 +963,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="/cdn-cgi/l/email-protection#bbdac1decddecfc8d0d2cec3fbdcd6dad2d795d8d4d6" class="nav-contact-btn">Contact</a></li>
+    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -959,7 +976,7 @@
   <a href="#about"   onclick="closeNav()">About</a>
   <a href="#work"    onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="/cdn-cgi/l/email-protection#35544f50435041465e5c404d755258545c591b565a58" onclick="closeNav()">Contact</a>
+  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
 </div>
 
 <!-- TICKER -->
@@ -1074,7 +1091,7 @@
   <div class="contact-left">
     <h2 class="contact-heading">Let's<br /><em>work</em><br />together.</h2>
     <p class="contact-sub">I'm open to full-time roles, contract work, and collaborations. If you've got a design problem worth solving, I'd love to hear about it.</p>
-    <a href="/cdn-cgi/l/email-protection#6e0f140b180b1a1d05071b162e09030f0702400d0103" class="contact-btn">Say Hello →</a>
+    <a href="mailto:azevetskiux@gmail.com" class="contact-btn">Say Hello →</a>
   </div>
 
 </section>
@@ -1085,7 +1102,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Dark mode toggle
   const darkToggle = document.getElementById('dark-toggle');
   const html = document.documentElement;
@@ -1247,23 +1264,7 @@
   })();
 
   // About carousel
-  let carouselIndex = 0;
-  const carouselSlides = document.querySelectorAll('.about-carousel-slide');
-  const carouselDots   = document.querySelectorAll('.about-carousel-dot');
-
-  function goToCarouselSlide(n) {
-    carouselSlides[carouselIndex].classList.remove('active');
-    carouselDots[carouselIndex].classList.remove('active');
-    carouselIndex = (n + carouselSlides.length) % carouselSlides.length;
-    carouselSlides[carouselIndex].classList.add('active');
-    carouselDots[carouselIndex].classList.add('active');
-  }
-
-  carouselDots.forEach(dot => {
-    dot.addEventListener('click', () => goToCarouselSlide(parseInt(dot.dataset.index)));
-  });
-
-  setInterval(() => goToCarouselSlide(carouselIndex + 1), 4000);
+  // About photo — single image, no carousel needed
 
   // Mobile nav
   const hamburger = document.getElementById('nav-hamburger');
@@ -1466,9 +1467,10 @@
     border: 2px solid var(--ink);
     border-radius: 100px;
     padding: 13px 24px;
-    cursor: pointer;
+    cursor: pointer !important;
     user-select: none;
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     font-family: var(--mono);
     font-size: 0.68rem;
     letter-spacing: 0.08em;
@@ -1711,7 +1713,7 @@
     stopGame();
   }
   fabBtn.addEventListener('click', openModal);
-  fabBtn.addEventListener('touchend', e => { e.preventDefault(); openModal(); });
+  fabBtn.addEventListener('touchstart', e => { e.preventDefault(); openModal(); }, { passive: false });
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', closeModal);
 
