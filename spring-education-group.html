@@ -555,34 +555,33 @@
     .cs-next-back {
       padding: 48px; border-right: 2px solid var(--ink);
       display: flex; flex-direction: column; justify-content: center;
+      text-decoration: none; color: var(--ink);
+      transition: background 0.2s;
     }
-    .cs-next-back a {
-      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted); text-decoration: none;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .cs-next-back a:hover { color: var(--ink); }
+    .cs-next-back:hover { background: var(--seg-bg); }
     .cs-next-project {
       padding: 48px;
       display: flex; flex-direction: column; justify-content: center;
+      text-decoration: none; color: white;
+      background: var(--seg-green);
+      transition: background 0.2s;
     }
+    .cs-next-project:hover { background: var(--violet); }
     .cs-next-label {
       font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: block;
     }
+    .cs-next-project .cs-next-label { color: rgba(255,255,255,0.7); }
     .cs-next-title {
       font-family: 'Archivo Black', sans-serif;
-      font-size: 1.6rem; letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      font-size: 1.6rem; letter-spacing: -0.02em; margin-bottom: 6px; display: block;
     }
-    .cs-next-link {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--ink);
-      text-decoration: none; border-bottom: 2px solid var(--ink);
-      padding-bottom: 2px;
+    .cs-next-project .cs-next-title { color: white; }
+    .cs-next-arrow {
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); display: block;
     }
-    .cs-next-link:hover { color: var(--punch); border-color: var(--punch); }
+    .cs-next-project .cs-next-arrow { color: rgba(255,255,255,0.7); }
 
     /* FOOTER */
     footer {
@@ -2063,14 +2062,16 @@
 
 <!-- NEXT -->
 <div class="cs-next">
-  <div class="cs-next-back">
-    <a href="index.html#work">← All projects</a>
-  </div>
-  <div class="cs-next-project">
-    <div class="cs-next-label">Next case study</div>
-    <div class="cs-next-title">Laurel Springs<br>Course Catalog</div>
-    <a href="laurel-springs.html" class="cs-next-link">View case study →</a>
-  </div>
+  <a href="laurel-springs.html" class="cs-next-back">
+    <span class="cs-next-label">← Previous Case Study</span>
+    <span class="cs-next-title">Laurel Springs</span>
+    <span class="cs-next-arrow">Ed-Tech Platform</span>
+  </a>
+  <a href="earth-hero.html" class="cs-next-project">
+    <span class="cs-next-label">Next Case Study →</span>
+    <span class="cs-next-title">Earth Hero</span>
+    <span class="cs-next-arrow">Sustainability App →</span>
+  </a>
 </div>
 
 <!-- FOOTER -->
@@ -2130,4 +2131,4 @@
   revealEls.forEach(el => revealObs.observe(el));
 </script>
 </body>
-</html>      
+</html>
