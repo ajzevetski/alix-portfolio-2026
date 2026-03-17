@@ -72,11 +72,36 @@
     .nav-logo {
       display: flex;
       align-items: center;
+      gap: 6px;
       text-decoration: none;
       flex-shrink: 0;
     }
-    .nav-logo svg { display: block; transition: transform 0.2s ease; }
-    .nav-logo:hover svg { transform: translateY(-2px); }
+    .nav-logo-text {
+      font-family: 'Archivo Black', sans-serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .nav-logo-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-left: 2px;
+      align-self: flex-end;
+      padding-bottom: 3px;
+    }
+    .nav-logo-bar {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--punch);
+      display: block;
+    }
+    .nav-logo-bar:first-child { width: 24px; }
+    .nav-logo-bar:last-child  { width: 36px; }
+    .nav-logo:hover .nav-logo-bar { background: #6B21A8; }
     .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-links a {
       font-family: var(--mono);
@@ -1294,11 +1319,11 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html" aria-label="Alix Zevetski">
-    <svg width="220" height="36" viewBox="0 0 220 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="2" y="28" font-family="'Archivo Black',sans-serif" font-style="italic" font-size="29" fill="#1A1118" letter-spacing="-1.5">Alix with an i</text>
-      <rect x="2"  y="31" width="24" height="3" rx="1.5" fill="#7B7FC4"/>
-      <rect x="30" y="31" width="36" height="3" rx="1.5" fill="#7B7FC4"/>
-    </svg>
+    <span class="nav-logo-text">Alix with an i</span>
+    <span class="nav-logo-bars">
+      <span class="nav-logo-bar"></span>
+      <span class="nav-logo-bar"></span>
+    </span>
   </a>
   <ul class="nav-links">
     <li><a href="index.html#about">About</a></li>
@@ -1641,10 +1666,10 @@
       <span class="cs-next-title">Earth Hero</span>
       <span class="cs-next-arrow">Sustainability App</span>
     </a>
-    <a href="index.html#work" class="cs-next-project">
-      <span class="cs-next-label">Back to →</span>
-      <span class="cs-next-title">All Work</span>
-      <span class="cs-next-arrow">View all case studies →</span>
+    <a href="spring-education-group.html" class="cs-next-project">
+      <span class="cs-next-label">Next Case Study →</span>
+      <span class="cs-next-title">Spring Education Group</span>
+      <span class="cs-next-arrow">K-12 Website Redesign →</span>
     </a>
   </div>
 
