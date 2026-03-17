@@ -1301,35 +1301,8 @@
       .cs-dot { width: 32px; height: 32px; }
       .cs-dot-number { inset: 4px; font-size: 0.6rem; }
 
-      /* TOOLTIPS on mobile — fixed to viewport, always safe */
-      .cs-tooltip {
-        position: fixed !important;
-        top: auto !important;
-        bottom: auto !important;
-        left: 50% !important;
-        right: auto !important;
-        transform: translateX(-50%) !important;
-        width: min(260px, 80vw) !important;
-        z-index: 9999 !important;
-        display: none;
-      }
-      .cs-dot.active .cs-tooltip {
-        display: block;
-      }
-      /* hide CSS arrows on mobile — JS positions tooltip, arrow doesn't track */
-      .cs-tooltip::before, .cs-tooltip::after { display: none !important; }
-
-      /* override any dot-specific tooltip positioning */
-      .cs-dot[data-dot="1"] .cs-tooltip,
-      .cs-dot[data-dot="2"] .cs-tooltip,
-      .cs-dot[data-dot="3"] .cs-tooltip,
-      .cs-dot[data-dot="4"] .cs-tooltip,
-      .cs-dot[data-dot="5"] .cs-tooltip,
-      .cs-dot[data-dot="6"] .cs-tooltip {
-        left: 50% !important; right: auto !important;
-        top: auto !important; bottom: auto !important;
-        transform: translateX(-50%) !important;
-      }
+      /* Hide inline tooltips completely on mobile — we use a bottom sheet instead */
+      .cs-tooltip { display: none !important; }
 
       /* active dot floats above its column */
       .cs-dot.active { z-index: 9998; }
@@ -1796,50 +1769,27 @@
       dotClickHandled = true;
       const isActive = dot.classList.contains('active');
 
-      // Close all
+      // Close all dots
       document.querySelectorAll('.cs-dot').forEach(d => {
         d.classList.remove('active');
         const tt = d.querySelector('.cs-tooltip');
-        if (tt) {
-          tt.style.cssText = '';
-        }
+        if (tt) { tt.style.cssText = ''; }
       });
 
       if (!isActive) {
         dot.classList.add('active');
 
         if (window.innerWidth <= 834) {
+          // Mobile: show bottom sheet instead of inline tooltip
           const tooltip = dot.querySelector('.cs-tooltip');
-          if (tooltip) {
-            const dotRect = dot.getBoundingClientRect();
-            const vw = window.innerWidth;
-            const tipW = Math.min(260, vw * 0.8);
-
-            // Center horizontally on screen, clamped to edges
-            let tipLeft = (vw / 2) - (tipW / 2);
-            tipLeft = Math.max(10, Math.min(tipLeft, vw - tipW - 10));
-
-            // Position above the dot, or below if too close to top
-            const spaceAbove = dotRect.top;
-            const tipH = 120; // estimate
-            let tipTop;
-            if (spaceAbove > tipH + 20) {
-              tipTop = dotRect.top - tipH - 16;
-            } else {
-              tipTop = dotRect.bottom + 12;
-            }
-
-            tooltip.style.position = 'fixed';
-            tooltip.style.left = tipLeft + 'px';
-            tooltip.style.top = tipTop + 'px';
-            tooltip.style.bottom = 'auto';
-            tooltip.style.right = 'auto';
-            tooltip.style.transform = 'none';
-            tooltip.style.width = tipW + 'px';
-            tooltip.style.zIndex = '99999';
-            tooltip.style.display = 'block';
+          if (tooltip && sheet) {
+            sheetNum.textContent  = tooltip.querySelector('.cs-tooltip-num')?.textContent  || '';
+            sheetText.textContent = tooltip.querySelector('.cs-tooltip-text')?.textContent || '';
+            sheet.style.display = 'block';
+            requestAnimationFrame(() => sheet.classList.add('open'));
           }
         }
+        // Desktop: inline tooltip handled by CSS
       }
     });
   });
@@ -1865,5 +1815,79 @@
     roleObs.observe(roleEl);
   }
 </script>
+
+<!-- MOBILE TOOLTIP BOTTOM SHEET -->
+<div id="mobileTooltipSheet" style="display:none;">
+  <div id="mobileTooltipSheetBackdrop"></div>
+  <div id="mobileTooltipSheetCard">
+    <div id="mobileTooltipSheetNum"></div>
+    <p id="mobileTooltipSheetText"></p>
+    <button id="mobileTooltipSheetClose">✕ Close</button>
+  </div>
+</div>
+
+<style>
+  #mobileTooltipSheetBackdrop {
+    position: fixed; inset: 0;
+    background: rgba(26,17,24,0.4);
+    z-index: 9998;
+  }
+  #mobileTooltipSheetCard {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 2px solid var(--ink);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 20px 40px;
+    z-index: 9999;
+    box-shadow: 0 -4px 0 var(--ink);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  #mobileTooltipSheet.open #mobileTooltipSheetCard {
+    transform: translateY(0);
+  }
+  #mobileTooltipSheetNum {
+    font-family: var(--mono);
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--punch);
+    margin-bottom: 10px;
+  }
+  #mobileTooltipSheetText {
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  #mobileTooltipSheetClose {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--ink); color: white;
+    border: none; border-radius: 8px;
+    padding: 10px 20px; cursor: pointer;
+  }
+  @media (min-width: 835px) {
+    #mobileTooltipSheet { display: none !important; }
+  }
+</style>
+
+<script>
+  const sheet      = document.getElementById('mobileTooltipSheet');
+  const sheetNum   = document.getElementById('mobileTooltipSheetNum');
+  const sheetText  = document.getElementById('mobileTooltipSheetText');
+  const sheetClose = document.getElementById('mobileTooltipSheetClose');
+  const sheetBack  = document.getElementById('mobileTooltipSheetBackdrop');
+
+  function closeMobileSheet() {
+    sheet.classList.remove('open');
+    document.querySelectorAll('.cs-dot').forEach(d => d.classList.remove('active'));
+    setTimeout(() => { sheet.style.display = 'none'; }, 320);
+  }
+  sheetClose.addEventListener('click', closeMobileSheet);
+  sheetBack.addEventListener('click', closeMobileSheet);
+</script>
+
 </body>
 </html>
