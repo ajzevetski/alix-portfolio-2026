@@ -1301,62 +1301,37 @@
       .cs-dot { width: 32px; height: 32px; }
       .cs-dot-number { inset: 4px; font-size: 0.6rem; }
 
-      /* TOOLTIPS on mobile — pop upward, centered above dot */
+      /* TOOLTIPS on mobile — fixed to viewport, always safe */
       .cs-tooltip {
-        top: auto;
-        bottom: calc(100% + 12px);
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%) scale(0.92);
-        width: 180px;
-        z-index: 10;
+        position: fixed !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        width: min(260px, 80vw) !important;
+        z-index: 9999 !important;
+        display: none;
       }
       .cs-dot.active .cs-tooltip {
-        transform: translateX(-50%) scale(1);
-        z-index: 9999;
+        display: block;
       }
-      /* arrow points downward */
-      .cs-tooltip::before {
-        right: auto;
-        left: 50%;
-        top: 100%;
-        transform: translateX(-50%);
-        border-right-color: transparent;
-        border-top-color: var(--ink);
-        border-bottom: none;
-      }
-      .cs-tooltip::after {
-        right: auto;
-        left: 50%;
-        top: calc(100% - 2px);
-        transform: translateX(-50%);
-        border-right-color: transparent;
-        border-top-color: white;
-        border-bottom: none;
-      }
-      /* override right-edge flips for dots 1 & 4 */
+      /* hide CSS arrows on mobile — JS positions tooltip, arrow doesn't track */
+      .cs-tooltip::before, .cs-tooltip::after { display: none !important; }
+
+      /* override any dot-specific tooltip positioning */
       .cs-dot[data-dot="1"] .cs-tooltip,
-      .cs-dot[data-dot="4"] .cs-tooltip {
-        left: 50%; right: auto;
-        bottom: calc(100% + 12px); top: auto;
+      .cs-dot[data-dot="2"] .cs-tooltip,
+      .cs-dot[data-dot="3"] .cs-tooltip,
+      .cs-dot[data-dot="4"] .cs-tooltip,
+      .cs-dot[data-dot="5"] .cs-tooltip,
+      .cs-dot[data-dot="6"] .cs-tooltip {
+        left: 50% !important; right: auto !important;
+        top: auto !important; bottom: auto !important;
+        transform: translateX(-50%) !important;
       }
-      .cs-dot[data-dot="1"] .cs-tooltip::before,
-      .cs-dot[data-dot="4"] .cs-tooltip::before {
-        right: auto; left: 50%;
-        top: 100%; transform: translateX(-50%);
-        border-left-color: transparent;
-        border-right-color: transparent;
-        border-top-color: var(--ink);
-      }
-      .cs-dot[data-dot="1"] .cs-tooltip::after,
-      .cs-dot[data-dot="4"] .cs-tooltip::after {
-        right: auto; left: 50%;
-        top: calc(100% - 2px); transform: translateX(-50%);
-        border-left-color: transparent;
-        border-right-color: transparent;
-        border-top-color: white;
-      }
-      /* active dot and its whole column float above everything */
+
+      /* active dot floats above its column */
       .cs-dot.active { z-index: 9998; }
       .cs-ba-col:has(.cs-dot.active) { z-index: 50; position: relative; }
 
@@ -1820,57 +1795,61 @@
       e.stopPropagation();
       dotClickHandled = true;
       const isActive = dot.classList.contains('active');
+
+      // Close all
       document.querySelectorAll('.cs-dot').forEach(d => {
         d.classList.remove('active');
         const tt = d.querySelector('.cs-tooltip');
-        if (tt) { tt.style.left = ''; tt.style.transform = ''; tt.style.right = ''; }
+        if (tt) {
+          tt.style.cssText = '';
+        }
       });
+
       if (!isActive) {
         dot.classList.add('active');
+
         if (window.innerWidth <= 834) {
           const tooltip = dot.querySelector('.cs-tooltip');
           if (tooltip) {
-            // Reset any inline styles first so we get clean measurements
-            tooltip.style.left = '';
-            tooltip.style.right = '';
-            tooltip.style.transform = '';
+            const dotRect = dot.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const tipW = Math.min(260, vw * 0.8);
 
-            requestAnimationFrame(() => {
-              const tipW    = tooltip.offsetWidth || 160;
-              const dotRect = dot.getBoundingClientRect();
-              const dotCx   = dotRect.left + dotRect.width / 2; // dot center in viewport
-              const margin  = 10;
-              const vw      = window.innerWidth;
+            // Center horizontally on screen, clamped to edges
+            let tipLeft = (vw / 2) - (tipW / 2);
+            tipLeft = Math.max(10, Math.min(tipLeft, vw - tipW - 10));
 
-              // Ideal: center tooltip on dot
-              let tipLeft = dotCx - tipW / 2;
+            // Position above the dot, or below if too close to top
+            const spaceAbove = dotRect.top;
+            const tipH = 120; // estimate
+            let tipTop;
+            if (spaceAbove > tipH + 20) {
+              tipTop = dotRect.top - tipH - 16;
+            } else {
+              tipTop = dotRect.bottom + 12;
+            }
 
-              // Clamp within viewport
-              tipLeft = Math.max(margin, Math.min(tipLeft, vw - tipW - margin));
-
-              // Convert viewport-relative left to position relative to dot's offsetParent
-              const wrap = dot.offsetParent;
-              const wrapRect = wrap ? wrap.getBoundingClientRect() : { left: 0 };
-              const dotOffsetLeft  = dotRect.left  - wrapRect.left;
-              const dotOffsetCx    = dotOffsetLeft + dotRect.width / 2;
-              const relLeft        = tipLeft - wrapRect.left;
-
-              // Apply: position left absolutely, no translateX
-              tooltip.style.left      = relLeft + 'px';
-              tooltip.style.transform = 'none';
-              tooltip.style.right     = 'auto';
-            });
+            tooltip.style.position = 'fixed';
+            tooltip.style.left = tipLeft + 'px';
+            tooltip.style.top = tipTop + 'px';
+            tooltip.style.bottom = 'auto';
+            tooltip.style.right = 'auto';
+            tooltip.style.transform = 'none';
+            tooltip.style.width = tipW + 'px';
+            tooltip.style.zIndex = '99999';
+            tooltip.style.display = 'block';
           }
         }
       }
     });
   });
+
   document.addEventListener('click', () => {
     if (dotClickHandled) { dotClickHandled = false; return; }
     document.querySelectorAll('.cs-dot').forEach(d => {
       d.classList.remove('active');
       const tt = d.querySelector('.cs-tooltip');
-      if (tt) { tt.style.left = ''; tt.style.transform = ''; tt.style.right = ''; }
+      if (tt) { tt.style.cssText = ''; }
     });
   });
   const roleEl = document.getElementById('role-highlight');
