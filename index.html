@@ -2233,11 +2233,14 @@
     ];
     const msg = msgs.find(([min]) => score >= min)[1];
     document.getElementById('final-score').textContent = score;
-    document.getElementById('go-comment').textContent  = msg;
+    document.getElementById('final-msg').textContent = msg;
     document.getElementById('gameover-screen').style.display = 'flex';
   }
 
-  // Button wiring
   document.getElementById('start-btn').addEventListener('click', startGame);
-  document.getElementById('restart-btn').addEventListener('click', () => {
-    document
+  document.getElementById('restart-btn').addEventListener('click', startGame);
+
+})();
+</script>
+</body>
+</html>
