@@ -1003,6 +1003,263 @@
   </div>
 </section>
 
+<!-- SIDE PROJECTS -->
+<section class="side-projects" id="side-projects">
+  <div class="side-projects-header">
+    <div>
+      <span class="side-projects-eyebrow">✦ Side Projects</span>
+      <h2 class="side-projects-heading">Design <em>Playground.</em></h2>
+    </div>
+  </div>
+
+  <!-- WARPED TOUR -->
+  <div class="sp-project">
+    <div class="sp-project-intro">
+      <h3 class="sp-project-title">Vans Warped Tour App</h3>
+      <p class="sp-project-caption">As an elder emo I was excited about attending the 30th anniversary of Warped Tour. I decided to make some smaller UI changes to the Vans Warped Tour app just for fun.</p>
+      <div class="sp-toggle-hint">
+        <span class="sp-hint-pip">↔</span> Click any screen to toggle before &amp; after
+      </div>
+    </div>
+
+    <div class="sp-screens">
+
+      <div class="sp-screen" onclick="toggleWT(this)">
+        <div class="sp-screen-label sp-label-after">After</div>
+        <div class="sp-screen-label sp-label-before" style="display:none;">Before</div>
+        <img src="WT-homepage-after.jpg" class="sp-img sp-img-after" alt="Warped Tour homepage redesign after" />
+        <img src="WT-homepage-before.jpg" class="sp-img sp-img-before" style="display:none;" alt="Warped Tour homepage before" />
+        <div class="sp-click-hint">tap to see before</div>
+      </div>
+
+      <div class="sp-screen" onclick="toggleWT(this)">
+        <div class="sp-screen-label sp-label-after">After</div>
+        <div class="sp-screen-label sp-label-before" style="display:none;">Before</div>
+        <img src="WT-lineup-after.jpg" class="sp-img sp-img-after" alt="Warped Tour lineup redesign after" />
+        <img src="WT-lineup-before.jpg" class="sp-img sp-img-before" style="display:none;" alt="Warped Tour lineup before" />
+        <div class="sp-click-hint">tap to see before</div>
+      </div>
+
+      <div class="sp-screen" onclick="toggleWT(this)">
+        <div class="sp-screen-label sp-label-after">After</div>
+        <div class="sp-screen-label sp-label-before" style="display:none;">Before</div>
+        <img src="WT-description-after.jpg" class="sp-img sp-img-after" alt="Warped Tour artist page redesign after" />
+        <img src="WT-description-before.jpg" class="sp-img sp-img-before" style="display:none;" alt="Warped Tour artist page before" />
+        <div class="sp-click-hint">tap to see before</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROTOTHON -->
+  <div class="sp-project sp-project--border">
+    <div class="sp-project-intro">
+      <h3 class="sp-project-title">Protothon 2024</h3>
+      <p class="sp-project-caption">A 48-hour design sprint where my team built a concept app from scratch. We designed Timelines, an audio-first historical exploration app that lets you walk through historical events like Woodstock as if you were there.</p>
+      <a href="https://www.figma.com/proto/GrKUl9H5U7RdAgPdbYFYXl/Protothon-2024?page-id=1%3A14747&node-id=1-14782&viewport=623%2C485%2C0.05&t=5Wbd1h2qv1Pjh9N8-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A15736" target="_blank" class="sp-figma-link">
+        <span>See More About This Protothon</span> ↗
+      </a>
+    </div>
+
+    <div class="sp-screens">
+      <div class="sp-screen sp-screen--static">
+        <img src="protothon-home.jpg" class="sp-img" alt="Timelines app home screen" />
+      </div>
+      <div class="sp-screen sp-screen--static">
+        <img src="protothon-description.jpg" class="sp-img" alt="Timelines app event detail screen" />
+      </div>
+      <div class="sp-screen sp-screen--static">
+        <img src="protothon-excursion.jpg" class="sp-img" alt="Timelines app chapter playback screen" />
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .side-projects {
+    border-top: 2px solid var(--ink);
+    background: var(--offwhite);
+  }
+  .side-projects-header {
+    max-width: 1200px; margin: 0 auto;
+    padding: 64px 48px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .side-projects-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--punch);
+    display: block; margin-bottom: 12px;
+  }
+  .side-projects-heading {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    letter-spacing: -0.03em; line-height: 1.05;
+    color: var(--ink);
+  }
+  .side-projects-heading em {
+    color: var(--punch); font-style: italic;
+  }
+
+  .sp-project {
+    max-width: 1200px; margin: 0 auto;
+    padding: 48px 48px 64px;
+  }
+  .sp-project-intro {
+    margin-bottom: 36px;
+  }
+  .sp-project-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.4rem; letter-spacing: -0.02em;
+    color: var(--ink); margin-bottom: 10px;
+  }
+  .sp-project-caption {
+    font-size: 0.95rem; color: var(--muted);
+    line-height: 1.7; max-width: 600px;
+    margin-bottom: 16px;
+  }
+  .sp-toggle-hint {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--punch);
+    background: var(--blush); padding: 6px 14px;
+    border-radius: 100px;
+  }
+  .sp-hint-pip {
+    font-size: 0.9rem;
+    animation: hintBounce 1.4s ease-in-out infinite;
+  }
+  @keyframes hintBounce {
+    0%,100% { transform: translateX(0); }
+    40%     { transform: translateX(-4px); }
+    60%     { transform: translateX(4px); }
+  }
+
+  .sp-screens {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .sp-screen {
+    position: relative;
+    cursor: pointer;
+    border-radius: 32px;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #000;
+  }
+  .sp-screen:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--ink);
+  }
+  .sp-img {
+    width: 100%; display: block;
+    border-radius: 30px;
+    transition: opacity 0.3s ease;
+  }
+
+  /* AFTER/BEFORE label */
+  .sp-screen-label {
+    position: absolute; top: 14px; left: 14px;
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 4px 10px;
+    border-radius: 100px; border: 1.5px solid rgba(255,255,255,0.6);
+    color: white; z-index: 2; backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.35);
+  }
+  .sp-label-after { background: rgba(123,127,196,0.7); border-color: var(--punch); }
+  .sp-label-before { background: rgba(0,0,0,0.45); }
+
+  /* TAP HINT */
+  .sp-click-hint {
+    position: absolute; bottom: 16px; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: white;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    padding: 5px 12px; border-radius: 100px;
+    white-space: nowrap; pointer-events: none;
+    opacity: 1; transition: opacity 0.3s;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .sp-screen.showing-before .sp-click-hint {
+    content: 'tap to see after';
+  }
+
+  @media (max-width: 834px) {
+    .side-projects-header { padding: 40px 20px 28px; }
+    .side-projects-heading { font-size: clamp(2rem, 8vw, 2.8rem); }
+    .sp-project { padding: 32px 20px 40px; }
+    .sp-project-caption { font-size: 0.9rem; }
+    .sp-toggle-hint { font-size: 0.62rem; padding: 5px 12px; }
+    /* 3-up on tablet, still readable */
+    .sp-screens { grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 100%; }
+    .sp-screen { border-radius: 20px; box-shadow: 3px 3px 0 var(--ink); }
+    .sp-img { border-radius: 18px; }
+    .sp-click-hint { font-size: 0.5rem; padding: 4px 8px; bottom: 8px; }
+    .sp-screen-label { font-size: 0.5rem; padding: 3px 7px; top: 8px; left: 8px; }
+    .sp-figma-link { font-size: 0.65rem; padding: 9px 16px; }
+  }
+  @media (max-width: 480px) {
+    .sp-screens { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .sp-screen { border-radius: 14px; border-width: 1.5px; box-shadow: 2px 2px 0 var(--ink); }
+    .sp-img { border-radius: 12px; }
+    .sp-click-hint { display: none; }
+    .sp-toggle-hint { font-size: 0.6rem; white-space: normal; text-align: center; }
+    .sp-project-title { font-size: 1.2rem; }
+    .sp-figma-link { font-size: 0.6rem; padding: 8px 14px; width: 100%; justify-content: center; }
+  }
+
+  .sp-project--border {
+    border-top: 1px solid var(--border);
+  }
+  .sp-screen--static {
+    cursor: default;
+  }
+  .sp-screen--static:hover {
+    transform: none;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .sp-figma-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: white;
+    background: var(--punch); border: 2px solid var(--ink);
+    padding: 10px 20px; border-radius: 8px;
+    box-shadow: 3px 3px 0 var(--ink);
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 4px; display: inline-flex;
+  }
+  .sp-figma-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+</style>
+
+<script>
+  function toggleWT(card) {
+    const after  = card.querySelector('.sp-img-after');
+    const before = card.querySelector('.sp-img-before');
+    const lAfter = card.querySelector('.sp-label-after');
+    const lBefore= card.querySelector('.sp-label-before');
+    const hint   = card.querySelector('.sp-click-hint');
+    const isAfter = after.style.display !== 'none';
+
+    after.style.display  = isAfter ? 'none' : 'block';
+    before.style.display = isAfter ? 'block' : 'none';
+    lAfter.style.display = isAfter ? 'none' : 'block';
+    lBefore.style.display= isAfter ? 'block' : 'none';
+    hint.textContent     = isAfter ? 'tap to see after' : 'tap to see before';
+    card.classList.toggle('showing-before', isAfter);
+  }
+</script>
+
 <!-- ABOUT ME -->
 <section class="about-me" id="about">
   <div class="about-me-text">
@@ -1031,7 +1288,7 @@
   <div class="contact-left">
     <h2 class="contact-heading">Let's<br /><em>work</em><br />together.</h2>
     <p class="contact-sub">I'm open to full-time roles, contract work, and collaborations. If you've got a design problem worth solving, I'd love to hear about it.</p>
-    <a href="mailto:azevetskiux@gmail.com" class="contact-btn">Contact Me! →</a>
+    <a href="/cdn-cgi/l/email-protection#05647f60736071766e6c707d456268646c692b666a68" class="contact-btn">Contact Me! →</a>
   </div>
 
 </section>
@@ -1042,7 +1299,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav logo: "A.I." → "not" slides in → slides out → types into "Alix with an i"
   (function() {
     const logoInner = document.getElementById('nav-logo-inner');
@@ -2032,12 +2289,4 @@
   // Button wiring
   document.getElementById('start-btn').addEventListener('click', startGame);
   document.getElementById('restart-btn').addEventListener('click', () => {
-    document.getElementById('gameover-screen').style.display = 'none';
-    gameWrap.style.display = 'block';
-    startGame();
-  });
-
-})();
-</script>
-</body>
-</html>
+    document
