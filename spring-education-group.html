@@ -147,7 +147,7 @@
     .cs-hero {
       padding-top: 120px;
       padding-bottom: 0;
-      background: var(--seg-green-lt);
+      background: var(--white);
       position: relative;
       overflow: hidden;
     }
@@ -1733,10 +1733,9 @@
     position: relative; width: 100%;
     border: 2px solid var(--ink); border-radius: 12px;
     overflow: visible; box-shadow: 6px 6px 0 var(--ink);
-    background: var(--seg-bg);
-    padding: 20px;
+    background: transparent;
   }
-  .seg-annotated-img { width: 100%; display: block; border-radius: 8px; }
+  .seg-annotated-img { width: 100%; display: block; border-radius: 10px; }
 
   /* SVG lines overlay */
   .seg-lines-svg {
@@ -1836,9 +1835,6 @@
   const lineIds = {
     '1': ['line1a','line1b'],
     '2': ['line2a','line2b']
-  };
-    '1': ['target1a','target1b'],
-    '2': ['target2a','target2b']
   };
 
   function clearAll() {
