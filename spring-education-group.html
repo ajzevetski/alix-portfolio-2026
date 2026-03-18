@@ -198,18 +198,12 @@
       font-size: 1.05rem; color: var(--muted); max-width: 480px; line-height: 1.7;
     }
     .cs-hero-right {
-      display: flex; align-items: flex-end; justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
     .cs-hero-img {
-      width: 100%; max-width: 480px;
-      border: 2px solid var(--ink);
-      border-bottom: none;
-      border-radius: 16px 16px 0 0;
-      box-shadow: 6px 0 0 var(--ink);
-      overflow: hidden;
-      transform: translateY(2px);
+      width: 100%; max-width: 560px;
     }
-    .cs-hero-img img { width: 100%; display: block; }
+    .cs-hero-img img { width: 100%; display: block; border-radius: 12px; }
 
     /* META STRIP */
     .cs-meta-strip {
@@ -711,7 +705,6 @@
   <div class="cs-overview">
     <div class="cs-overview-meta">
       <div class="cs-overview-label">Spring Education Group</div>
-      <div style="font-size:0.82rem; color:var(--muted); line-height:1.5; margin-bottom:28px;">Improving Visit-to-Inquiry Conversion Through Research Driven Website Redesign</div>
       <div class="cs-overview-meta-row">
         <div class="cs-overview-meta-key">My Role</div>
         <div class="cs-overview-meta-val">UX Designer</div>
@@ -1457,26 +1450,26 @@
       <!-- SVG overlay for lines -->
       <svg class="seg-lines-svg" id="segLinesSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
         <!-- Dot 1 lines: dot→mobile bar, dot→desktop bar -->
-        <line class="seg-line seg-line--1" id="line1a" x1="35" y1="30" x2="13" y2="10"/>
-        <line class="seg-line seg-line--1" id="line1b" x1="35" y1="30" x2="63" y2="31"/>
+        <line class="seg-line seg-line--1" id="line1a" x1="36" y1="22" x2="9" y2="11.5"/>
+        <line class="seg-line seg-line--1" id="line1b" x1="36" y1="22" x2="66" y2="31"/>
         <!-- Dot 2 lines: dot→mobile CTA, dot→desktop CTA -->
-        <line class="seg-line seg-line--2" id="line2a" x1="35" y1="58" x2="14" y2="53"/>
-        <line class="seg-line seg-line--2" id="line2b" x1="35" y1="58" x2="56" y2="67"/>
+        <line class="seg-line seg-line--2" id="line2a" x1="36" y1="59" x2="13" y2="53"/>
+        <line class="seg-line seg-line--2" id="line2b" x1="36" y1="59" x2="54" y2="64"/>
         <!-- Target highlights -->
-        <rect class="seg-target seg-target--1" id="target1a" x="3" y="7.5" width="22" height="5" rx="1"/>
-        <rect class="seg-target seg-target--1" id="target1b" x="43" y="28.5" width="38" height="5" rx="1"/>
-        <rect class="seg-target seg-target--2" id="target2a" x="3" y="50.5" width="22" height="5.5" rx="1"/>
-        <rect class="seg-target seg-target--2" id="target2b" x="46" y="64" width="13" height="5" rx="1"/>
+        <rect class="seg-target seg-target--1" id="target1a" x="1.5" y="7.5"  width="21"  height="8"   rx="1"/>
+        <rect class="seg-target seg-target--1" id="target1b" x="44"  y="28"   width="44"  height="5.5" rx="1"/>
+        <rect class="seg-target seg-target--2" id="target2a" x="2"   y="50"   width="22"  height="7"   rx="1"/>
+        <rect class="seg-target seg-target--2" id="target2b" x="44"  y="61.5" width="14"  height="5"   rx="1"/>
       </svg>
 
       <!-- DOT 1 -->
-      <button class="seg-dot" style="top:30%;left:35%;" data-dot="1" aria-label="Annotation 1: Announcement Bar">
+      <button class="seg-dot" style="top:22%;left:36%;" data-dot="1" aria-label="Annotation 1: Announcement Bar">
         <span class="seg-dot-ring"></span>
         <span class="seg-dot-number">1</span>
       </button>
 
       <!-- DOT 2 -->
-      <button class="seg-dot" style="top:58%;left:35%;" data-dot="2" aria-label="Annotation 2: Hero CTA">
+      <button class="seg-dot" style="top:59%;left:36%;" data-dot="2" aria-label="Annotation 2: Hero CTA">
         <span class="seg-dot-ring"></span>
         <span class="seg-dot-number">2</span>
       </button>
@@ -1510,35 +1503,35 @@
         <img src="chesterbrook-after-three.jpg" alt="Chesterbrook Academy West Chester redesign" class="seg-annotated-img" />
 
         <svg class="seg-lines-svg" id="segLinesSvg2" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <!-- Dot 1 → mobile green box + desktop green box -->
-          <line class="seg-line2 seg-line2--1" id="l2-1a" x1="36" y1="30" x2="19" y2="25"/>
-          <line class="seg-line2 seg-line2--1" id="l2-1b" x1="36" y1="30" x2="56" y2="74"/>
-          <rect class="seg-target2 seg-target2--1" id="t2-1a" x="2"  y="5"  width="26" height="44" rx="1"/>
-          <rect class="seg-target2 seg-target2--1" id="t2-1b" x="44" y="61" width="26" height="27" rx="1"/>
-          <!-- Dot 2 → mobile children + desktop children -->
-          <line class="seg-line2 seg-line2--2" id="l2-2a" x1="36" y1="65" x2="19" y2="72"/>
-          <line class="seg-line2 seg-line2--2" id="l2-2b" x1="36" y1="65" x2="80" y2="74"/>
-          <rect class="seg-target2 seg-target2--2" id="t2-2a" x="2"  y="53" width="26" height="44" rx="1"/>
-          <rect class="seg-target2 seg-target2--2" id="t2-2b" x="64" y="61" width="28" height="27" rx="1"/>
-          <!-- Dot 3 → desktop school photo only -->
-          <line class="seg-line2 seg-line2--3" id="l2-3a" x1="55" y1="22" x2="76" y2="33"/>
-          <rect class="seg-target2 seg-target2--3" id="t2-3a" x="42" y="26" width="52" height="35" rx="1"/>
+          <!-- Dot 1 → mobile value prop block + desktop value prop block -->
+          <line class="seg-line2 seg-line2--1" id="l2-1a" x1="36" y1="28" x2="13" y2="27"/>
+          <line class="seg-line2 seg-line2--1" id="l2-1b" x1="36" y1="28" x2="54" y2="74"/>
+          <rect class="seg-target2 seg-target2--1" id="t2-1a" x="1.5" y="5"    width="23"   height="49"  rx="1"/>
+          <rect class="seg-target2 seg-target2--1" id="t2-1b" x="44.5" y="61.5" width="19.5" height="25"  rx="1"/>
+          <!-- Dot 2 → mobile children photo + desktop children photo -->
+          <line class="seg-line2 seg-line2--2" id="l2-2a" x1="36" y1="70" x2="13" y2="72"/>
+          <line class="seg-line2 seg-line2--2" id="l2-2b" x1="36" y1="70" x2="72" y2="74"/>
+          <rect class="seg-target2 seg-target2--2" id="t2-2a" x="1.5"  y="52.5" width="23"  height="45"  rx="1"/>
+          <rect class="seg-target2 seg-target2--2" id="t2-2b" x="63.5" y="61.5" width="18"  height="25"  rx="1"/>
+          <!-- Dot 3 → desktop school campus hero -->
+          <line class="seg-line2 seg-line2--3" id="l2-3a" x1="50" y1="20" x2="60" y2="35"/>
+          <rect class="seg-target2 seg-target2--3" id="t2-3a" x="39.5" y="30" width="42" height="28" rx="1"/>
         </svg>
 
         <!-- DOT 1 -->
-        <button class="seg-dot seg-dot2" style="top:30%;left:36%;" data-dot2="1" aria-label="Annotation 1: Value Proposition Block">
+        <button class="seg-dot seg-dot2" style="top:28%;left:36%;" data-dot2="1" aria-label="Annotation 1: Value Proposition Block">
           <span class="seg-dot-ring"></span>
           <span class="seg-dot-number">1</span>
         </button>
 
         <!-- DOT 2 -->
-        <button class="seg-dot seg-dot2" style="top:65%;left:36%;" data-dot2="2" aria-label="Annotation 2: Authentic Photography">
+        <button class="seg-dot seg-dot2" style="top:70%;left:36%;" data-dot2="2" aria-label="Annotation 2: Authentic Photography">
           <span class="seg-dot-ring"></span>
           <span class="seg-dot-number">2</span>
         </button>
 
         <!-- DOT 3 -->
-        <button class="seg-dot seg-dot2" style="top:22%;left:55%;" data-dot2="3" aria-label="Annotation 3: School Campus Hero">
+        <button class="seg-dot seg-dot2" style="top:20%;left:50%;" data-dot2="3" aria-label="Annotation 3: School Campus Hero">
           <span class="seg-dot-ring"></span>
           <span class="seg-dot-number">3</span>
         </button>
@@ -1564,10 +1557,10 @@
 
         <svg class="seg-lines-svg" id="segLinesSvg3" viewBox="0 0 100 100" preserveAspectRatio="none">
           <!-- Dot 1 → mobile accordion + desktop accordion -->
-          <line class="seg-line3 seg-line3--1" id="l3-1a" x1="38" y1="55" x2="17" y2="60"/>
-          <line class="seg-line3 seg-line3--1" id="l3-1b" x1="38" y1="55" x2="82" y2="60"/>
-          <rect class="seg-target3 seg-target3--1" id="t3-1a" x="2"  y="44" width="24" height="48" rx="1"/>
-          <rect class="seg-target3 seg-target3--1" id="t3-1b" x="67" y="45" width="28" height="48" rx="1"/>
+          <line class="seg-line3 seg-line3--1" id="l3-1a" x1="38" y1="55" x2="13" y2="65"/>
+          <line class="seg-line3 seg-line3--1" id="l3-1b" x1="38" y1="55" x2="74" y2="65"/>
+          <rect class="seg-target3 seg-target3--1" id="t3-1a" x="1.5" y="48"  width="23"   height="50"  rx="1"/>
+          <rect class="seg-target3 seg-target3--1" id="t3-1b" x="65.5" y="49.5" width="17.5" height="43"  rx="1"/>
         </svg>
 
         <!-- DOT 1 -->
@@ -1630,16 +1623,16 @@
 (function() {
   const annotations2 = {
     '1': {
-      num: 'Design Decision 01: Value Proposition Block',
-      text: 'A dedicated green block communicates each school\'s unique identity and story right away, responding directly to what parents told us in research: they needed to understand what made each school worth considering, fast.'
+      num: 'Value Proposition Block',
+      text: 'Each school gets a dedicated section that leads with who they are and what makes them worth a closer look. Parents told us they needed to understand a school\'s identity quickly. This gives them that without having to scroll through the whole page to find it.'
     },
     '2': {
-      num: 'Design Decision 02: Authentic Photography',
-      text: 'Real photography of students at this specific school builds emotional trust with parents. Generic stock imagery was replaced with authentic moments that reflect the actual school community.'
+      num: 'Authentic Photography',
+      text: 'We swapped out generic stock photos for real images of students at each school. Parents are making a big decision and they want to feel something when they land on the page. Photos from the actual school community do that in a way stock imagery just can\'t.'
     },
     '3': {
-      num: 'Design Decision 03: School Campus Hero',
-      text: 'Leading with an actual photo of the school building grounds the experience in place. Parents researching schools want to picture their child there, and showing the actual campus right away gives parents something real to connect with.'
+      num: 'School Campus Hero',
+      text: 'Starting with a real photo of the campus gives parents an immediate sense of place. When you\'re researching schools for your kid, seeing the actual building matters. It makes the experience feel grounded and credible right from the start.'
     }
   };
 
@@ -1699,8 +1692,8 @@
 (function() {
   const annotations3 = {
     '1': {
-      num: 'Design Decision 01: Curriculum Accordion',
-      text: 'An accordion component organizes curriculum categories by domain, letting parents quickly scan what matters to them without overwhelming walls of text. Research showed parents wanted faster access to critical information. Using an accordion makes that information scannable and expandable on both mobile and desktop.'
+      num: 'Curriculum Accordion',
+      text: 'Parents kept telling us they wanted to understand what their child would actually be learning, but they didn\'t want to read an essay to find out. Breaking curriculum into expandable categories lets them quickly tap into whatever they care about most, on any device.'
     }
   };
 
@@ -1771,8 +1764,10 @@
     position: relative; width: 100%;
     border: 2px solid var(--ink); border-radius: 12px;
     overflow: visible; box-shadow: 6px 6px 0 var(--ink);
+    background: var(--seg-bg);
+    padding: 20px;
   }
-  .seg-annotated-img { width: 100%; display: block; border-radius: 10px; }
+  .seg-annotated-img { width: 100%; display: block; border-radius: 8px; }
 
   /* SVG lines overlay */
   .seg-lines-svg {
@@ -1863,12 +1858,12 @@
 (function() {
   const annotations = {
     '1': {
-      num: 'Design Decision 01: Announcement Bar',
-      text: 'A persistent announcement bar at the top of every page surfaces time-sensitive events like Open Houses, giving parents a direct path to act before they\'ve even scrolled.'
+      num: 'Announcement Bar',
+      text: 'Parents told us they wanted to know about upcoming events right away. Putting the Open House announcement at the very top means they see it the moment they land, without having to hunt for it.'
     },
     '2': {
-      num: 'Design Decision 02: Hero CTA',
-      text: 'A high-contrast CTA button in the hero puts the inquiry action right in front of parents before they scroll, on every device.'
+      num: 'Hero CTA Button',
+      text: 'One of the biggest things we heard in research was that parents wanted a faster way to get in touch. Anchoring a contact button in the hero puts that path right in front of them, above the fold, on every device.'
     }
   };
 
