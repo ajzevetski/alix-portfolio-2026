@@ -39,7 +39,7 @@
       transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       background: var(--white);
@@ -865,6 +865,9 @@
       .case-card:nth-child(even) .card-visual { order: 0; }
       .case-card:nth-child(even) .card-info { order: 0; border-right: none; border-top: 2px solid var(--ink); }
       .card-info { border-left: none !important; border-top: 2px solid var(--ink); padding: 36px 24px; }
+      /* Disable slide-in transforms on mobile — they cause horizontal overflow */
+      .case-card, .case-card:nth-child(even) { transform: none; }
+      .case-card.visible { transform: none; }
 
       .contact-section { grid-template-columns: 1fr; }
       .contact-left { border-right: none; border-bottom: 2px solid var(--ink); padding: 56px 24px; }
@@ -903,7 +906,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#f1908b94879485829a988489b1969c90989ddf929e9c" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -916,7 +919,7 @@
   <a href="#about"   onclick="closeNav()">About</a>
   <a href="#work"    onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#b5d4cfd0c3d0c1c6dedcc0cdf5d2d8d4dcd99bd6dad8" onclick="closeNav()">Contact</a>
 </div>
 
 <!-- TICKER -->
@@ -1193,7 +1196,7 @@
   }
 </style>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function toggleWT(card) {
     const after  = card.querySelector('.sp-img-after');
     const before = card.querySelector('.sp-img-before');
@@ -1239,7 +1242,7 @@
   <div class="contact-left">
     <h2 class="contact-heading">Let's<br /><em>work</em><br />together.</h2>
     <p class="contact-sub">I'm open to full-time roles, contract work, and collaborations. If you've got a design problem worth solving, I'd love to hear about it.</p>
-    <a href="mailto:azevetskiux@gmail.com" class="contact-btn">Contact Me! →</a>
+    <a href="/cdn-cgi/l/email-protection#34554e51425140475f5d414c745359555d581a575b59" class="contact-btn">Contact Me! →</a>
   </div>
 
 </section>
@@ -1250,7 +1253,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav logo: "A.I." → "not" slides in → slides out → types into "Alix with an i"
   (function() {
     const logoInner = document.getElementById('nav-logo-inner');
@@ -2232,15 +2235,4 @@
       [0,   `Uh oh... ${name} is still hungry 😅`],
     ];
     const msg = msgs.find(([min]) => score >= min)[1];
-    document.getElementById('final-score').textContent = score;
-    document.getElementById('final-msg').textContent = msg;
-    document.getElementById('gameover-screen').style.display = 'flex';
-  }
-
-  document.getElementById('start-btn').addEventListener('click', startGame);
-  document.getElementById('restart-btn').addEventListener('click', startGame);
-
-})();
-</script>
-</body>
-</html>
+    document.getElementById('final-score'
