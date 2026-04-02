@@ -73,7 +73,7 @@
       position: fixed;
       top: 0; left: 0;
       pointer-events: none;
-      z-index: 10000;
+      z-index: 10002;
       transform: translate(-50%, -50%);
       transition: transform 0.12s ease, width 0.18s ease, height 0.18s ease;
     }
@@ -319,15 +319,12 @@
       color: var(--ink);
       background: white;
       box-shadow: 2px 2px 0 var(--ink);
-      transition: all 0.18s ease;
+      cursor: default;
     }
-    .tag:hover {
-      background: var(--punch);
-      color: white;
-      border-color: var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      transform: translate(-1px, -1px);
-    }
+    .tag:nth-child(1) { background: var(--blush); }
+    .tag:nth-child(2) { background: #B8E8FF; }
+    .tag:nth-child(3) { background: var(--mint); }
+    .tag:nth-child(4) { background: #FFD6B0; }
     .hero-cta {
       display: inline-flex;
       align-items: center;
@@ -906,7 +903,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank">Resume</a></li>
-    <li><a href="mailto:azevetskiux@gmail.com" class="nav-contact-btn">Contact</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#b1d0cbd4c7d4c5c2dad8c4c9f1d6dcd0d8dd9fd2dedc" class="nav-contact-btn">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -919,7 +916,7 @@
   <a href="#about"   onclick="closeNav()">About</a>
   <a href="#work"    onclick="closeNav()">Work</a>
   <a href="https://docs.google.com/document/d/1EM-mB6N0mtlsxL77bu_2pU__wmEk5LnI4KvsNgSgu6Y" target="_blank" onclick="closeNav()">Resume</a>
-  <a href="mailto:azevetskiux@gmail.com" onclick="closeNav()">Contact</a>
+  <a href="/cdn-cgi/l/email-protection#c5a4bfa0b3a0b1b6aeacb0bd85a2a8a4aca9eba6aaa8" onclick="closeNav()">Contact</a>
 </div>
 
 <!-- TICKER -->
@@ -1196,7 +1193,7 @@
   }
 </style>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function toggleWT(card) {
     const after  = card.querySelector('.sp-img-after');
     const before = card.querySelector('.sp-img-before');
@@ -1242,7 +1239,7 @@
   <div class="contact-left">
     <h2 class="contact-heading">Let's<br /><em>work</em><br />together.</h2>
     <p class="contact-sub">I'm open to full-time roles, contract work, and collaborations. If you've got a design problem worth solving, I'd love to hear about it.</p>
-    <a href="mailto:azevetskiux@gmail.com" class="contact-btn">Contact Me! →</a>
+    <a href="/cdn-cgi/l/email-protection#d0b1aab5a6b5a4a3bbb9a5a890b7bdb1b9bcfeb3bfbd" class="contact-btn">Contact Me! →</a>
   </div>
 
 </section>
@@ -1253,7 +1250,7 @@
   <span class="footer-credit">Designed with Claude, ChatGPT, and Coffee</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav logo: "A.I." → "not" slides in → slides out → types into "Alix with an i"
   (function() {
     const logoInner = document.getElementById('nav-logo-inner');
@@ -1297,7 +1294,7 @@
     cursor.style.left = e.clientX + 'px';
     cursor.style.top  = e.clientY + 'px';
   });
-  document.querySelectorAll('a, .tag, button').forEach(el => {
+  document.querySelectorAll('a, button').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('big'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
   });
@@ -2235,15 +2232,4 @@
       [0,   `Uh oh... ${name} is still hungry 😅`],
     ];
     const msg = msgs.find(([min]) => score >= min)[1];
-    document.getElementById('final-score').textContent = score;
-    document.getElementById('final-msg').textContent = msg;
-    document.getElementById('gameover-screen').style.display = 'flex';
-  }
-
-  document.getElementById('start-btn').addEventListener('click', startGame);
-  document.getElementById('restart-btn').addEventListener('click', startGame);
-
-})();
-</script>
-</body>
-</html>
+    document.getElementById('final-score
